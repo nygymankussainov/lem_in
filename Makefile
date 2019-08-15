@@ -3,50 +3,51 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+         #
+#    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/01/20 19:05:15 by hfrankly          #+#    #+#              #
-#    Updated: 2019/08/15 16:16:22 by hfrankly         ###   ########.fr        #
+#    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
+#    Updated: 2019/08/15 19:55:27 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+ARCHIVE = lem_in.a
+
 NAME = lem_in
 
-FLAGS = -Wall -Wextra -Werror -g
+LIB = libft/ft_printf
+LIB_A = libft/libft.a $(LIB)/libftprintf.a
 
-MLX = -I /usr/local/include -L /usr/local/include -lmlx -framework OpenGL -framework Appkit
+INCLUDES = -I ./libft -I ./libft/ft_printf/ -I ./includes
 
-INCLUDES = -L./libft -lft -I ./libft -I./includes
+SRC = isint.c lem_in.c validation.c
 
-SRCS = srcs/main.c
+OBJ = $(SRC:.c=.o)
 
-OBJ = $(addprefix $(OBJDIR)/, $(patsubst $(SRCSDIR)/%.c, %.o, $(wildcard $(SRCSDIR)/*.c)))
-
-SRCSDIR = srcs
-
-OBJDIR = objdir
-
-all: $(OBJDIR) $(NAME)
-
-$(OBJDIR):
-	mkdir -p $(OBJDIR)
-
-$(OBJDIR)/%.o: $(SRCSDIR)/%.c $(INCLUDES)
-	cc $(FLAGS) -I . -o $@ -c $<
-
-$(NAME): $(OBJ)
-	make -C libft/
-	cc $(FLAGS) $(MLX) $(OBJ) -o $(NAME)
-
-clean:
-	make -C libft clean
-	/bin/rm -rf $(OBJ)
-
-fclean: clean
-	make -C libft fclean
-	/bin/rm -rf $(NAME)
-	/bin/rm -rf $(OBJDIR)
-
-re: fclean all
+CCFL = -Wall -Wextra -Werror
 
 .PHONY: all clean fclean re
+
+all: $(ARCHIVE) $(NAME)
+
+$(ARCHIVE): $(OBJ)
+	@make -C $(LIB)
+	@ar rc $(ARCHIVE) $(OBJ)
+	@ranlib $(ARCHIVE)
+
+%.o: %.c $(INCLUDES)
+	@gcc $(CCFL) -c $<
+
+$(NAME): $(OBJ)
+	@gcc $(CCFL) -o $(NAME) $(ARCHIVE) $(LIB_A) -g
+
+
+clean:
+	@make clean -C $(LIB)
+	@rm -f $(ARCHIVE)
+	@rm -f $(NAME)
+	@rm -f $(OBJ)
+
+fclean: clean
+	@make fclean -C $(LIB)
+
+re: fclean all
