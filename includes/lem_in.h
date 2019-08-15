@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 15:44:57 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/15 16:21:17 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/15 16:37:12 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ typedef	struct s_image		t_image;
 typedef	struct s_mlx		t_mlx;
 typedef struct s_room		t_room;
 typedef struct s_link		t_link;
+typedef struct s_farm		t_farm;
 
-typedef struct  s_room
+typedef struct		s_room
 {
     t_link *link;
     int x;
@@ -36,11 +37,19 @@ typedef struct  s_room
     char status;
 }               t_room;
 
-typedef struct s_link
+typedef struct		s_link
 {
-    int iroom;
-    struct s_link *next;
-}				t_link;
+    int				iroom;
+    struct s_link	*next;
+}					t_link;
+
+typedef struct s_farm
+{
+	int		ants;
+	int		room_count;
+	int		link_count;
+	t_room	*room;
+}				t_farm;
 
 struct	s_mlx
 {
