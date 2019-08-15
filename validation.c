@@ -6,12 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 16:04:51 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/15 16:18:10 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/15 16:21:20 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-#include <fcntl.h>
 
 int		validation(char *str)
 {
