@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 15:44:57 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/15 19:59:51 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/16 19:55:08 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,11 @@ typedef struct				s_farm
 	int						ants;
 	int						room_count;
 	int						link_count;
+	char					*start;
+	char					*end;
+	char					*room_name;
 	char					*output;
+	char					*coords;
 	t_room					*room;
 }							t_farm;
 
@@ -71,7 +75,7 @@ struct						s_image
 	int						color;
 };
 
-int							validation(int fd, t_farm *farm);
+int							validation(int fd, t_farm *farm, int isrec, char **line);
 int							isint(char *str, t_farm *farm, char c);
 
 #endif
