@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 11:35:37 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/05 20:52:32 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/16 12:18:08 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,21 @@ static char	**ft_free(char **result, size_t word)
 	return (result);
 }
 
+static int	letters(const char *s, size_t *i, char c, char t)
+{
+	int		let;
+
+	let = 0;
+	while (s[*i] == c || s[*i] == t)
+		(*i)++;
+	while (s[*i] != c && s[*i] != t && s[*i])
+	{
+		(*i)++;
+		let++;
+	}
+	return (let);
+}
+
 static char	**ft_count_letters(char **result, const char *s, char c, char t)
 {
 	size_t	i;
@@ -36,14 +51,9 @@ static char	**ft_count_letters(char **result, const char *s, char c, char t)
 	i = 0;
 	while (s[i])
 	{
-		let = 0;
-		while (s[i] == c || s[i] == t)
-			i++;
-		while (s[i] != c && s[i] != t && s[i])
-		{
-			i++;
-			let++;
-		}
+		if ((s[i] == c || s[i] == t) && !s[i + 1])
+			return (result);
+		let = letters(s, &i, c, t);
 		if (!(result[word] = ft_memalloc(let + 1)))
 			result = ft_free(result, word);
 		j = 0;

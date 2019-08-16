@@ -1,4 +1,11 @@
-123
-asd -1 1
+1
 ##start
-asd
+start 1 1
+##end
+end 2 2
+room1 3 3
+room2 4 4
+room3 4 3
+room2 1 2
+start-end
+room1-room2

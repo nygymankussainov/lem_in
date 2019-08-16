@@ -6,11 +6,12 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 11:50:12 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/15 15:19:14 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/16 14:32:14 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 static t_gnl_list	*search_fd(t_gnl_list ***list, int fd)
 {
