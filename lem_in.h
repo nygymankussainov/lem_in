@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 15:44:57 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/16 19:55:08 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/17 11:18:07 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,8 @@ struct						s_image
 
 int							validation(int fd, t_farm *farm, int isrec, char **line);
 int							isint(char *str, t_farm *farm, char c);
-
+char						**validate_links(char *str, t_farm *farm);
+char						**validate_rooms(char *str, t_farm *farm);
+int							duplicate(t_farm *farm, char **room);
+int							isdash(char *str);
 #endif

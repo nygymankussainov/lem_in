@@ -6,6 +6,7 @@ end 2 2
 room1 3 3
 room2 4 4
 room3 4 3
-room2 1 2
+room4 4 5
 start-end
 room1-room2
+#comment
