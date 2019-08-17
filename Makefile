@@ -6,7 +6,7 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/08/15 19:55:27 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/08/17 12:09:52 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ LIB_A = libft/libft.a $(LIB)/libftprintf.a
 
 INCLUDES = -I ./libft -I ./libft/ft_printf/ -I ./includes
 
-SRC = isint.c lem_in.c validation.c
+SRC = lem_in.c \
+		validation/isint.c validation/validation.c validation/validate_links.c validation/validate_rooms.c \
 
 OBJ = $(SRC:.c=.o)
 
@@ -35,11 +36,10 @@ $(ARCHIVE): $(OBJ)
 	@ranlib $(ARCHIVE)
 
 %.o: %.c $(INCLUDES)
-	@gcc $(CCFL) -c $<
+	@gcc -Wall -Wextra -Werror -c $<
 
 $(NAME): $(OBJ)
-	@gcc $(CCFL) -o $(NAME) $(ARCHIVE) $(LIB_A) -g
-
+	@gcc -Wall -Wextra -Werror -o $(NAME) $(ARCHIVE) $(LIB_A) -g
 
 clean:
 	@make clean -C $(LIB)

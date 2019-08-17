@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:33:43 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/16 15:46:55 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/17 12:10:08 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "../lem_in.h"
 
 int		isint_limit(char *str)
 {
@@ -65,6 +65,6 @@ int		isint(char *str, t_farm *farm, char c)
 	if (i > 10)
 		return (0);
 	else if (i == 10)
-		return(isint_limit(str));
+		return (isint_limit(str));
 	return (1);
 }
