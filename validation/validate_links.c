@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 10:43:03 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/17 12:10:11 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/19 15:14:21 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,8 @@ char	**validate_links(char *str, t_farm *farm)
 		ft_free_two_dim_arr(room);
 		return (NULL);
 	}
+	farm->link = farm->link ? ft_strjoin(farm->link, "\n", 1, 0) : farm->link;
+	farm->link = farm->link ? ft_strjoin(farm->link, str, 1, 0) : farm->link;
+	farm->link = !farm->link ? ft_strdup(str) : farm->link;
 	return (room);
 }
