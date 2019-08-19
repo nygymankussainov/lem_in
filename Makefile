@@ -6,7 +6,7 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/08/17 12:09:52 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/08/19 15:05:18 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIB_A = libft/libft.a $(LIB)/libftprintf.a
 INCLUDES = -I ./libft -I ./libft/ft_printf/ -I ./includes
 
 SRC = lem_in.c \
-		validation/isint.c validation/validation.c validation/validate_links.c validation/validate_rooms.c \
+		validation/isint.c validation/validation.c validation/validate_links.c validation/validate_rooms.c hash_table.c \
 
 OBJ = $(SRC:.c=.o)
 

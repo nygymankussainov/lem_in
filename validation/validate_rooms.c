@@ -6,11 +6,31 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 10:41:55 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/17 12:10:17 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/19 19:56:26 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
+
+void	ifroomlinks(t_farm *farm, char **room, char c)
+{
+	int		i;
+
+	i = !farm->output ? 1 : 0;
+	farm->output = !farm->output ? ft_strdup(room[0]) : farm->output;
+	while (room[i])
+	{
+		if (i > 0)
+			farm->output = c == 'l' ? ft_strjoin(farm->output, "-", 1, 0) :
+				ft_strjoin(farm->output, " ", 1, 0);
+		farm->output = ft_strjoin(farm->output, room[i], 1, 0);
+		i++;
+	}
+	farm->output = ft_strjoin(farm->output, "\n", 1, 0);
+	farm->link_count += c == 'l' ? 1 : 0;
+	farm->room_count += c == 'r' ? 1 : 0;
+	ft_free_two_dim_arr(room);
+}
 
 int		ifcoords(t_farm *farm, char **room)
 {
