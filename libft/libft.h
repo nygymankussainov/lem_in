@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nygymankussainov <nygymankussainov@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 20:06:51 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/11 12:56:01 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/22 14:58:49 by nygymankuss      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char					*ft_strsub(char const *s, unsigned int start,
 char					*ft_strjoin(char const *s1, char const *s2,
 	int f, int s);
 char					*ft_strtrim(char const *s);
-char					**ft_strsplit(char const *s, char c, char t);
+char					**ft_strsplit(char const *s, char c);
 char					*ft_itoa_ll(__int128_t n);
 int						ft_count_digit_ll(__int128_t n, int len);
 char					*ft_itoa(int n);

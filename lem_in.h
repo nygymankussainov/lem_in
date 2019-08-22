@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nygymankussainov <nygymankussainov@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 15:44:57 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/19 16:51:40 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/22 15:00:20 by nygymankuss      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
-# include <mlx.h>
+// # include <mlx.h>
 # include "./libft/ft_printf/ft_printf.h"
 # include <fcntl.h>
 # include <math.h>
