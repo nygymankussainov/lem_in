@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_rooms.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nygymankussainov <nygymankussainov@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 10:41:55 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/19 19:56:26 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/22 15:00:42 by nygymankuss      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		ifcoords(t_farm *farm, char **room)
 	xy = ft_strdup(room[1]);
 	xy = ft_strjoin(xy, "*", 1, 0);
 	xy = ft_strjoin(xy, room[2], 1, 0);
-	allcoords = ft_strsplit(farm->coords, '\n', '\n');
+	allcoords = ft_strsplit(farm->coords, '\n');
 	i = 0;
 	while (allcoords[i])
 	{
@@ -85,7 +85,7 @@ int		duplicate(t_farm *farm, char **room)
 
 	if (farm->room_name)
 	{
-		allnames = ft_strsplit(farm->room_name, '\n', '\n');
+		allnames = ft_strsplit(farm->room_name, '\n');
 		i = 0;
 		while (allnames[i])
 		{
@@ -123,7 +123,7 @@ char	**validate_rooms(char *str, t_farm *farm)
 	}
 	if (j > 2)
 		return (0);
-	room = ft_strsplit(str, ' ', '\t');
+	room = ft_strsplit(str, ' ');
 	i = 0;
 	while (room[i])
 		i++;

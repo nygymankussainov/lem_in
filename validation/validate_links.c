@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_links.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nygymankussainov <nygymankussainov@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 10:43:03 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/19 15:14:21 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/22 14:59:37 by nygymankuss      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		isname_exist(char **room, t_farm *farm)
 	int		key;
 	int		j;
 
-	name = ft_strsplit(farm->room_name, '\n', '\n');
+	name = ft_strsplit(farm->room_name, '\n');
 	i = 0;
 	key = 0;
 	while (room[i])
@@ -64,7 +64,7 @@ char	**validate_links(char *str, t_farm *farm)
 	if (key != 1)
 		return (0);
 	i = 0;
-	room = ft_strsplit(str, '-', '-');
+	room = ft_strsplit(str, '-');
 	while (room[i])
 		i++;
 	if (i != 2 || (room[0] && room[1] && !ft_strcmp(room[0], room[1]))

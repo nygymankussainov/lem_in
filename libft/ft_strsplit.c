@@ -3,89 +3,76 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nygymankussainov <nygymankussainov@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 11:35:37 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/19 18:50:17 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/22 14:58:04 by nygymankuss      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	**ft_free(char **result, size_t word)
+static int		ft_nbw(const char *str, char c)
 {
-	while (result[word])
-	{
-		free(result[word]);
-		result[word] = NULL;
-		word--;
-	}
-	free(result);
-	result = NULL;
-	return (result);
-}
-
-static int	letters(const char *s, size_t *i, char c, char t)
-{
-	int		let;
-
-	let = 0;
-	while (s[*i] == c || s[*i] == t)
-		(*i)++;
-	while (s[*i] != c && s[*i] != t && s[*i])
-	{
-		(*i)++;
-		let++;
-	}
-	return (let);
-}
-
-static char	**ft_count_letters(char **result, const char *s, char c, char t)
-{
-	size_t	i;
-	size_t	j;
-	size_t	let;
-	size_t	word;
+	int word;
 
 	word = 0;
-	i = 0;
-	while (s[i])
+	if (*str != c && *str)
 	{
-		if ((s[i] == c || s[i] == t) && !s[i + 1])
-			return (result);
-		let = letters(s, &i, c, t);
-		if (!(result[word] = ft_memalloc(let + 1)))
-			result = ft_free(result, word);
-		j = 0;
-		while (let)
-			result[word][j++] = s[i - let--];
+		str++;
 		word++;
 	}
-	return (result);
+	while (*str)
+	{
+		while (*str == c)
+		{
+			str++;
+			if (*str != c && *str)
+				word++;
+		}
+		str++;
+	}
+	return (word);
 }
 
-char		**ft_strsplit(char const *s, char c, char t)
+static int		ft_ln(const char *str, char c)
 {
-	char	**result;
-	size_t	i;
-	size_t	j;
+	int count;
 
-	i = 0;
-	j = 0;
-	if (!s)
-		return (NULL);
-	while (s[i])
+	count = 0;
+	while (*str != c && *str)
 	{
-		while (s[i] == c || s[i] == t)
-			i++;
-		while (s[i] != c && s[i] != t && s[i])
-			i++;
-		if (ft_isascii(i - 1) && s[i - 1] != c && s[i - 1] != t)
-			j++;
+		count++;
+		str++;
 	}
-	if (!(result = (char **)malloc(sizeof(char *) * (j + 1))))
+	return (count);
+}
+
+char			**ft_strsplit(char const *s, char c)
+{
+	int		j;
+	int		i;
+	char	**spt;
+
+	j = 0;
+	i = 0;
+	if (!s || (!(spt = (char **)malloc(sizeof(char *) * (ft_nbw(s, c) + 1)))))
 		return (NULL);
-	result = ft_count_letters(result, s, c, t);
-	result[j] = NULL;
-	return (result);
+	while (*s)
+	{
+		while (*s == c && *s)
+			s++;
+		if (*s != c && *s)
+		{
+			if (!(spt[j] = (char *)malloc(sizeof(char) * (ft_ln(s, c) + 1))))
+				return (NULL);
+			while (*s && *s != c)
+				spt[j][i++] = (char)*s++;
+			spt[j][i] = '\0';
+			j++;
+			i = 0;
+		}
+	}
+	spt[j] = NULL;
+	return (spt);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_table.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nygymankussainov <nygymankussainov@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:40:48 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/19 18:16:03 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/22 15:01:30 by nygymankuss      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ void	get_links(t_farm *farm, t_room **room)
 	int		hash1;
 	int		hash2;
 
-	links = ft_strsplit(farm->link, '\n', '\n');
+	links = ft_strsplit(farm->link, '\n');
 	i = 0;
 	while (links[i])
 	{
-		tmp = ft_strsplit(links[i], '-', '-');
+		tmp = ft_strsplit(links[i], '-');
 		hash1 = hash_func(tmp[0]);
 		hash2 = hash_func(tmp[1]);
 		while (room[hash1]->next && ft_strcmp(room[hash1]->name, tmp[0]) != 0)
@@ -85,8 +85,8 @@ void	hash_table(t_farm *farm, t_room **room)
 
 	if (!(room = (t_room **)malloc(sizeof(t_room *) * (2147483647))))
 		exit(0);
-	allnames = ft_strsplit(farm->room_name, '\n', '\n');
-	coords = ft_strsplit(farm->coords, '\n', '\n');
+	allnames = ft_strsplit(farm->room_name, '\n');
+	coords = ft_strsplit(farm->coords, '\n');
 	j = 0;
 	while (j < farm->room_count)
 	{
