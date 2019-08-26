@@ -1,19 +1,11 @@
+##star
 1
 ##start
-start 1 1
+start -1 00
 ##end
-end 2 2
-room1 3 3
-room2 4 4
-room4 4 5
-room3 4 3
+end -11 0
+as -21 00
 start-end
-room1-room2
+asd-start
 #comment
-room1-room3
-room4-room3
-start-room1
-end-room4
-start-room2
-start-room3
-start-room4
+##en

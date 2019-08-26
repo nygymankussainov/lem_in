@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:33:43 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/17 12:10:08 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/26 12:42:04 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,27 @@ int		isonlynum(char *str, char c)
 	int		i;
 
 	i = 0;
-	if (str[0] == '-')
+	if (str[0] == '-' || (str[0] == '0' && !str[1] && c == 'a'))
 		return (0);
 	while (str[i])
 	{
-		if (ft_isascii(str[i]) && !ft_isdigit(str[i]) && !iswhitesp(str[i]))
+		if (c == 'r' && ft_isascii(str[i]) &&
+			!ft_isdigit(str[i]) && !iswhitesp(str[i]))
+			return (0);
+		else if (c == 'a' && ft_isascii(str[i]) &&
+			!ft_isdigit(str[i]) && iswhitesp(str[i]))
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-int		isint(char *str, t_farm *farm, char c)
+int		isint(char *str, char c)
 {
-	int		i;
+	int		len;
 	int		sign;
 
-	i = 0;
-	sign = 0;
+	sign = str[0] == '-' && c == 'r' ? -1 : 0;
 	if (str[0] == '+' || (str[0] == '-' && c == 'r'))
 		str++;
 	if (!str[0])
@@ -61,10 +64,16 @@ int		isint(char *str, t_farm *farm, char c)
 			str++;
 	if (!isonlynum(str, c))
 		return (0);
-	i = ft_strlen(str);
-	if (i > 10)
+	str -= sign == -1 ? 1 : 0;
+	*str = sign == -1 && *str != '-' ? '-' : *str;
+	len = ft_strlen(str);
+	if (len > 10 && !sign)
 		return (0);
-	else if (i == 10)
-		return (isint_limit(str));
+	else if (len == 10 || (len == 11 && sign))
+	{
+		if (!isint_limit(str))
+			return (0);
+		*str = *(str - 1) == '0' && *str == '-' ? '0' : *str;
+	}
 	return (1);
 }

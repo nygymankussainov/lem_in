@@ -3,135 +3,101 @@
 /*                                                        :::      ::::::::   */
 /*   validate_rooms.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nygymankussainov <nygymankussainov@stud    +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/17 10:41:55 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/22 15:00:42 by nygymankuss      ###   ########.fr       */
+/*   Created: 2019/08/23 17:24:00 by vhazelnu          #+#    #+#             */
+/*   Updated: 2019/08/26 13:19:52 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
 
-void	ifroomlinks(t_farm *farm, char **room, char c)
+int		islink(char *line)
 {
-	int		i;
-
-	i = !farm->output ? 1 : 0;
-	farm->output = !farm->output ? ft_strdup(room[0]) : farm->output;
-	while (room[i])
+	while (*line)
 	{
-		if (i > 0)
-			farm->output = c == 'l' ? ft_strjoin(farm->output, "-", 1, 0) :
-				ft_strjoin(farm->output, " ", 1, 0);
-		farm->output = ft_strjoin(farm->output, room[i], 1, 0);
-		i++;
-	}
-	farm->output = ft_strjoin(farm->output, "\n", 1, 0);
-	farm->link_count += c == 'l' ? 1 : 0;
-	farm->room_count += c == 'r' ? 1 : 0;
-	ft_free_two_dim_arr(room);
-}
-
-int		ifcoords(t_farm *farm, char **room)
-{
-	char	**allcoords;
-	char	*xy;
-	int		i;
-
-	xy = ft_strdup(room[1]);
-	xy = ft_strjoin(xy, "*", 1, 0);
-	xy = ft_strjoin(xy, room[2], 1, 0);
-	allcoords = ft_strsplit(farm->coords, '\n');
-	i = 0;
-	while (allcoords[i])
-	{
-		if (!ft_strcmp(allcoords[i], xy))
-		{
-			free(xy);
-			xy = NULL;
-			ft_free_two_dim_arr(allcoords);
-			ft_free_two_dim_arr(room);
+		if (*line == '-' && *(line - 1) != ' ')
 			return (1);
-		}
-		i++;
+		line++;
 	}
-	farm->coords = ft_strjoin(farm->coords, xy, 1, 1);
-	ft_free_two_dim_arr(allcoords);
 	return (0);
 }
 
-int		check_coords(t_farm *farm, char **room)
+int		isduplicate(t_coords *coords)
 {
-	if (!farm->coords)
+	t_coords	*tmp;
+
+	while (coords->next)
 	{
-		farm->coords = ft_strdup(room[1]);
-		farm->coords = ft_strjoin(farm->coords, "*", 1, 0);
-		farm->coords = ft_strjoin(farm->coords, room[2], 1, 0);
+		tmp = coords->next;
+		while (tmp)
+		{
+			if (coords->x == tmp->x && coords->y == tmp->y)
+				return (1);
+			tmp = tmp->next;
+		}
+		coords = coords->next;
 	}
+	return (0);
+}
+
+int		ifstartend(t_farm *farm, t_hashcodes **hashcodes,
+	t_room **room, t_coords **coords)
+{
+	int		tmp;
+
+	tmp = 0;
+	farm->isst = !ft_strcmp("##start", farm->line) ? 1 : farm->isst;
+	farm->isend = !ft_strcmp("##end", farm->line) ? 1 : farm->isend;
+	tmp = farm->room_count;
+	ft_strdel(&farm->line);
+	farm->isrec = 1;
+	validate_rooms(hashcodes, room, farm, coords);
+	farm->isrec = 0;
+	if (tmp >= farm->room_count)
+		return (0);
+	return (1);
+}
+
+int		validate_rooms_part2(t_hashcodes **hashcodes, t_room **room,
+	t_farm *farm, t_coords **coords)
+{
+	if (!(farm->i = validate_coords(farm->line)))
+		return (0);
 	else
 	{
-		if (ifcoords(farm, room))
-			return (1);
+		if (!(write_data_in_sroom(farm, room, hashcodes, coords)))
+			return (0);
+		farm->room_count++;
 	}
-	farm->coords = farm->coords ? ft_strjoin(farm->coords, "\n", 1, 0) :
-		farm->coords;
-	return (0);
+	return (1);
 }
 
-int		duplicate(t_farm *farm, char **room)
+int		validate_rooms(t_hashcodes **hashcodes, t_room **room,
+	t_farm *farm, t_coords **coords)
 {
-	char	**allnames;
-	int		i;
-
-	if (farm->room_name)
+	while (get_next_line(farm->fd, &farm->line) == 1)
 	{
-		allnames = ft_strsplit(farm->room_name, '\n');
-		i = 0;
-		while (allnames[i])
+		if ((!ft_strcmp("##start", farm->line) ||
+			!ft_strcmp("##end", farm->line)) && !farm->isrec)
 		{
-			if (!ft_strcmp(allnames[i], room[0]))
-			{
-				ft_free_two_dim_arr(allnames);
-				ft_free_two_dim_arr(room);
-				return (1);
-			}
-			i++;
+			if (!ifstartend(farm, hashcodes, room, coords))
+				return (0);
 		}
-		ft_free_two_dim_arr(allnames);
+		else if (farm->line[0] == '#' && !farm->isrec)
+			farm->i = farm->i;
+		else if (islink(farm->line))
+		{
+			if (!farm->isst || !farm->isend ||
+				!farm->room_count || isduplicate(*coords))
+				return (0);
+			return (1);
+		}
+		else if (!validate_rooms_part2(hashcodes, room, farm, coords))
+			return (0);
+		if (farm->isrec == 1)
+			return (1);
+		ft_strdel(&farm->line);
 	}
-	if (check_coords(farm, room))
-		return (1);
-	farm->room_name = !farm->room_name ? ft_strdup(room[0]) :
-		ft_strjoin(farm->room_name, room[0], 1, 0);
-	farm->room_name = ft_strjoin(farm->room_name, "\n", 1, 0);
 	return (0);
-}
-
-char	**validate_rooms(char *str, t_farm *farm)
-{
-	char	**room;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if (str[i] == ' ')
-			j++;
-		i++;
-	}
-	if (j > 2)
-		return (0);
-	room = ft_strsplit(str, ' ');
-	i = 0;
-	while (room[i])
-		i++;
-	if (i != 3 || isdash(room[0]) ||
-		!isint(room[1], farm, 'r') || !isint(room[2], farm, 'r'))
-	{
-		ft_free_two_dim_arr(room);
-		return (NULL);
-	}
-	return (room);
 }

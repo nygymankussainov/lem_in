@@ -3,78 +3,83 @@
 /*                                                        :::      ::::::::   */
 /*   validate_links.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nygymankussainov <nygymankussainov@stud    +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/17 10:43:03 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/22 14:59:37 by nygymankuss      ###   ########.fr       */
+/*   Created: 2019/08/24 11:31:58 by vhazelnu          #+#    #+#             */
+/*   Updated: 2019/08/26 13:30:58 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
 
-int		isdash(char *str)
+int		count_dash(char *line)
 {
-	while (*str)
-	{
-		if (*str == '-')
-			return (1);
-		str++;
-	}
-	return (0);
-}
-
-int		isname_exist(char **room, t_farm *farm)
-{
-	char	**name;
 	int		i;
-	int		key;
-	int		j;
 
-	name = ft_strsplit(farm->room_name, '\n');
 	i = 0;
-	key = 0;
-	while (room[i])
+	while (*line)
 	{
-		j = 0;
-		while (name[j])
-			if (!ft_strcmp(room[i], name[j++]))
-				key++;
-		i++;
+		if (*line == '-')
+			i++;
+		line++;
 	}
-	ft_free_two_dim_arr(name);
-	if (key != 2)
+	if (i != 1)
 		return (0);
 	return (1);
 }
 
-char	**validate_links(char *str, t_farm *farm)
+t_link	*create_slink(t_room *room, char *linkname)
 {
-	char	**room;
-	int		i;
-	int		key;
+	t_link	*new;
+	t_link	*tmp;
 
-	i = 0;
-	key = 0;
-	while (str[i])
+	if (room->link)
 	{
-		if (str[i] == '-')
-			key++;
-		i++;
+		tmp = room->link;
+		while (tmp)
+		{
+			if (!ft_strcmp(linkname, tmp->name))
+				return (room->link);
+			tmp = tmp->next;
+		}
+		if (!(new = (t_link *)ft_memalloc(sizeof(t_link))))
+			return (NULL);
+		new->next = room->link;
+		room->link = new;
 	}
-	if (key != 1)
-		return (0);
-	i = 0;
-	room = ft_strsplit(str, '-');
-	while (room[i])
-		i++;
-	if (i != 2 || (room[0] && room[1] && !ft_strcmp(room[0], room[1]))
-		|| !isname_exist(room, farm))
+	else
 	{
-		ft_free_two_dim_arr(room);
-		return (NULL);
+		if (!(room->link = (t_link *)ft_memalloc(sizeof(t_link))))
+			return (NULL);
+		room->link->next = NULL;
 	}
-	farm->link = farm->link ? ft_strjoin(farm->link, "\n", 1, 0) : farm->link;
-	farm->link = farm->link ? ft_strjoin(farm->link, str, 1, 0) : farm->link;
-	farm->link = !farm->link ? ft_strdup(str) : farm->link;
-	return (room);
+	return (room->link);
+}
+
+int		validate_links(t_room **room, t_farm *farm, t_hashcodes *hashcodes)
+{
+	ft_strdel(&farm->line);
+	while (get_next_line(farm->fd, &farm->line) == 1)
+	{
+		if (count_dash(farm->line) && islink(farm->line))
+		{
+			if (!find_and_connect_rooms(farm->line, room, hashcodes))
+				return (0);
+		}
+		else if (farm->line[0] == '#' &&
+			ft_strcmp("##start", farm->line) && ft_strcmp("##end", farm->line))
+		{
+			ft_strdel(&farm->line);
+			continue ;
+		}
+		else if (count_space(farm->line))
+		{
+			ft_strdel(&farm->line);
+			return (1);
+		}
+		else
+			return (0);
+		ft_strdel(&farm->line);
+	}
+	return (1);
 }
