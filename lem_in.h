@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/26 13:52:32 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/26 16:09:14 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ typedef struct				s_farm
 	int						ants;
 	int						room_count;
 	int						link_count;
-	int						isst;
-	int						isend;
-	int						isrec;
+	int						start;
+	int						end;
+	int						recur;
 	int						fd;
 	int						i;
 	char					*line;

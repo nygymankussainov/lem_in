@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/23 17:24:00 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/26 13:19:52 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/26 16:09:51 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ int		ifstartend(t_farm *farm, t_hashcodes **hashcodes,
 	int		tmp;
 
 	tmp = 0;
-	farm->isst = !ft_strcmp("##start", farm->line) ? 1 : farm->isst;
-	farm->isend = !ft_strcmp("##end", farm->line) ? 1 : farm->isend;
+	farm->start = !ft_strcmp("##start", farm->line) ? 1 : farm->start;
+	farm->end = !ft_strcmp("##end", farm->line) ? 1 : farm->end;
 	tmp = farm->room_count;
 	ft_strdel(&farm->line);
-	farm->isrec = 1;
+	farm->recur = 1;
 	validate_rooms(hashcodes, room, farm, coords);
-	farm->isrec = 0;
+	farm->recur = 0;
 	if (tmp >= farm->room_count)
 		return (0);
 	return (1);
@@ -79,23 +79,23 @@ int		validate_rooms(t_hashcodes **hashcodes, t_room **room,
 	while (get_next_line(farm->fd, &farm->line) == 1)
 	{
 		if ((!ft_strcmp("##start", farm->line) ||
-			!ft_strcmp("##end", farm->line)) && !farm->isrec)
+			!ft_strcmp("##end", farm->line)) && !farm->recur)
 		{
 			if (!ifstartend(farm, hashcodes, room, coords))
 				return (0);
 		}
-		else if (farm->line[0] == '#' && !farm->isrec)
+		else if (farm->line[0] == '#' && !farm->recur)
 			farm->i = farm->i;
 		else if (islink(farm->line))
 		{
-			if (!farm->isst || !farm->isend ||
+			if (!farm->start || !farm->end ||
 				!farm->room_count || isduplicate(*coords))
 				return (0);
 			return (1);
 		}
 		else if (!validate_rooms_part2(hashcodes, room, farm, coords))
 			return (0);
-		if (farm->isrec == 1)
+		if (farm->recur == 1)
 			return (1);
 		ft_strdel(&farm->line);
 	}
