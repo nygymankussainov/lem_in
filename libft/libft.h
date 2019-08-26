@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nygymankussainov <nygymankussainov@stud    +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 20:06:51 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/22 14:58:49 by nygymankuss      ###   ########.fr       */
+/*   Updated: 2019/08/25 15:17:02 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# define BUFF_SIZE	58
+# define BUFF_SIZE	32
 
 # include <string.h>
 # include <unistd.h>
@@ -30,15 +30,14 @@ typedef struct			s_list
 	struct s_list		*next;
 }						t_list;
 
-typedef struct			s_gnl_list
+typedef struct			s_gnl
 {
-	int					fd;
-	int					nbytes;
-	char				*str;
-	char				*temp;
-	struct s_gnl_list	*prev;
-	struct s_gnl_list	*next;
-}						t_gnl_list;
+	char				*c;
+	char				buff[BUFF_SIZE + 1];
+	char				*tmp;
+	ssize_t				b;
+	int					endl;
+}						t_gnl;
 
 void					*ft_memset(void *b, int c, size_t len);
 void					ft_bzero(void *s, size_t n);

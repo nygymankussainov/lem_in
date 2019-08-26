@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nygymankussainov <nygymankussainov@stud    +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/15 15:44:57 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/22 15:00:20 by nygymankuss      ###   ########.fr       */
+/*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
+/*   Updated: 2019/08/26 13:52:32 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
-// # include <mlx.h>
+# include <mlx.h>
 # include "./libft/ft_printf/ft_printf.h"
 # include <fcntl.h>
 # include <math.h>
@@ -23,40 +23,47 @@
 # define SIZEY 1200
 # define HALF_W 600
 
-typedef struct s_image		t_image;
-typedef struct s_mlx		t_mlx;
-typedef struct s_room		t_room;
-typedef struct s_link		t_link;
-typedef struct s_farm		t_farm;
-
-typedef struct				s_room
+typedef struct				s_hashcodes
 {
-    int						x;
-    int						y;
-	char					*name;
-    char					status;
-	char					*link;
-	struct s_room			*next;
-}							t_room;
+	int						hash_code;
+	struct s_hashcodes		*next;
+}							t_hashcodes;
+
+typedef struct				s_coords
+{
+	int						x;
+	int						y;
+	struct s_coords			*next;
+}							t_coords;
 
 typedef struct				s_link
 {
-    int						iroom;
-    struct s_link			*next;
+	char					*name;
+	struct s_link			*next;
 }							t_link;
+
+typedef struct				s_room
+{
+	int						x;
+	int						y;
+	char					*name;
+	char					status;
+	t_link					*link;
+	struct s_room			*next;
+}							t_room;
 
 typedef struct				s_farm
 {
 	int						ants;
 	int						room_count;
 	int						link_count;
-	char					*start;
-	char					*end;
-	char					*room_name;
-	char					*output;
-	char					*coords;
-	char					*link;
-	// t_room					*room;
+	int						isst;
+	int						isend;
+	int						isrec;
+	int						fd;
+	int						i;
+	char					*line;
+	char					*name;
 }							t_farm;
 
 typedef struct				s_mlx
@@ -78,13 +85,28 @@ typedef struct				s_image
 	int						color;
 }							t_image;
 
-int							validation(int fd, t_farm *farm, int isrec, char **line);
-char						**validate_links(char *str, t_farm *farm);
-char						**validate_rooms(char *str, t_farm *farm);
-void						ifroomlinks(t_farm *farm, char **room, char c);
-int							isint(char *str, t_farm *farm, char c);
-int							isdash(char *str);
-int							duplicate(t_farm *farm, char **room);
+int							isint(char *str, char c);
 void						hash_table(t_farm *farm, t_room **room);
+int							hash_func(char *name);
+int							validation(t_room **room, t_farm *farm,
+	t_hashcodes **hashcodes);
+int							validate_ants(t_farm *farm);
+int							validate_rooms(t_hashcodes **hashcodes,
+	t_room **room, t_farm *farm, t_coords **coords);
+int							validate_coords(char *line);
+int							validate_links(t_room **room,
+	t_farm *farm, t_hashcodes *hashcodes);
+int							write_data_in_sroom(t_farm *farm,
+	t_room **room, t_hashcodes **hashcodes, t_coords **coords);
+void						write_hashcode_in_struct(int hash,
+	t_hashcodes **hashcodes);
+int							find_and_connect_rooms(char *line,
+	t_room **room, t_hashcodes *hashcodes);
+void						free_coords(t_coords **coords);
+int							islink(char *line);
+int							isduplicate(t_coords *coords);
+int							is_room_exist(int hash, t_hashcodes *hashcodes);
+int							count_space(char *line);
+t_link						*create_slink(t_room *room, char *linkname);
 
 #endif

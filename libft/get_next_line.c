@@ -6,112 +6,34 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 11:50:12 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/16 14:32:14 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/25 15:18:42 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
-static t_gnl_list	*search_fd(t_gnl_list ***list, int fd)
+int		get_next_line(const int fd, char **line)
 {
-	t_gnl_list	*temp;
+	static t_gnl	v;
 
-	temp = **list;
-	while (temp)
-	{
-		if (temp->fd == fd)
-		{
-			**list = temp;
-			return (**list);
-		}
-		temp = temp->next;
-	}
-	while (**list)
-	{
-		if ((**list)->fd == fd)
-			return (**list);
-		if (!((**list)->prev))
-			return (NULL);
-		**list = (**list)->prev;
-	}
-	return (NULL);
-}
-
-static t_gnl_list	*create_list(t_gnl_list **list, int fd)
-{
-	t_gnl_list	*new;
-
-	if (!(search_fd(&list, fd)))
-	{
-		if (!(new = (t_gnl_list *)ft_memalloc(sizeof(t_gnl_list))))
-		{
-			free(new);
-			new = NULL;
-			return (NULL);
-		}
-		new->fd = fd;
-		new->next = NULL;
-		if (*list)
-		{
-			new->next = *list;
-			(*list)->prev = new;
-		}
-		new->prev = NULL;
-		*list = new;
-	}
-	return (*list);
-}
-
-static int			isnewline(t_gnl_list **list, char ***line)
-{
-	size_t	i;
-
-	if (ft_strchr((*list)->str, '\n'))
-	{
-		(*list)->temp = (*list)->str;
-		i = ft_strlen((*list)->str) - ft_strlen(ft_strchr((*list)->str, '\n'));
-		**line = ft_strsub((*list)->temp, 0, i);
-		if ((*list)->str[i + 1])
-			(*list)->str = ft_strdup((*list)->temp + (i + 1));
-		else
-			(*list)->str = NULL;
-		free((*list)->temp);
-		(*list)->temp = NULL;
-		return (1);
-	}
-	return (0);
-}
-
-int					nonewline(t_gnl_list **list, char ***line)
-{
-	if (isnewline(list, line) == 1)
-		return (1);
-	**line = ft_strdup((*list)->str);
-	free((*list)->str);
-	(*list)->str = NULL;
-	return (1);
-}
-
-int					get_next_line(const int fd, char **line)
-{
-	static t_gnl_list	*list;
-	char				buf[BUFF_SIZE + 1];
-
-	if (fd < 0 || !line || read(fd, buf, 0) < 0 ||
-			!(list = create_list(&list, fd)))
+	v.b = 0;
+	if (fd < 0 || (!v.c && !(v.c = ft_strnew(1))) || !line)
 		return (-1);
-	while ((list->nbytes = read(fd, buf, BUFF_SIZE)) > 0)
+	while (!ft_strchr(v.c, '\n') && (v.b = read(fd, v.buff, BUFF_SIZE)) > 0)
 	{
-		buf[list->nbytes] = '\0';
-		list->temp = list->str;
-		list->str = ft_strjoin(list->temp, buf, 1, 0);
-		if (isnewline(&list, &line) == 1)
-			return (1);
+		v.buff[v.b] = '\0';
+		v.tmp = v.c;
+		v.c = ft_strjoin(v.c, v.buff, 0, 0);
+		ft_strdel(&v.tmp);
 	}
-	if (list->str)
-		return (nonewline(&list, &line));
+	if (v.b == -1 || !*(v.tmp = v.c))
+		return (v.b == -1 ? -1 : 0);
+	if ((v.endl = (ft_strchr(v.c, '\n') > 0)))
+		*line = ft_strsub(v.c, 0, ft_strchr(v.c, '\n') - v.c);
 	else
-		free(list);
-	return (0);
+		*line = ft_strdup(v.c);
+	v.c = ft_strsub(v.c, (unsigned int)(ft_strlen(*line) + v.endl),
+			(size_t)(ft_strlen(v.c) - (ft_strlen(*line) + v.endl)));
+	ft_strdel(&v.tmp);
+	return (!(!v.c && !ft_strlen(*line)));
 }
