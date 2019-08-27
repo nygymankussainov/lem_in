@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/23 11:48:14 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/26 13:27:49 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/27 14:54:15 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@ int		validation(t_room **room, t_farm *farm, t_hashcodes **hashcodes)
 	t_coords	*coords;
 
 	coords = NULL;
-	if (!validate_ants(farm))
-		return (0);
-	if (!validate_rooms(hashcodes, room, farm, &coords) ||
+	if (!validate_ants(farm) ||
+		!validate_rooms(hashcodes, room, farm, &coords) ||
 		!find_and_connect_rooms(farm->line, room, *hashcodes) ||
 		!validate_links(room, farm, *hashcodes))
 	{

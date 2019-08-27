@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/26 16:09:14 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/27 16:05:26 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define SIZEX 1200
 # define SIZEY 1200
 # define HALF_W 600
+# define H_SIZE 100136400
 
 typedef struct				s_hashcodes
 {

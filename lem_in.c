@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/26 12:33:53 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/26 20:04:28 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int		main(int argc, char **argv)
 	if (argc == 2)
 	{
 		if (!(farm = (t_farm *)ft_memalloc(sizeof(t_farm))) ||
-			!(room = (t_room **)malloc(sizeof(t_room) * 100136400)))
+			!(room = (t_room **)malloc(sizeof(t_room) * H_SIZE)))
 			exit(0);
 		farm->fd = open(argv[1], O_RDONLY);
 		if (farm->fd < 0)

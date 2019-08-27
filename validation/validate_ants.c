@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 12:43:45 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/26 12:44:30 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/27 14:54:23 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ int		validate_ants(t_farm *farm)
 			continue ;
 		}
 		else
-		{
-			ft_strdel(&farm->line);
 			return (0);
-		}
 		ft_strdel(&farm->line);
 	}
 	return (1);
