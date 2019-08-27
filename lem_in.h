@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/27 16:05:26 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/27 18:04:08 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct				s_link
 
 typedef struct				s_room
 {
+	int						antnbr;
 	int						x;
 	int						y;
 	char					*name;
@@ -65,6 +66,8 @@ typedef struct				s_farm
 	int						i;
 	char					*line;
 	char					*name;
+	t_room					**room;
+	t_hashcodes				*hashcodes;
 }							t_farm;
 
 typedef struct				s_mlx
