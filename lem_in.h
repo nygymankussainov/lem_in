@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/29 18:34:48 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/29 20:07:47 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,7 @@
 
 typedef struct s_link		t_link;
 typedef struct s_room		t_room;
-// typedef struct s_qelem		t_qelem;
 typedef struct s_queue		t_queue;
-
-// struct						s_qelem
-// {
-// 	t_room					*room;
-// 	struct s_qelem			*next;
-// };
 
 struct						s_queue
 {
