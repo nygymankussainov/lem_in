@@ -6,34 +6,34 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/26 20:04:28 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/29 16:04:57 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	mark_room(int fd, t_room **room, char **line, char c)
+void	mark_room(t_farm *farm, t_hash_tab *h_tab, char c)
 {
 	int		i;
 	char	*name;
+	t_room	*tmp;
 
 	i = 0;
-	ft_strdel(line);
-	get_next_line(fd, line);
-	while ((*line)[i] != ' ')
+	ft_strdel(&farm->line);
+	get_next_line(farm->fd, &farm->line);
+	while (farm->line[i] != ' ')
 		i++;
-	name = ft_strndup(*line, i);
-	i = hash_func(name);
-	if (room[i]->next)
-	{
-		while (room[i])
+	name = ft_strndup(farm->line, i);
+	i = hash_func(name, farm->size);
+	tmp = h_tab[i].room;
+	if (tmp)
+		while (tmp)
 		{
-			if (!ft_strcmp(room[i]->name, name))
+			if (!ft_strcmp(tmp->name, name))
 				break ;
-			room[i] = room[i]->next;
+			tmp = tmp->next;
 		}
-	}
-	room[i]->status = c;
+	tmp->status = c;
 	ft_strdel(&name);
 	if (c == 's')
 		ft_printf("##start\n");
@@ -69,7 +69,8 @@ int		isroom(char *line)
 	return (sp != 2 ? 0 : 1);
 }
 
-void	free_all_structs(t_hashcodes *hashcodes, t_room **room, t_farm *farm)
+void	free_all_structs(t_hashcodes *hashcodes,
+	t_hash_tab *h_tab, t_farm *farm)
 {
 	t_link		*tmp;
 	t_hashcodes	*tmp1;
@@ -78,19 +79,18 @@ void	free_all_structs(t_hashcodes *hashcodes, t_room **room, t_farm *farm)
 	while (hashcodes)
 	{
 		tmp1 = hashcodes->next;
-		while (room[hashcodes->hash_code])
+		while (h_tab[hashcodes->hash_code].room)
 		{
-			tmp2 = room[hashcodes->hash_code]->next;
-			while (room[hashcodes->hash_code]->link)
+			tmp2 = h_tab[hashcodes->hash_code].room->next;
+			while (h_tab[hashcodes->hash_code].room->link)
 			{
-				tmp = room[hashcodes->hash_code]->link->next;
-				ft_strdel(&room[hashcodes->hash_code]->link->name);
-				free(room[hashcodes->hash_code]->link);
-				room[hashcodes->hash_code]->link = tmp;
+				tmp = h_tab[hashcodes->hash_code].room->link->next;
+				free(h_tab[hashcodes->hash_code].room->link);
+				h_tab[hashcodes->hash_code].room->link = tmp;
 			}
-			ft_strdel(&room[hashcodes->hash_code]->name);
-			free(room[hashcodes->hash_code]);
-			room[hashcodes->hash_code] = tmp2;
+			ft_strdel(&h_tab[hashcodes->hash_code].room->name);
+			free(h_tab[hashcodes->hash_code].room);
+			h_tab[hashcodes->hash_code].room = tmp2;
 		}
 		free(hashcodes);
 		hashcodes = tmp1;
@@ -98,7 +98,7 @@ void	free_all_structs(t_hashcodes *hashcodes, t_room **room, t_farm *farm)
 	free(farm);
 }
 
-void	print_valid_data(t_farm *farm, t_room **room, char *argv)
+void	print_valid_data(t_farm *farm, t_hash_tab *h_tab, char *argv)
 {
 	int			link;
 
@@ -107,9 +107,9 @@ void	print_valid_data(t_farm *farm, t_room **room, char *argv)
 	while (get_next_line(farm->fd, &farm->line) == 1)
 	{
 		if (!ft_strcmp("##start", farm->line))
-			mark_room(farm->fd, room, &farm->line, 's');
+			mark_room(farm, h_tab, 's');
 		else if (!ft_strcmp("##end", farm->line))
-			mark_room(farm->fd, room, &farm->line, 'e');
+			mark_room(farm, h_tab, 'e');
 		else if (farm->line[0] == '#' && farm->line[1] == '#')
 		{
 			ft_strdel(&farm->line);
@@ -130,28 +130,26 @@ void	print_valid_data(t_farm *farm, t_room **room, char *argv)
 int		main(int argc, char **argv)
 {
 	t_farm		*farm;
-	t_room		**room;
+	t_hash_tab	*h_tab;
 	t_hashcodes	*hashcodes;
 
 	hashcodes = NULL;
-	if (argc == 2)
+	if ((farm = (t_farm *)ft_memalloc(sizeof(t_farm))) && argc == 2
+		&& (farm->size = count_room(argv[1])))
 	{
-		if (!(farm = (t_farm *)ft_memalloc(sizeof(t_farm))) ||
-			!(room = (t_room **)malloc(sizeof(t_room) * H_SIZE)))
+		if (!(h_tab = (t_hash_tab *)ft_memalloc(sizeof(t_hash_tab )
+			* (farm->size * 4))))
 			exit(0);
 		farm->fd = open(argv[1], O_RDONLY);
-		if (farm->fd < 0)
-		{
-			write(2, "ERROR\n", 6);
-			exit(0);
-		}
-		if (validation(room, farm, &hashcodes))
-			print_valid_data(farm, room, argv[1]);
+		if (validation(h_tab, farm, &hashcodes))
+			print_valid_data(farm, h_tab, argv[1]);
 		else
 			write(2, "ERROR\n", 6);
-		free_all_structs(hashcodes, room, farm);
+		free_all_structs(hashcodes, h_tab, farm);
 		exit(1);
 	}
+	if (!farm->size)
+		free(farm);
 	write(2, "ERROR\n", 6);
 	return (0);
 }
