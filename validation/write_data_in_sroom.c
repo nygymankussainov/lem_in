@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/23 18:03:57 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/26 13:21:49 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/29 15:49:08 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,44 +54,36 @@ int		write_coords_in_struct(char *line, t_coords **coords, int i)
 	return (1);
 }
 
-int		is_room_exist(int hash, t_hashcodes *hashcodes)
+int		is_collision_and_duplicate(t_hash_tab *h_tab, t_coords *coords,
+	t_farm *farm, t_hashcodes **hashcodes)
 {
-	while (hashcodes)
-	{
-		if (hash == hashcodes->hash_code)
-			return (1);
-		hashcodes = hashcodes->next;
-	}
-	return (0);
-}
+	int			hash;
+	t_room		*tmp;
 
-int		is_collision_and_duplicate(t_room **room, t_coords *coords,
-	char *name, t_hashcodes **hashcodes)
-{
-	int	hash;
-
-	hash = hash_func(name);
-	if (is_room_exist(hash, *hashcodes))
-	{
-		while (room[hash])
+	hash = hash_func(farm->name, farm->size);
+	tmp = h_tab[hash].room;
+	if (tmp)
+		while (tmp)
 		{
-			if (!ft_strcmp(room[hash]->name, name))
+			if (!ft_strcmp(tmp->name, farm->name))
 				return (0);
-			room[hash] = room[hash]->next;
+			tmp = tmp->next;
 		}
-	}
-	if (!(room[hash] = (t_room *)ft_memalloc(sizeof(t_room))))
+	if (!(tmp = (t_room *)ft_memalloc(sizeof(t_room))))
 		return (0);
-	room[hash]->name = ft_strdup(name);
-	room[hash]->x = coords->x;
-	room[hash]->y = coords->y;
-	room[hash]->next = NULL;
-	room[hash]->link = NULL;
+	tmp->name = ft_strdup(farm->name);
+	tmp->bfs_lvl = 0;
+	tmp->weight = 1;
+	tmp->x = coords->x;
+	tmp->y = coords->y;
+	tmp->next = h_tab[hash].room;
+	tmp->link = NULL;
+	h_tab[hash].room = tmp;
 	write_hashcode_in_struct(hash, hashcodes);
 	return (1);
 }
 
-int		write_data_in_sroom(t_farm *farm, t_room **room,
+int		write_data_in_sroom(t_farm *farm, t_hash_tab *h_tab,
 	t_hashcodes **hashcodes, t_coords **coords)
 {
 	while (farm->line[farm->i] != ' ')
@@ -102,7 +94,7 @@ int		write_data_in_sroom(t_farm *farm, t_room **room,
 		return (0);
 	}
 	farm->name = ft_strndup(farm->line, farm->i);
-	if (!is_collision_and_duplicate(room, *coords, farm->name, hashcodes))
+	if (!is_collision_and_duplicate(h_tab, *coords, farm, hashcodes))
 	{
 		free_coords(coords);
 		ft_strdel(&farm->name);

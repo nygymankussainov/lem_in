@@ -6,18 +6,46 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:40:48 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/27 16:04:58 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/29 15:15:00 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
+int		count_room(char *argv)
+{
+	int		fd;
+	int		size;
+	char	*line;
+
+	fd = open(argv, O_RDONLY);
+	size = 0;
+	if (fd <= 0)
+		return (0);
+	while (get_next_line(fd, &line) == 1)
+	{
+		if (isroom(line))
+			size++;
+		ft_strdel(&line);
+	}
+	close(fd);
+	return (size);
+}
+
 void	write_hashcode_in_struct(int hash, t_hashcodes **hashcodes)
 {
+	t_hashcodes	*tmp;
 	t_hashcodes	*new;
 
+	tmp = *hashcodes;
 	if (*hashcodes)
 	{
+		while (tmp)
+		{
+			if (hash == tmp->hash_code)
+				return ;
+			tmp = tmp->next;
+		}
 		if (!(new = (t_hashcodes *)ft_memalloc(sizeof(t_hashcodes))))
 			return ;
 		new->next = *hashcodes;
@@ -33,16 +61,14 @@ void	write_hashcode_in_struct(int hash, t_hashcodes **hashcodes)
 	}
 }
 
-int		hash_func(char *name)
+int		hash_func(char *name, int size)
 {
 	int		i;
-	int		g;
 	int		hash;
 
-	g = 28;
 	hash = 0;
 	i = 0;
-	while (name[i] && i != 5)
-		hash = hash * g + name[i++];
-	return (hash);
+	while (name[i])
+		hash += name[i++];
+	return (hash % (size * 4));
 }
