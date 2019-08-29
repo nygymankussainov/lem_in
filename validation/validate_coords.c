@@ -6,11 +6,29 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:14:26 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/29 16:45:30 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/29 18:42:21 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
+
+int		isduplicate(t_coords *coords)
+{
+	t_coords	*tmp;
+
+	while (coords->next)
+	{
+		tmp = coords->next;
+		while (tmp)
+		{
+			if (coords->x == tmp->x && coords->y == tmp->y)
+				return (1);
+			tmp = tmp->next;
+		}
+		coords = coords->next;
+	}
+	return (0);
+}
 
 int		count_space(char *line)
 {

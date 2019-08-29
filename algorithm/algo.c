@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 15:10:05 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/29 16:18:10 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/08/29 17:26:46 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ void	ft_qinsert(t_queue *q, t_room *room)
 	t_qelem		qe;
 	t_qelem		*prev;
 
-	if (room == NULL)
-		exit(0);
 	qe.room = room;
 	qe.next = NULL;
 	if (q->end == NULL && q->begin == NULL)

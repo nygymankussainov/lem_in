@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:30:36 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/29 16:45:27 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/29 19:47:35 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ t_room	*find_room(char *name, t_hash_tab *h_tab, int size)
 			tmp = tmp->next;
 		}
 	}
-	ft_strdel(&name);
 	return (NULL);
 }
 
@@ -120,7 +119,11 @@ int		find_and_connect_rooms(char *line, t_hash_tab *h_tab, int size)
 	{
 		if (!(room1 = find_room(name2, h_tab, size)) ||
 			!(room2 = find_room(name1, h_tab, size)))
+		{
+			ft_strdel(&name1);
+			ft_strdel(&name2);
 			return (0);
+		}
 		connect_rooms(room1, room2);
 	}
 	return (i);

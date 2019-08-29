@@ -18,28 +18,10 @@ room11 13 13
 room12 14 14
 room13 15 15
 room14 16 16
-start-end
-room1-room2
+start-room1
+start-room2
 room1-room3
-room1-room4
-room1-room5
-room1-room6
-room1-room7
-room1-room8
-room1-room9
-room1-room10
-room1-room11
-room1-room12
-room2-room3
-room2-room3
-room2-room4
-##asdsadas
-room2-room5
-room2-room6
-room2-room7
-room2-room8
-room2-room9
-room2-room10
-room2-room11
-room2-room12
+room1-room2
+room3-end
+room2-end
 #asdasd
