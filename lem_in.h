@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/29 16:47:59 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/29 16:57:40 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct				s_coords
 	struct s_coords			*next;
 }							t_coords;
 
-typedef struct				s_room
+struct						s_room
 {
 	int						antnbr;
 	int						x;
@@ -58,13 +58,13 @@ typedef struct				s_room
 	char					status;
 	t_link					*link;
 	struct s_room			*next;
-}							t_room;
+};
 
-typedef struct				s_link
+struct						s_link
 {
 	t_room					*room;
 	struct s_link			*next;
-}							t_link;
+};
 
 typedef struct				s_hash_tab
 {
@@ -112,8 +112,7 @@ int							count_space(char *line);
 t_link						*create_slink(t_room *room, char *linkname);
 int							count_room(char *argv);
 int							isroom(char *line);
-
-
-void	print_links(t_hashcodes *hashcodes, t_hash_tab *h_tab);
+void						print_links(t_hashcodes *hashcodes,
+	t_hash_tab *h_tab);
 
 #endif
