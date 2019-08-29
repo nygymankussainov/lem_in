@@ -5,15 +5,8 @@
 **.idea
 **.dSYM
 .vscode
-main.c
 **.gch
 a.out
-push_swap
-checker
-pft/
-42_push_swap_checker
-test.sh
-push_swap_checker
 42_lem-in_tools
 lem-in
 data
