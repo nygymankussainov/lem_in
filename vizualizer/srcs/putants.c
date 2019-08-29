@@ -6,11 +6,11 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 00:54:20 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/25 14:06:27 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/08/28 14:11:50 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "visual.h"
 
 void		ft_linedirtop_a(t_line line, t_sdl *sdl, t_ant *ant, int step)
 {
@@ -73,8 +73,8 @@ void		ft_move_ant(t_sdl *sdl, t_farm *farm, t_ant *ant, int step)
 
 	line.p0.x = ant->x;
 	line.p0.y = ant->y;
-	line.p1.x = farm->room[ant->dstroom].x;
-	line.p1.y = farm->room[ant->dstroom].y;
+	line.p1.x = ant->dstroom->x;
+	line.p1.y = ant->dstroom->y;
 	line.ydir = line.p1.y - line.p0.y;
 	line.xdir = line.p1.x - line.p0.x;
 	line.k = (float)(line.ydir) / (float)(line.xdir);
@@ -91,5 +91,5 @@ void		ft_move_ant(t_sdl *sdl, t_farm *farm, t_ant *ant, int step)
 	}
 	else
 		ft_linedirlow_a(line, sdl, ant, step);
-	farm->room[ant->srcroom].antnbr = 0;
+	ant->srcroom->antnbr = 0;
 }

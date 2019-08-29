@@ -6,11 +6,11 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 15:28:58 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/25 14:12:31 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/08/28 13:25:20 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "visual.h"
 
 void	ft_draw_circle(t_sdl *sdl, t_ant ant)
 {
@@ -36,7 +36,7 @@ void	ft_draw_circle(t_sdl *sdl, t_ant ant)
 	SDL_SetRenderDrawColor(sdl->ren, 0x00, 0x00, 0x00, 0x00);
 }
 
-void	ft_draw_vertex(t_sdl *sdl, t_room room, int room_count)
+void	ft_draw_vertex(t_sdl *sdl, const t_room *room, int room_count)
 {
 	int		i;
 	int		j;
@@ -51,57 +51,69 @@ void	ft_draw_vertex(t_sdl *sdl, t_room room, int room_count)
 		j = -r - 1;
 		while (++j < r)
 		{
-			x = abs(j - room.x);
-			y = abs(i - room.y);
-			if ((x - room.x) * (x - room.x)
-			+ (y - room.y) * (y - room.y) <= r * r)
+			x = abs(j - room->x);
+			y = abs(i - room->y);
+			if ((x - room->x) * (x - room->x)
+			+ (y - room->y) * (y - room->y) <= r * r)
 				SDL_RenderDrawPoint(sdl->ren, x, y);
 		}
 	}
 	SDL_SetRenderDrawColor(sdl->ren, 0x00, 0x00, 0x00, 0x00);
 }
 
-void	ft_draw_link(t_sdl *sdl, t_farm farm, t_room room)
+void	ft_draw_link(t_sdl *sdl, const t_farm *farm, const t_room *room) // тут остановился
 {
 	int		*coords;
+	t_room	*hroom;
 
 	if (!(coords = (int *)malloc(4 * 4)))
 		exit(0);
-	coords[0] = room.x;
-	coords[1] = room.y;
-	while (room.link)
+	coords[0] = room->x;
+	coords[1] = room->y;
+	hroom = room->link->room;
+	while (hroom)
 	{
-		coords[2] = farm.room[room.link->iroom].x;
-		coords[3] = farm.room[room.link->iroom].y;
-		room.link = room.link->next;
+		coords[2] = hroom->link->room->x;
+		coords[3] = hroom->link->room->y;
+		hroom->link = hroom->link->next;
 		ft_bresenham(sdl, coords);
 	}
 	free(coords);
 }
 
-void	ft_creategraph(t_farm farm, t_sdl *sdl)
+void	ft_creategraph(t_sdl *sdl)
 {
-	t_map	map;
-	int		i;
+	t_room		*room;
+	t_hash_tab	*ht;
+	t_hashcodes	*hc;
 
-	i = -1;
-	map = ft_initmap(farm, ft_find_maxcoords(farm));
-	while (++i < farm.room_count)
+	hc = sdl->farm->hashcodes;
+	ht = sdl->farm->h_tab;
+	while (hc)
 	{
-		farm.room[i].x = SIZEY / 2
-		- (SIZEY / map.maxdif) * (map.xcenter - farm.room[i].x);
-		farm.room[i].y = SIZEY / 2
-		- (SIZEY / map.maxdif) * (map.ycenter - farm.room[i].y);
-		if (i == farm.start)
-			SDL_SetRenderDrawColor(sdl->ren, 0x67, 0x9B, 0x00, 0x00);
-		else if (i == farm.end)
-			SDL_SetRenderDrawColor(sdl->ren, 0xB7, 0x2E, 0x3E, 0x00);
-		else
-			SDL_SetRenderDrawColor(sdl->ren, 0xFF, 0xFF, 0xFF, 0x00);
-		ft_draw_vertex(sdl, farm.room[i], farm.room_count);
+		room = ht[hc->hash_code].room;
+		while (room)
+		{
+			if (hc->hash_code == sdl->farm->start)
+				SDL_SetRenderDrawColor(sdl->ren, 0x67, 0x9B, 0x00, 0x00);
+			else if (hc->hash_code == sdl->farm->end)
+				SDL_SetRenderDrawColor(sdl->ren, 0xB7, 0x2E, 0x3E, 0x00);
+			else
+				SDL_SetRenderDrawColor(sdl->ren, 0xFF, 0xFF, 0xFF, 0x00);
+			ft_draw_vertex(sdl, ht[hc->hash_code].room, sdl->farm->room_count);
+			room = room->next;
+		}
+		hc = hc->next;
 	}
-	i = -1;
-	while (++i < farm.room_count)
-		if (i != farm.end)
-			ft_draw_link(sdl, farm, farm.room[i]);
+	hc = sdl->farm->hashcodes;
+	while (hc)
+	{
+		room = ht[hc->hash_code].room;
+		while (room)
+		{
+			if (hc->hash_code != sdl->farm->end)
+				ft_draw_link(sdl, sdl->farm, ht[hc->hash_code].room);
+			hc = hc->next;
+		}
+	}
 }
