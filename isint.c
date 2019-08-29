@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:33:43 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/29 16:45:24 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/15 21:21:31 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "lem_in.h"
 
 int		isint_limit(char *str)
 {
@@ -29,51 +29,40 @@ int		isint_limit(char *str)
 	return (1);
 }
 
-int		isonlynum(char *str, char c)
+int		isonlynum(char *str)
 {
 	int		i;
 
 	i = 0;
-	if (str[0] == '-' || (str[0] == '0' && !str[1] && c == 'a'))
+	if (str[0] == '-')
 		return (0);
 	while (str[i])
 	{
-		if (c == 'r' && ft_isascii(str[i]) &&
-			!ft_isdigit(str[i]) && !iswhitesp(str[i]))
-			return (0);
-		else if (c == 'a' && ft_isascii(str[i]) &&
-			!ft_isdigit(str[i]) && iswhitesp(str[i]))
+		if (ft_isascii(str[i]) && !ft_isdigit(str[i]) && !iswhitesp(str[i]))
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-int		isint(char *str, char c)
+int		isint(char *str, t_farm *farm, char c)
 {
-	int		len;
+	int		i;
 	int		sign;
 
-	sign = str[0] == '-' && c == 'r' ? -1 : 0;
+	i = 0;
+	sign = 0;
 	if (str[0] == '+' || (str[0] == '-' && c == 'r'))
 		str++;
-	if (!str[0])
+	if (!str[0] || !isonlynum(str))
 		return (0);
 	if (str[0] == '0' && str[1])
 		while (*str == '0' && *str)
 			str++;
-	if (!isonlynum(str, c))
+	i = ft_strlen(str);
+	if (i > 10)
 		return (0);
-	str -= sign == -1 ? 1 : 0;
-	*str = sign == -1 && *str != '-' ? '-' : *str;
-	len = ft_strlen(str);
-	if (len > 10 && !sign)
-		return (0);
-	else if (len == 10 || (len == 11 && sign))
-	{
-		if (!isint_limit(str))
-			return (0);
-		*str = *(str - 1) == '0' && *str == '-' ? '0' : *str;
-	}
+	else if (i == 10)
+		return(isint_limit(str));
 	return (1);
 }
