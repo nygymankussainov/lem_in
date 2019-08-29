@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/23 17:24:00 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/29 15:47:49 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/29 18:57:03 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,42 +23,48 @@ int		islink(char *line)
 	return (0);
 }
 
-int		isduplicate(t_coords *coords)
+void	mark_room(t_farm *farm, t_hash_tab *h_tab, char *name, char c)
 {
-	t_coords	*tmp;
+	t_room	*room;
 
-	while (coords->next)
+	farm->start = c == 's' ? hash_func(name, farm->size) : farm->start;
+	farm->end = c == 'e' ? hash_func(name, farm->size) : farm->end;
+	room = c == 's' ? h_tab[farm->start].room : h_tab[farm->end].room;
+	while (room)
 	{
-		tmp = coords->next;
-		while (tmp)
+		if (!ft_strcmp(room->name, name))
 		{
-			if (coords->x == tmp->x && coords->y == tmp->y)
-				return (1);
-			tmp = tmp->next;
+			room->status = c;
+			return ;
 		}
-		coords = coords->next;
+		room = room->next;
 	}
-	return (0);
 }
 
 int		ifstartend(t_farm *farm, t_hashcodes **hashcodes,
 	t_hash_tab *h_tab, t_coords **coords)
 {
 	int		tmp;
+	char	*name;
+	char	c;
 
-	tmp = 0;
 	if ((!ft_strcmp("##start", farm->line) && farm->start) ||
 		(!ft_strcmp("##end", farm->line) && farm->end))
 		return (0);
-	farm->start = !ft_strcmp("##start", farm->line) ? 1 : farm->start;
-	farm->end = !ft_strcmp("##end", farm->line) ? 1 : farm->end;
 	tmp = farm->room_count;
+	c = !ft_strcmp("##start", farm->line) ? 's' : 'e';
 	ft_strdel(&farm->line);
 	farm->recur = 1;
 	validate_rooms(hashcodes, h_tab, farm, coords);
-	farm->recur = 0;
 	if (tmp >= farm->room_count)
 		return (0);
+	tmp = 0;
+	while (farm->line[tmp] != ' ')
+		tmp++;
+	name = ft_strndup(farm->line, tmp);
+	farm->recur = 0;
+	mark_room(farm, h_tab, name, c);
+	ft_strdel(&name);
 	return (1);
 }
 

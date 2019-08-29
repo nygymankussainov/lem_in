@@ -6,40 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/29 16:04:57 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/29 18:59:25 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-void	mark_room(t_farm *farm, t_hash_tab *h_tab, char c)
-{
-	int		i;
-	char	*name;
-	t_room	*tmp;
-
-	i = 0;
-	ft_strdel(&farm->line);
-	get_next_line(farm->fd, &farm->line);
-	while (farm->line[i] != ' ')
-		i++;
-	name = ft_strndup(farm->line, i);
-	i = hash_func(name, farm->size);
-	tmp = h_tab[i].room;
-	if (tmp)
-		while (tmp)
-		{
-			if (!ft_strcmp(tmp->name, name))
-				break ;
-			tmp = tmp->next;
-		}
-	tmp->status = c;
-	ft_strdel(&name);
-	if (c == 's')
-		ft_printf("##start\n");
-	else
-		ft_printf("##end\n");
-}
 
 int		isroom(char *line)
 {
@@ -98,7 +69,7 @@ void	free_all_structs(t_hashcodes *hashcodes,
 	free(farm);
 }
 
-void	print_valid_data(t_farm *farm, t_hash_tab *h_tab, char *argv)
+void	print_valid_data(t_farm *farm, char *argv)
 {
 	int			link;
 
@@ -106,11 +77,8 @@ void	print_valid_data(t_farm *farm, t_hash_tab *h_tab, char *argv)
 	farm->fd = open(argv, O_RDONLY);
 	while (get_next_line(farm->fd, &farm->line) == 1)
 	{
-		if (!ft_strcmp("##start", farm->line))
-			mark_room(farm, h_tab, 's');
-		else if (!ft_strcmp("##end", farm->line))
-			mark_room(farm, h_tab, 'e');
-		else if (farm->line[0] == '#' && farm->line[1] == '#')
+		if (ft_strcmp("##start", farm->line) && ft_strcmp("##end", farm->line)
+			&& farm->line[0] == '#' && farm->line[1] == '#')
 		{
 			ft_strdel(&farm->line);
 			continue ;
@@ -141,8 +109,8 @@ int		main(int argc, char **argv)
 			* (farm->size * 4))))
 			exit(0);
 		farm->fd = open(argv[1], O_RDONLY);
-		if (validation(h_tab, farm, &hashcodes))
-			print_valid_data(farm, h_tab, argv[1]);
+		if (validation(h_tab, farm, &hashcodes) && bfs(farm))
+			print_valid_data(farm, argv[1]);
 		else
 			write(2, "ERROR\n", 6);
 		free_all_structs(hashcodes, h_tab, farm);
