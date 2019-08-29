@@ -6,11 +6,11 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/08/26 13:32:45 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/08/28 14:17:07 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = lem_in
+NAME = lem-in
 
 LIB = libft/ft_printf
 LIB_A = libft/libft.a $(LIB)/libftprintf.a
