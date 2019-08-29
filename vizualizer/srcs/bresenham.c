@@ -6,11 +6,11 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 18:33:57 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/25 23:15:23 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/08/27 17:06:04 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "visual.h"
 
 void		ft_swap_floats(float *a, float *b)
 {
