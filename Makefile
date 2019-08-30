@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
+#    By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/08/29 16:04:28 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/08/30 15:46:27 by hfrankly         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,13 @@ ARCHIVE = lem-in.a
 NAME = lem-in
 
 LIB = libft/ft_printf
-LIB_A = libft/libft.a $(LIB)/libftprintf.a
+LIB_A = libft/libft.a $(LIB)/libftprintf.a 
 
 INCLUDES = -I ./libft -I ./libft/ft_printf/ -I ./includes
 
 SRC = lem_in.c hash_func.c validation/validate_coords.c validation/find_and_connect_rooms.c \
 		validation/isint.c validation/validation.c validation/validate_rooms.c validation/write_data_in_sroom.c validation/validate_links.c validation/validate_ants.c \
-		helpful_func.c
+		helpful_func.c validation/work_with_data.c\
 
 OBJ = $(SRC:.c=.o)
 
@@ -40,7 +40,8 @@ $(ARCHIVE): $(OBJ)
 	@gcc -Wall -Wextra -Werror -c $<
 
 $(NAME): $(OBJ)
-	@gcc -Wall -Wextra -Werror -o $(NAME) $(ARCHIVE) $(LIB_A) -g
+	make -C ./vizualizer
+	@gcc -Wall -Wextra -Werror -o $(NAME) $(ARCHIVE) $(LIB_A) $(SDL) -g
 
 clean:
 	@make clean -C $(LIB)

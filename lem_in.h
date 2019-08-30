@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/29 16:47:59 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/30 16:30:10 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
+# include "vizualizer/includes/visual.h"
 # include "./libft/ft_printf/ft_printf.h"
 # include <fcntl.h>
 # include <stdio.h>
@@ -88,6 +89,10 @@ typedef struct				s_farm
 	t_hashcodes				*hashcodes;
 }							t_farm;
 
+void						free_all_structs(t_hashcodes *hashcodes,
+	t_hash_tab *h_tab, t_farm *farm);
+int							isroom(char *line);
+void						print_valid_data(t_farm *farm, t_hash_tab *h_tab, char *argv);
 int							isint(char *str, char c);
 void						hash_table(t_farm *farm, t_hash_tab *h_tab);
 int							hash_func(char *name, int size);

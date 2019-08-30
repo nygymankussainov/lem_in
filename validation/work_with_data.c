@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.c                                           :+:      :+:    :+:   */
+/*   work_with_data.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/30 15:47:29 by hfrankly         ###   ########.fr       */
+/*   Created: 2019/08/30 15:03:04 by hfrankly          #+#    #+#             */
+/*   Updated: 2019/08/30 15:33:17 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
- #include "lem_in.h"
+#include "../lem_in.h"
 
 void	mark_room(t_farm *farm, t_hash_tab *h_tab, char c)
 {
@@ -125,33 +125,4 @@ void	print_valid_data(t_farm *farm, t_hash_tab *h_tab, char *argv)
 		ft_printf("%s\n", farm->line);
 		ft_strdel(&farm->line);
 	}
-}
-
-int		main(int argc, char **argv)
-{
-	t_farm		*farm;
-	t_hash_tab	*h_tab;
-	t_hashcodes	*hashcodes;
-
-	hashcodes = NULL;
-	if ((farm = (t_farm *)ft_memalloc(sizeof(t_farm))) && argc == 2
-		&& (farm->size = count_room(argv[1])))
-	{
-		if (!(h_tab = (t_hash_tab *)ft_memalloc(sizeof(t_hash_tab )
-			* (farm->size * 4))))
-			exit(0);
-		farm->fd = open(argv[1], O_RDONLY);
-		if (validation(h_tab, farm, &hashcodes))
-			print_valid_data(farm, h_tab, argv[1]);
-		else
-			write(2, "ERROR\n", 6);
-		farm->h_tab = h_tab;
-		farm->hashcodes = hashcodes;
-		free_all_structs(hashcodes, h_tab, farm);
-		exit(1);
-	}
-	if (!farm->size)
-		free(farm);
-	write(2, "ERROR\n", 6);
-	return (0);
 }
