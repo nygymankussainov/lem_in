@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/29 17:57:30 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/30 11:59:33 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/30 13:22:11 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,24 @@ void	dequeue(t_queue **queue)
 	head = NULL;
 }
 
-void	enqueue(t_queue **queue, t_room *room, t_qend **last)
+void	enqueue(t_queue **queue, t_room *room, t_queue **last)
 {
 	t_queue	*new;
 
 	if (!*queue)
 	{
-		if (!(*queue = (t_queue *)ft_memalloc(sizeof(t_queue))) ||
-			!(*last = (t_qend *)ft_memalloc(sizeof(t_qend))))
+		if (!(*queue = (t_queue *)ft_memalloc(sizeof(t_queue))))
 			exit(0);
 		(*queue)->room = room;
-		(*last)->elem = (*queue);
+		(*last) = (*queue);
 	}
 	else
 	{
 		if (!(new = (t_queue *)ft_memalloc(sizeof(t_queue))))
 			exit(0);
 		new->room = room;
-		(*last)->elem->next = new;
-		(*last)->elem = new;
+		(*last)->next = new;
+		(*last) = new;
 	}
 }
 
@@ -58,18 +57,11 @@ t_room	*find_start(t_room *room)
 	return (NULL);
 }
 
-int		bfs(t_farm *farm)
+int		assign_lvl(t_queue *queue, t_room *room, t_queue *last)
 {
-	t_room	*room;
-	t_queue	*queue;
 	t_link	*link;
-	t_qend	*last;
 	int		ret;
 
-	queue = NULL;
-	room = find_start(farm->h_tab[farm->start].room);
-	last = NULL;
-	enqueue(&queue, room, &last);
 	ret = 0;
 	while (queue)
 	{
@@ -91,7 +83,19 @@ int		bfs(t_farm *farm)
 		dequeue(&queue);
 		room = queue ? queue->room : room;
 	}
-	free(last);
-	printf("\n");
+	pritnf("\n");
 	return (ret);
+}
+
+int		bfs(t_farm *farm)
+{
+	t_queue	*queue;
+	t_queue	*last;
+	t_room	*room;
+	int		ret;
+
+	queue = NULL;
+	room = find_start(farm->h_tab[farm->start].room);
+	enqueue(&queue, room, &last);
+	return (assign_lvl(queue, room, last));
 }

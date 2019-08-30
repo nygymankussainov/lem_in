@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/30 11:59:19 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/30 12:39:07 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,6 @@ struct						s_queue
 	t_room					*room;
 	struct s_queue			*next;
 };
-
-typedef struct				s_qend
-{
-	struct s_queue			*elem;
-}							t_qend;
-
 
 typedef struct				s_hashcodes
 {

@@ -3,25 +3,44 @@
 start 1 1
 ##end
 end 3 3
-room1 2 2
+R1 2 2
 edn 35 35
-room2 4 4
-room3 5 5
-room4 6 6
-room5 7 7
-room6 8 8
-room7 9 9
-room8 10 10
-room9 11 11
-room10 12 12
-room11 13 13
-room12 14 14
-room13 15 15
-room14 16 16
-start-room1
-start-room2
-room1-room3
-room1-room2
-room3-end
-room2-end
-#asdasd
+R2 4 4
+R3 5 5
+R4 6 6
+R5 7 7
+R6 8 8
+R7 9 9
+R8 10 10
+R9 11 11
+R10 12 12
+R11 13 13
+R12 14 14
+R13 15 15
+R14 16 16
+start-R1
+start-R2
+R1-R3
+R1-R2
+R3-R4
+R3-R5
+R4-R7
+R7-R5
+R7-R8
+R8-R5
+R5-R9
+R9-R10
+R2-R10
+R10-R11
+R11-R12
+R12-end
+R12-R13
+R13-end
+R13-R14
+R14-end
+R3-R2
+R3-R10
+R9-R11
+R8-R9
+R8-R12
+R8-end
