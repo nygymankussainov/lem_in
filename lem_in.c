@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/29 18:59:25 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/30 11:51:24 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	print_valid_data(t_farm *farm, char *argv)
 		ft_printf("%s\n", farm->line);
 		ft_strdel(&farm->line);
 	}
+	ft_printf("\n");
 }
 
 int		main(int argc, char **argv)
@@ -110,7 +111,10 @@ int		main(int argc, char **argv)
 			exit(0);
 		farm->fd = open(argv[1], O_RDONLY);
 		if (validation(h_tab, farm, &hashcodes) && bfs(farm))
+		{
 			print_valid_data(farm, argv[1]);
+			// lem_in(farm);
+		}
 		else
 			write(2, "ERROR\n", 6);
 		free_all_structs(hashcodes, h_tab, farm);

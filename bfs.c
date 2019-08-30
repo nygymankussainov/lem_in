@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/29 17:57:30 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/29 19:55:26 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/30 11:59:33 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,25 @@ void	dequeue(t_queue **queue)
 	head = NULL;
 }
 
-void	enqueue(t_queue **queue, t_room *room)
+void	enqueue(t_queue **queue, t_room *room, t_qend **last)
 {
 	t_queue	*new;
-	t_queue	*end;
 
-	end = *queue;
 	if (!*queue)
 	{
-		if (!(*queue = (t_queue *)ft_memalloc(sizeof(t_queue))))
+		if (!(*queue = (t_queue *)ft_memalloc(sizeof(t_queue))) ||
+			!(*last = (t_qend *)ft_memalloc(sizeof(t_qend))))
 			exit(0);
 		(*queue)->room = room;
+		(*last)->elem = (*queue);
 	}
 	else
 	{
 		if (!(new = (t_queue *)ft_memalloc(sizeof(t_queue))))
 			exit(0);
-		while (end->next)
-			end = end->next;
 		new->room = room;
-		end->next = new;
+		(*last)->elem->next = new;
+		(*last)->elem = new;
 	}
 }
 
@@ -64,11 +63,13 @@ int		bfs(t_farm *farm)
 	t_room	*room;
 	t_queue	*queue;
 	t_link	*link;
+	t_qend	*last;
 	int		ret;
 
 	queue = NULL;
 	room = find_start(farm->h_tab[farm->start].room);
-	enqueue(&queue, room);
+	last = NULL;
+	enqueue(&queue, room, &last);
 	ret = 0;
 	while (queue)
 	{
@@ -80,7 +81,7 @@ int		bfs(t_farm *farm)
 			printf("link with: %s\n", link->room->name);
 			if (!link->room->bfs_lvl)
 			{
-				enqueue(&queue, link->room);
+				enqueue(&queue, link->room, &last);
 				link->room->bfs_lvl = room->bfs_lvl == -1 ?
 					room->bfs_lvl + 2 : room->bfs_lvl + 1;
 			}
@@ -90,6 +91,7 @@ int		bfs(t_farm *farm)
 		dequeue(&queue);
 		room = queue ? queue->room : room;
 	}
+	free(last);
 	printf("\n");
 	return (ret);
 }
