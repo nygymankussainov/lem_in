@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/30 11:51:24 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/08/30 15:41:47 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int		main(int argc, char **argv)
 		if (validation(h_tab, farm, &hashcodes) && bfs(farm))
 		{
 			print_valid_data(farm, argv[1]);
-			// lem_in(farm);
+			find_disjoint_paths(farm);
 		}
 		else
 			write(2, "ERROR\n", 6);
