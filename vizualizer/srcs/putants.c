@@ -6,11 +6,11 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 00:54:20 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/28 14:11:50 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/08/30 12:24:49 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "visual.h"
+#include "../includes/visual.h"
 
 void		ft_linedirtop_a(t_line line, t_sdl *sdl, t_ant *ant, int step)
 {
@@ -67,7 +67,7 @@ void		ft_linedirlow_a(t_line line, t_sdl *sdl, t_ant *ant, int step)
 	ft_draw_circle(sdl, *ant);
 }
 
-void		ft_move_ant(t_sdl *sdl, t_farm *farm, t_ant *ant, int step)
+void		ft_move_ant(t_sdl *sdl, t_ant *ant, int step)
 {
 	t_line	line;
 

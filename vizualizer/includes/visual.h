@@ -6,14 +6,14 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 15:44:57 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/28 15:09:00 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/08/30 12:25:03 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VISUAL_H
 # define VISUAL_H
 
-# include "lem_in.h"
+# include "../../lem_in.h"
 # include "SDL.h"
 # include <fcntl.h>
 # include <math.h>
@@ -97,11 +97,11 @@ int			*ft_find_maxcoords(t_farm *farm);
 t_map		ft_initmap(t_farm *farm, int *maxcoords);
 //draw.c
 void		ft_draw_vertex(t_sdl *sdl, const t_room *room, int room_count);
-void		ft_draw_link(t_sdl *sdl, const t_farm *farm, const t_room *room);
+void		ft_draw_link(t_sdl *sdl, const t_room *room);
 void		ft_creategraph(t_sdl *sdl);
 void		ft_draw_circle(t_sdl *sdl, t_ant ant);
 //putants.c
-void		ft_move_ant(t_sdl *sdl, t_farm *farm, t_ant *ant, int step);
+void		ft_move_ant(t_sdl *sdl, t_ant *ant, int step);
 //vizualizer.c
 void		ft_get_ants(t_sdl *sdl);
 void		ft_send_ants(t_sdl *sdl, int length);
