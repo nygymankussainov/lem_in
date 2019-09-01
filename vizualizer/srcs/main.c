@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.c                                           :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/01 13:49:24 by hfrankly         ###   ########.fr       */
+/*   Created: 2019/08/15 15:45:43 by hfrankly          #+#    #+#             */
+/*   Updated: 2019/08/30 19:03:00 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
- #include "lem_in.h"
+#include "../includes/visual.h"
 
 int		main(int argc, char **argv)
 {
@@ -27,19 +27,18 @@ int		main(int argc, char **argv)
 			exit(0);
 		farm->fd = open(argv[1], O_RDONLY);
 		if (validation(h_tab, farm, &hashcodes))
-		{
 			print_valid_data(farm, argv[1]);
-			lem_in(farm);
-		}
 		else
 			write(2, "ERROR\n", 6);
 		farm->h_tab = h_tab;
 		farm->hashcodes = hashcodes;
+		vizualizer(farm);
 		free_all_structs(hashcodes, h_tab, farm);
-		exit(1);
+		return(1);
 	}
 	if (!farm->size)
 		free(farm);
 	write(2, "ERROR\n", 6);
 	return (0);
 }
+

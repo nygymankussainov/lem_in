@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 00:54:20 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/30 12:24:49 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/08/31 19:51:15 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void		ft_linedirtop_a(t_line line, t_sdl *sdl, t_ant *ant, int step)
 	}
 	ant->x = line.current.x;
 	ant->y = line.current.y;
-	ft_draw_circle(sdl, *ant);
+	SDL_SetRenderDrawColor(sdl->ren, 0xA5, 0xFF, 0x2A, 0xFF);
+	ft_draw_circle(sdl->ren, ant->x, ant->y, ant->radius);
 }
 
 void		ft_linedirlow_a(t_line line, t_sdl *sdl, t_ant *ant, int step)
@@ -64,7 +65,8 @@ void		ft_linedirlow_a(t_line line, t_sdl *sdl, t_ant *ant, int step)
 	}
 	ant->x = line.current.x;
 	ant->y = line.current.y;
-	ft_draw_circle(sdl, *ant);
+	SDL_SetRenderDrawColor(sdl->ren, 0xA5, 0xFF, 0x2A, 0xFF);
+	ft_draw_circle(sdl->ren, ant->x, ant->y, ant->radius);
 }
 
 void		ft_move_ant(t_sdl *sdl, t_ant *ant, int step)

@@ -6,40 +6,11 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 15:03:04 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/30 15:33:17 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/08/30 16:38:09 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
-
-void	mark_room(t_farm *farm, t_hash_tab *h_tab, char c)
-{
-	int		i;
-	char	*name;
-	t_room	*tmp;
-
-	i = 0;
-	ft_strdel(&farm->line);
-	get_next_line(farm->fd, &farm->line);
-	while (farm->line[i] != ' ')
-		i++;
-	name = ft_strndup(farm->line, i);
-	i = hash_func(name, farm->size);
-	tmp = h_tab[i].room;
-	if (tmp)
-		while (tmp)
-		{
-			if (!ft_strcmp(tmp->name, name))
-				break ;
-			tmp = tmp->next;
-		}
-	tmp->status = c;
-	ft_strdel(&name);
-	if (c == 's')
-		ft_printf("##start\n");
-	else
-		ft_printf("##end\n");
-}
 
 int		isroom(char *line)
 {
@@ -98,7 +69,7 @@ void	free_all_structs(t_hashcodes *hashcodes,
 	free(farm);
 }
 
-void	print_valid_data(t_farm *farm, t_hash_tab *h_tab, char *argv)
+void	print_valid_data(t_farm *farm, char *argv)
 {
 	int			link;
 
@@ -106,11 +77,8 @@ void	print_valid_data(t_farm *farm, t_hash_tab *h_tab, char *argv)
 	farm->fd = open(argv, O_RDONLY);
 	while (get_next_line(farm->fd, &farm->line) == 1)
 	{
-		if (!ft_strcmp("##start", farm->line))
-			mark_room(farm, h_tab, 's');
-		else if (!ft_strcmp("##end", farm->line))
-			mark_room(farm, h_tab, 'e');
-		else if (farm->line[0] == '#' && farm->line[1] == '#')
+		if (ft_strcmp("##start", farm->line) && ft_strcmp("##end", farm->line)
+			&& farm->line[0] == '#' && farm->line[1] == '#')
 		{
 			ft_strdel(&farm->line);
 			continue ;
@@ -125,4 +93,5 @@ void	print_valid_data(t_farm *farm, t_hash_tab *h_tab, char *argv)
 		ft_printf("%s\n", farm->line);
 		ft_strdel(&farm->line);
 	}
+	ft_printf("\n");
 }
