@@ -3,14 +3,14 @@
 start 2 0
 ##end
 end 2 6
-room0 0 2
-room1 0 4
-room2 4 2
-room3 4 4
-start-room0
-room0-room1
-start-room2
-room2-room3
-room1-end
-room3-end
+0 0 2
+1 0 4
+2 4 2
+3 4 4
+start-0
+0-1
+start-2
+2-3
+1-end
+3-end
 #asdasd

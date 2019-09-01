@@ -6,7 +6,7 @@
 #    By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/08/30 15:44:20 by hfrankly         ###   ########.fr        #
+#    Updated: 2019/08/30 19:02:35 by hfrankly         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ INCLUDES = -L../libft -lft -I../libft -I./includes -I../ -I ../libft/ft_printf/
 SRCS = ../validation/work_with_data.c ../hash_func.c ../validation/validate_coords.c ../validation/find_and_connect_rooms.c \
 		../validation/isint.c ../validation/validation.c ../validation/validate_rooms.c ../validation/write_data_in_sroom.c ../validation/validate_links.c ../validation/validate_ants.c \
 		../helpful_func.c \
-		srcs/bresenham.c srcs/coords.c srcs/draw.c srcs/putants.c srcs/vizualizer.c srcs/vizualizer1.c srcs/sdl.c
+		srcs/main.c srcs/bresenham.c srcs/coords.c srcs/draw.c srcs/putants.c srcs/vizualizer.c srcs/vizualizer1.c srcs/sdl.c
 
 OBJ = $(SRCS:.c=.o)
 

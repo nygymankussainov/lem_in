@@ -6,7 +6,7 @@
 #    By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/08/30 12:18:27 by hfrankly         ###   ########.fr        #
+#    Updated: 2019/08/30 16:35:13 by hfrankly         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ LIB_A = libft/libft.a $(LIB)/libftprintf.a
 
 INCLUDES = -I ./libft -I ./libft/ft_printf/ -I ./includes -I ./vizualizer/includes
 
-SRC = lem_in.c hash_func.c validation/validate_coords.c validation/find_and_connect_rooms.c \
+SRC = lem_in.c hash_func.c validation/validate_coords.c validation/find_and_connect_rooms.c bfs.c \
 		validation/isint.c validation/validation.c validation/validate_rooms.c validation/write_data_in_sroom.c validation/validate_links.c validation/validate_ants.c \
 		helpful_func.c \
 		vizualizer/srcs/bresenham.c vizualizer/srcs/coords.c vizualizer/srcs/draw.c vizualizer/srcs/putants.c vizualizer/srcs/vizualizer.c vizualizer/srcs/vizualizer1.c vizualizer/srcs/sdl.c

@@ -6,7 +6,7 @@
 #    By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/08/30 15:46:27 by hfrankly         ###   ########.fr        #
+#    Updated: 2019/09/01 14:00:26 by hfrankly         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ INCLUDES = -I ./libft -I ./libft/ft_printf/ -I ./includes
 
 SRC = lem_in.c hash_func.c validation/validate_coords.c validation/find_and_connect_rooms.c \
 		validation/isint.c validation/validation.c validation/validate_rooms.c validation/write_data_in_sroom.c validation/validate_links.c validation/validate_ants.c \
-		helpful_func.c validation/work_with_data.c\
+		helpful_func.c validation/work_with_data.c algorithm/algo.c \
 
 OBJ = $(SRC:.c=.o)
 
@@ -41,7 +41,7 @@ $(ARCHIVE): $(OBJ)
 
 $(NAME): $(OBJ)
 	make -C ./vizualizer
-	@gcc -Wall -Wextra -Werror -o $(NAME) $(ARCHIVE) $(LIB_A) $(SDL) -g
+	@gcc -Wall -Wextra -Werror -o $(NAME) $(SRC) $(LIB_A) $(SDL) -g
 
 clean:
 	@make clean -C $(LIB)

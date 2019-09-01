@@ -6,11 +6,35 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 15:27:17 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/30 14:41:19 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/08/30 18:57:03 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/visual.h"
+
+void		ft_change_coords(t_sdl *sdl)
+{
+	t_hash_tab	*ht;
+	t_hashcodes	*hc;
+	t_room		*room;
+
+	sdl->map = ft_initmap(sdl->farm, ft_find_maxcoords(sdl->farm));
+	ht = sdl->farm->h_tab;
+	hc = sdl->farm->hashcodes;
+	while (hc)
+	{
+		room = ht[hc->hash_code].room;
+		while (room)
+		{
+			room->x = SIZEX / 2 - (SIZEX / sdl->map.maxdif)
+			* (sdl->map.xcenter - room->x);
+			room->y = SIZEY / 2 - (SIZEY / sdl->map.maxdif)
+			* (sdl->map.ycenter - room->y);
+			room = room->next;
+		}
+		hc = hc->next;
+	}
+}
 
 t_map	ft_initmap(t_farm *farm, int *maxcoords)
 {
