@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 15:44:57 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/31 19:24:14 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/02 14:13:42 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void		ft_draw_rooms(t_sdl *sdl);
 void		ft_move_ant(t_sdl *sdl, t_ant *ant, int step);
 //vizualizer.c
 void		ft_get_ants(t_sdl *sdl);
-void		ft_send_ants(t_sdl *sdl, int length);
+void		ft_send_ants(t_sdl *sdl, int *length);
 int			ft_do_move(t_sdl *sdl);
 int			ft_go_ant(t_sdl *sdl);
 void		vizualizer(t_farm *farm);

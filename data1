@@ -1,12 +1,12 @@
 4
 ##start
-start -1 -1
+start 2 0
 ##end
-end 5 0
-0 0 0
-1 1 1
-2 2 2
-3 3 3
+end 2 6
+0 0 2
+1 0 4
+2 4 2
+3 4 4
 start-0
 0-1
 start-2
