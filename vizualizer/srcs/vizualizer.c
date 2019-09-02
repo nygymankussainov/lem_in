@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vizualizer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:16:39 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/28 15:10:33 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/02 14:09:21 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void		vizualizer(t_farm *farm)
 	ft_change_coords(sdl);
 	ft_creategraph(sdl);
 	SDL_RenderPresent(sdl->ren);
-	ft_go_ant(sdl);
+	// ft_go_ant(sdl);
 	while (!quit)
 	{
 		while (SDL_PollEvent(sdl->e) != 0)

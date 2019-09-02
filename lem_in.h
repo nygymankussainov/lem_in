@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/30 12:39:07 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/02 12:12:30 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "./libft/ft_printf/ft_printf.h"
 # include <fcntl.h>
 # include <stdio.h>
+# include <stdbool.h>
 
 typedef struct s_link		t_link;
 typedef struct s_room		t_room;
@@ -45,17 +46,20 @@ struct						s_room
 	int						antnbr;
 	int						x;
 	int						y;
-	int						weight;
-	int						bfs_lvl;
+	int						dist;
 	char					*name;
 	char					status;
+	bool					visited;
 	t_link					*link;
+	struct s_room			*prev;
 	struct s_room			*next;
 };
 
 struct						s_link
 {
 	t_room					*room;
+	int						weight;
+	bool					lock;
 	struct s_link			*next;
 };
 
@@ -108,5 +112,10 @@ int							isroom(char *line);
 void						print_links(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab);
 int							bfs(t_farm *farm);
+t_room						*find_startend(t_room *room, char c);
+void						dequeue(t_queue **queue);
+void						enqueue(t_queue **queue, t_room *room, t_queue **last);
+int							find_shortest_path(t_farm *farm);
+void						unvisit_rooms(t_farm *farm);
 
 #endif
