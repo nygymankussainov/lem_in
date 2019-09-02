@@ -6,11 +6,11 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:15:44 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/27 17:06:18 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/02 12:40:10 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "visual.h"
+#include "../includes/visual.h"
 
 int		ft_init_sdl(t_sdl *sdl)
 {

@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:16:39 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/02 14:09:21 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/02 16:51:06 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "visual.h"
+#include "../includes/visual.h"
 
 void		ft_get_ants(t_sdl *sdl)
 {
@@ -23,29 +23,40 @@ void		ft_get_ants(t_sdl *sdl)
 	hc = sdl->farm->hashcodes;
 	while (++i < sdl->arrsize)
 	{
-		sdl->ants[i].srcroom = ft_find_ant_room(sdl->farm,
-		sdl->cmdline[i][1] - '0'); // изменить для чисел
-		sdl->ants[i].dstroom = sdl->cmdline[i][3] - '0';
+		sdl->ants[i].srcroom = ft_find_ant_room(sdl->farm, &sdl->cmdline[i][1]);
+		sdl->ants[i].dstroom = sdl->farm->h_tab[hash_func(&sdl->cmdline[i][3], sdl->farm->size)].room;
 		sdl->ants[i].x = sdl->ants[i].srcroom->x;
 		sdl->ants[i].y = sdl->ants[i].srcroom->y;
 		sdl->ants[i].radius = 10;
 	}
 }
 
-void		ft_send_ants(t_sdl *sdl, int length)
+void		ft_send_ants(t_sdl *sdl, int *length)
 {
 	int		temp;
+	int		*step;
 	int		i;
 
 	temp = 0;
-	while (++temp < sdl->stepsize)
+	if (!(step = (int*)malloc(sizeof(int) * sdl->arrsize)))
+		exit(0);
+	i = -1;
+	while (++i < sdl->arrsize)
+		step[i] = length[i] / sdl->stepsize;
+	while (temp < sdl->stepsize)
 	{
 		i = -1;
 		SDL_RenderClear(sdl->ren);
-		ft_creategraph(sdl);
+		ft_draw_graph(sdl);
 		while (++i < sdl->arrsize)
-			ft_move_ant(sdl, sdl->farm, &(sdl->ants[i]),
-			length / sdl->stepsize);
+		{
+			ft_move_ant(sdl, &(sdl->ants[i]), step[i]);
+			if (SDL_PollEvent(sdl->e) != 0)
+				if (sdl->e->type == SDL_QUIT ||
+				(sdl->e->type == SDL_KEYDOWN && sdl->e->key.keysym.sym == SDLK_ESCAPE))
+					exit(0);
+		}
+		temp++;
 		SDL_RenderPresent(sdl->ren);
 		SDL_Delay(10);
 	}
@@ -55,19 +66,23 @@ int			ft_do_move(t_sdl *sdl)
 {
 	int		temp;
 	int		i;
-	int		length;
+	int		*length;
 
 	temp = 0;
 	sdl->arrsize = ft_array_size(sdl->cmdline);
 	if (!(sdl->ants = (t_ant*)malloc(sizeof(t_ant) * sdl->arrsize)))
 		exit(0);
+	if (!(length = (int*)malloc(sizeof(int) * sdl->arrsize)))
+		exit(0);
 	ft_get_ants(sdl);
-	length = ft_get_link_length(sdl, sdl->ants[0].srcroom, sdl->ants[0].dstroom);
+	i = -1;
+	while (++i < sdl->arrsize)
+		length[i] = ft_get_link_length(sdl->ants[i].srcroom, sdl->ants[i].dstroom);
 	ft_send_ants(sdl, length);
 	i = -1;
 	while (++i < sdl->arrsize)
 	{
-		sdl->ants[i].dstroom = hash_func(sdl->cmdline[i][1]);
+		sdl->ants[i].dstroom->antnbr = ft_atoi(&sdl->cmdline[i][1]);
 		if (sdl->ants[i].antnbr == sdl->ants[i].srcroom->antnbr)
 			sdl->ants[i].srcroom->antnbr = -1;
 	}
@@ -81,44 +96,17 @@ int			ft_go_ant(t_sdl *sdl)
 	while (get_next_line(sdl->fd, &str))
 	{
 		if (str[0] != 'L')
+		{
+			free(str);
 			continue ;
+		}
 		sdl->cmdline = ft_strsplit(str, ' ');
 		ft_do_move(sdl);
-		SDL_Delay(100);
+		SDL_Delay(150);
 		free(str);
 		free_arr(sdl->cmdline);
 	}
 	return (0);
-}
-
-void		ft_change_coords(t_sdl *sdl)
-{
-	t_hash_tab	*ht;
-	t_hashcodes	*hc;
-	t_room		*room;
-
-	sdl->map = ft_initmap(sdl->farm, ft_find_maxcoords(sdl->farm));
-	ht = sdl->farm->h_tab;
-	while (hc)
-	{
-		ht[hc->hash_code].room->x = SIZEY / 2 - (SIZEY / sdl->map.maxdif)
-		* (sdl->map.xcenter - ht[hc->hash_code].room->x);
-		ht[hc->hash_code].room->y = SIZEY / 2 - (SIZEY / sdl->map.maxdif)
-		* (sdl->map.ycenter - ht[hc->hash_code].room->y);
-		if (ht[hc->hash_code].room->next)
-		{
-			room = ht[hc->hash_code].room->next;
-			while (room)
-			{
-				room->x = SIZEX / 2 - (SIZEX / sdl->map.maxdif)
-				* (sdl->map.xcenter - room->x);
-				room->y = SIZEY / 2 - (SIZEY / sdl->map.maxdif)
-				* (sdl->map.ycenter - room->y);
-				room = room->next;
-			}
-		}
-		hc = hc->next;
-	}
 }
 
 void		vizualizer(t_farm *farm)
@@ -129,12 +117,13 @@ void		vizualizer(t_farm *farm)
 	quit = 0;
 	sdl = (t_sdl*)malloc(sizeof(t_sdl));
 	if (!(ft_init_sdl(sdl)))
-		return (0);
-	sdl->fd = 0;
+		exit(0);
+	sdl->fd = open("test", O_RDONLY);
 	sdl->farm = farm;
 	sdl->stepsize = 100;
 	ft_change_coords(sdl);
-	ft_creategraph(sdl);
+	SDL_RenderClear(sdl->ren);
+	ft_draw_graph(sdl);
 	SDL_RenderPresent(sdl->ren);
 	// ft_go_ant(sdl);
 	while (!quit)
