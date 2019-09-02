@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:16:39 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/31 19:53:59 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/02 16:46:47 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,34 @@ void		ft_get_ants(t_sdl *sdl)
 	}
 }
 
-void		ft_send_ants(t_sdl *sdl, int length)
+void		ft_send_ants(t_sdl *sdl, int *length)
 {
 	int		temp;
+	int		*step;
 	int		i;
 
 	temp = 0;
-	while (++temp < sdl->stepsize)
+	if (!(step = (int*)malloc(sizeof(int) * sdl->arrsize)))
+		exit(0);
+	i = -1;
+	while (++i < sdl->arrsize)
+		step[i] = length[i] / sdl->stepsize;
+	while (temp < sdl->stepsize)
 	{
 		i = -1;
 		SDL_RenderClear(sdl->ren);
 		ft_draw_graph(sdl);
 		while (++i < sdl->arrsize)
 		{
-			ft_move_ant(sdl, &(sdl->ants[i]), length / sdl->stepsize);
+			ft_move_ant(sdl, &(sdl->ants[i]), step[i]);
 			if (SDL_PollEvent(sdl->e) != 0)
 				if (sdl->e->type == SDL_QUIT ||
 				(sdl->e->type == SDL_KEYDOWN && sdl->e->key.keysym.sym == SDLK_ESCAPE))
 					exit(0);
 		}
+		temp++;
 		SDL_RenderPresent(sdl->ren);
-		SDL_Delay(0);
+		SDL_Delay(10);
 	}
 }
 
@@ -59,14 +66,18 @@ int			ft_do_move(t_sdl *sdl)
 {
 	int		temp;
 	int		i;
-	int		length;
+	int		*length;
 
 	temp = 0;
 	sdl->arrsize = ft_array_size(sdl->cmdline);
 	if (!(sdl->ants = (t_ant*)malloc(sizeof(t_ant) * sdl->arrsize)))
 		exit(0);
+	if (!(length = (int*)malloc(sizeof(int) * sdl->arrsize)))
+		exit(0);
 	ft_get_ants(sdl);
-	length = ft_get_link_length(sdl->ants[0].srcroom, sdl->ants[0].dstroom);
+	i = -1;
+	while (++i < sdl->arrsize)
+		length[i] = ft_get_link_length(sdl->ants[i].srcroom, sdl->ants[i].dstroom);
 	ft_send_ants(sdl, length);
 	i = -1;
 	while (++i < sdl->arrsize)
@@ -91,7 +102,7 @@ int			ft_go_ant(t_sdl *sdl)
 		}
 		sdl->cmdline = ft_strsplit(str, ' ');
 		ft_do_move(sdl);
-		SDL_Delay(100);
+		SDL_Delay(150);
 		free(str);
 		free_arr(sdl->cmdline);
 	}
@@ -109,12 +120,12 @@ void		vizualizer(t_farm *farm)
 		exit(0);
 	sdl->fd = open("test", O_RDONLY);
 	sdl->farm = farm;
-	sdl->stepsize = 50;
+	sdl->stepsize = 100;
 	ft_change_coords(sdl);
 	SDL_RenderClear(sdl->ren);
 	ft_draw_graph(sdl);
 	SDL_RenderPresent(sdl->ren);
-	ft_go_ant(sdl);
+	// ft_go_ant(sdl);
 	while (!quit)
 	{
 		while (SDL_PollEvent(sdl->e) != 0)
