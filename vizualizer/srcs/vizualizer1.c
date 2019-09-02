@@ -6,39 +6,65 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:17:24 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/28 14:14:33 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/02 12:40:30 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "visual.h"
+#include "../includes/visual.h"
 
 t_room		*ft_find_ant_room(t_farm *farm, char *str)
 {
-	t_hash_tab	*ht;
 	t_hashcodes	*hc;
 	t_room		*room;
+	int			nbr;
 
-	ht = farm->h_tab;
 	hc = farm->hashcodes;
+	nbr = ft_atoi(str);
 	while (hc)
 	{
-		room = ht[hc->hash_code].room;
+		room = farm->h_tab[hc->hash_code].room;
 		while (room)
 		{
-			if (ht[hc->hash_code].room->antnbr == hash_func(str)
-			&& !ft_strcmp(ht[hc->hash_code].room->name, str))
+			if (room->antnbr == nbr)
 				return (room);
 			room = room->next;
 		}
 		hc = hc->next;
 	}
-	return (ht[farm->start].room); // не работает, если есть коллизия со стартовой комнатой
+	room = farm->h_tab[farm->start].room;
+	while (room)
+	{
+		if (room->status == 's')
+			return (room);
+		room = room->next;
+	}
+	return (NULL);
 }
 
-int		ft_get_link_length(t_sdl *sdl, const t_room *src, const t_room *dst)
+int		ft_get_link_length(const t_room *src, const t_room *dst)
 {
-	return (sqrt(pow(SIZEX / 2 - (SIZEY / sdl->map.maxdif)
-	* (sdl->map.xcenter - (dst->x - src->x)), 2)
-	+ pow(SIZEY / 2 - (SIZEY / sdl->map.maxdif)
-	* (sdl->map.ycenter - (dst->y - src->y)), 2)));
+	return (sqrt(pow((dst->x - src->x), 2) + pow(dst->y - src->y, 2)));
+}
+
+void		free_arr(char **arr)
+{
+	int		i;
+
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
+int			ft_array_size(char **arr)
+{
+	int		count;
+
+	count = 0;
+	while (arr[count])
+		count++;
+	return (count);
 }

@@ -6,13 +6,14 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/02 12:12:30 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/02 16:52:30 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
+# include "vizualizer/includes/visual.h"
 # include "./libft/ft_printf/ft_printf.h"
 # include <fcntl.h>
 # include <stdio.h>
@@ -85,6 +86,10 @@ typedef struct				s_farm
 	t_hashcodes				*hashcodes;
 }							t_farm;
 
+void						free_all_structs(t_hashcodes *hashcodes,
+	t_hash_tab *h_tab, t_farm *farm);
+int							isroom(char *line);
+void						print_valid_data(t_farm *farm, char *argv);
 int							isint(char *str, char c);
 void						hash_table(t_farm *farm, t_hash_tab *h_tab);
 int							hash_func(char *name, int size);

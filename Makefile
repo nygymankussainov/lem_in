@@ -6,7 +6,7 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/09/01 17:40:18 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/09/02 16:53:59 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,13 @@ ARCHIVE = lem-in.a
 NAME = lem-in
 
 LIB = libft/ft_printf
-LIB_A = libft/libft.a $(LIB)/libftprintf.a
+LIB_A = libft/libft.a $(LIB)/libftprintf.a 
 
 INCLUDES = -I ./libft -I ./libft/ft_printf/ -I ./includes
 
 SRC = lem_in.c hash_func.c validation/validate_coords.c validation/find_and_connect_rooms.c bfs.c find_shortest_path.c \
 		validation/isint.c validation/validation.c validation/validate_rooms.c validation/write_data_in_sroom.c validation/validate_links.c validation/validate_ants.c \
-		helpful_func.c
+		helpful_func.c validation/work_with_data.c \
 
 OBJ = $(SRC:.c=.o)
 
@@ -40,7 +40,8 @@ $(ARCHIVE): $(OBJ)
 	@gcc -Wall -Wextra -Werror -c $<
 
 $(NAME): $(OBJ)
-	@gcc -Wall -Wextra -Werror -o $(NAME) $(ARCHIVE) $(LIB_A) -g
+	make -C ./vizualizer
+	@gcc -Wall -Wextra -Werror -o $(NAME) $(SRC) $(LIB_A) $(SDL) -g
 
 clean:
 	@make clean -C $(LIB)
