@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 18:33:57 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/02 16:26:40 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/02 23:14:32 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void            ft_linedirlow(t_line line, t_sdl *sdl)
         t_sdl   *par;
         t_point delta;
         float   s;
-        int             sdir;
+        int		sdir;
 
         par = (t_sdl*)sdl;
         s = 0;

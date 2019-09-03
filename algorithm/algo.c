@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 15:10:05 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/02 16:46:55 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/03 12:45:18 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_bell_ford(t_farm *farm)
 	hc = farm->hashcodes;
 	ht = farm->h_tab;
 	ft_make_room_inf(farm);
-	while (++iter < farm->room_count)
+	while (++iter < farm->room_count - 1)
 	{
 		changes = false;
 		hc = farm->hashcodes;
