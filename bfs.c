@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bfs.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nygymankussainov <nygymankussainov@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/29 17:57:30 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/02 19:55:57 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/03 12:49:05 by nygymankuss      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	enqueue(t_queue **queue, t_room *room, t_queue **last)
 		if (!(*queue = (t_queue *)ft_memalloc(sizeof(t_queue))))
 			exit(0);
 		(*queue)->room = room;
-		(*last) = (*queue);
+		*last = *queue;
 	}
 	else
 	{
@@ -39,7 +39,7 @@ void	enqueue(t_queue **queue, t_room *room, t_queue **last)
 			exit(0);
 		new->room = room;
 		(*last)->next = new;
-		(*last) = new;
+		*last = new;
 	}
 }
 
@@ -48,7 +48,10 @@ t_room	*find_startend(t_room *room, char c)
 	while (room)
 	{
 		if (room->status == c)
+		{
+			room->visited = c == 's' ? 1 : room->visited;
 			return (room);
+		}
 		room = room->next;
 	}
 	return (NULL);
@@ -58,48 +61,40 @@ int		calculate_distance(t_queue *queue, t_room *room, t_queue *last)
 {
 	t_link	*link;
 	int		ret;
-	int		tmp;
 
 	ret = 0;
 	while (queue)
 	{
-		tmp = 0;
 		link = room->link;
-		ret = room->status == 'e' ? 1 : ret;
-		// printf("%s: ", room->name);
+		ret = link->room->status == 'e' ? 1 : ret;
 		while (link)
 		{
-			if (!link->lock && !link->room->visited && link->room->status != 's')
+			if (!link->room->visited)
 			{
 				enqueue(&queue, link->room, &last);
-				if (link->room->dist == 0 || room->dist + link->weight < link->room->dist)
-					link->room->dist = room->dist + link->weight;
-				if (link->room->dist < tmp || !tmp || !link->room->dist)
-					link->room->prev = room;
-				tmp = link->room->dist;
-				// printf("%s-%s %d\n", link->room->name, link->room->prev->name, link->room->dist);
-				// printf("%s-", link->room->name);
-				// printf("%s\n", link->room->prev->name);
-				// link->room->visited = 1;
+				link->room->dist = room->dist + link->weight;
+				link->room->visited = 1;
+				link->room->prev = room;
+				printf("%s-%s in %d\n", link->room->prev->name, link->room->name, link->room->dist);
 			}
 			link = link->next;
 		}
-		room->visited = room->status == 'e' ? room->visited : 1;
 		dequeue(&queue);
 		room = queue ? queue->room : room;
 	}
-	// printf("\n");
+	printf("\n");
 	return (ret);
 }
 
 int		bfs(t_farm *farm)
 {
+	t_room	*room;
 	t_queue	*queue;
 	t_queue	*last;
-	t_room	*room;
 
 	queue = NULL;
 	room = find_startend(farm->h_tab[farm->start].room, 's');
+	last = NULL;
 	enqueue(&queue, room, &last);
 	if (calculate_distance(queue, room, last))
 		return (1);

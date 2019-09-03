@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_shortest_path.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nygymankussainov <nygymankussainov@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:04:26 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/02 14:13:39 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/03 12:50:22 by nygymankuss      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		find_shortest_path(t_farm *farm)
 		printf("%s-", room->name);
 		while (link->room != room->prev)
 			link = link->next;
-		link->weight = 0;
+		link->weight = -1;
 		tmp = room;
 		room = link->room;
 		link = room->link;

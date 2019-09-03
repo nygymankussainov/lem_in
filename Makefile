@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
+#    By: nygymankussainov <nygymankussainov@stud    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/09/02 16:53:59 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/09/03 12:29:24 by nygymankuss      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,6 @@ $(ARCHIVE): $(OBJ)
 	@gcc -Wall -Wextra -Werror -c $<
 
 $(NAME): $(OBJ)
-	make -C ./vizualizer
 	@gcc -Wall -Wextra -Werror -o $(NAME) $(SRC) $(LIB_A) $(SDL) -g
 
 clean:
