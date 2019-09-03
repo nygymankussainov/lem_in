@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:16:39 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/03 12:54:12 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/03 14:54:59 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void		vizualizer(t_farm *farm)
 	SDL_RenderClear(sdl->ren);
 	ft_draw_graph(sdl);
 	SDL_RenderPresent(sdl->ren);
-	ft_go_ant(sdl);
+	// ft_go_ant(sdl);
 	while (!quit)
 	{
 		while (SDL_PollEvent(sdl->e) != 0)

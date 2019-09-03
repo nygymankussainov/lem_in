@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/02 11:35:23 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/03 23:25:26 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,10 @@ typedef struct s_room		t_room;
 typedef struct s_queue		t_queue;
 typedef struct s_qelem		t_qelem;
 
-struct						s_qelem
-{
-	t_room					*room;
-	struct s_qelem			*next;
-};
-
 struct						s_queue
 {
-	t_qelem					*begin;
-	t_qelem					*end;
+	t_room					*room;
+	t_queue					*next;
 };
 
 typedef struct				s_hashcodes
@@ -54,13 +48,14 @@ struct						s_room
 	int						antnbr;
 	int						x;
 	int						y;
-	int						weight;
-	int						bfs_lvl;
+	int						dist;
 	int						pathlength;
 	char					*name;
 	char					status;
-	int						was;
+	bool					visited;
+	bool					was;
 	t_link					*link;
+	struct s_room			*prev;
 	struct s_room			*next;
 };
 
@@ -68,6 +63,7 @@ struct						s_link
 {
 	t_room					*room;
 	int						weight;
+	bool					lock;
 	struct s_link			*next;
 };
 
@@ -89,6 +85,7 @@ typedef struct				s_farm
 	char					*line;
 	char					*name;
 	int						size;
+	t_room					*startroom;
 	t_hash_tab				*h_tab;
 	t_hashcodes				*hashcodes;
 }							t_farm;
@@ -124,7 +121,12 @@ int							isroom(char *line);
 void						print_links(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab);
 int							bfs(t_farm *farm);
+t_room						*find_startend(t_room *room, char c);
+void						dequeue(t_queue **queue);
+void						enqueue(t_queue **queue, t_room *room, t_queue **last);
+int							find_shortest_path(t_farm *farm);
+void						unvisit_rooms(t_farm *farm);
+void 						lem_in(t_farm *farm);
 void						ft_show_pathlengthes(t_farm *farm);
-void    					lem_in(t_farm *farm);
 
 #endif
