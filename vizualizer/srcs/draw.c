@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 15:28:58 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/02 12:40:19 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/03 12:46:59 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ void	ft_draw_circle(SDL_Renderer *ren, int xc, int yc, int r)
 	{
 		till = sqrt((r * r - i * i));
 		j = -till;
-		while (j <= till) 
+		// SDL_RenderDrawPoint(ren, xc - j, yc - i);
+		// SDL_RenderDrawPoint(ren, xc - j, yc + i);
+		// SDL_RenderDrawPoint(ren, xc - till, yc - i);
+		// SDL_RenderDrawPoint(ren, xc - till, yc + i);
+		while (j <= till)
 		{
 			SDL_RenderDrawPoint(ren, xc - j, yc - i);
 			SDL_RenderDrawPoint(ren, xc - j, yc + i);
@@ -33,60 +37,6 @@ void	ft_draw_circle(SDL_Renderer *ren, int xc, int yc, int r)
 	}
 	SDL_SetRenderDrawColor(ren, 0x00, 0x00, 0x00, 0x00);
 }
-
-// void	ft_draw_vertex(t_sdl *sdl, const t_room *room, int room_count)
-// {
-	// int		i;
-	// int		j;
-	// int		r;
-	// int		x;
-	// int		y;
-	// int		till;
-// 
-	// r = (room_count > 10) ? (SIZEX / 2) / room_count - 5 : 25;
-	// i = -r - 1;
-	// while (++i < r)
-	// {
-		// j = -(r * r - (abs(i - room->y) - room->y) * (abs(i - room->y) - room->y));
-		// till = -j;
-		// while (++j < till)
-		// {
-			// x = abs(j - room->x);
-			// y = abs(i - room->y);
-			// if ((x - room->x) * (x - room->x)
-			// + (y - room->y) * (y - room->y) <= r * r)
-				// SDL_RenderDrawPoint(sdl->ren, x, y);
-		// }
-	// }
-	// SDL_SetRenderDrawColor(sdl->ren, 0x00, 0x00, 0x00, 0x00);
-// }
-
-// void	ft_draw_circle(SDL_Renderer *ren, int xc, int yc, int r)
-// {
-// 	int		y;
-// 	int		c;
-// 	int 	d;
-// 	int		xmin;
-// 	int		xmax;
-// 	int		newr;
-
-// 	y = yc - r;
-// 	newr = yc + r;
-// 	while (y <= newr)
-// 	{
-// 		c = xc * xc + (y - yc) * (y - yc) - r * r;
-// 		d = sqrt(((xc * xc) * 4) - 4 * c);
-// 		xmin = ((xc * 2) - d) / 2;
-// 		xmax = ((xc * 2) + d) / 2;
-// 		while (xmin <= xmax)
-// 		{
-// 			SDL_RenderDrawPoint(ren, xmin, y);
-// 			xmin++;
-// 		}
-// 		y++;
-// 	}
-// 	SDL_SetRenderDrawColor(ren, 0x00, 0x00, 0x00, 0x00);
-// }
 
 void	ft_draw_link(t_sdl *sdl, const t_room *room)
 {

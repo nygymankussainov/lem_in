@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:16:39 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/02 16:46:47 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/03 12:54:12 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@ void		ft_send_ants(t_sdl *sdl, int *length)
 {
 	int		temp;
 	int		*step;
+	int		pause;
 	int		i;
 
 	temp = 0;
+	pause = 0;
 	if (!(step = (int*)malloc(sizeof(int) * sdl->arrsize)))
 		exit(0);
 	i = -1;
@@ -45,16 +47,24 @@ void		ft_send_ants(t_sdl *sdl, int *length)
 		step[i] = length[i] / sdl->stepsize;
 	while (temp < sdl->stepsize)
 	{
-		i = -1;
+		i = 0;
 		SDL_RenderClear(sdl->ren);
 		ft_draw_graph(sdl);
-		while (++i < sdl->arrsize)
+		while (i < sdl->arrsize)
 		{
-			ft_move_ant(sdl, &(sdl->ants[i]), step[i]);
 			if (SDL_PollEvent(sdl->e) != 0)
+			{
 				if (sdl->e->type == SDL_QUIT ||
 				(sdl->e->type == SDL_KEYDOWN && sdl->e->key.keysym.sym == SDLK_ESCAPE))
 					exit(0);
+				else if ((sdl->e->type == SDL_KEYDOWN && sdl->e->key.keysym.sym == SDLK_SPACE))
+					pause = (pause) ? 0 : 1;
+			}
+			if (!pause)
+			{
+				ft_move_ant(sdl, &(sdl->ants[i]), step[i]);
+				i++;
+			}
 		}
 		temp++;
 		SDL_RenderPresent(sdl->ren);
@@ -125,7 +135,7 @@ void		vizualizer(t_farm *farm)
 	SDL_RenderClear(sdl->ren);
 	ft_draw_graph(sdl);
 	SDL_RenderPresent(sdl->ren);
-	// ft_go_ant(sdl);
+	ft_go_ant(sdl);
 	while (!quit)
 	{
 		while (SDL_PollEvent(sdl->e) != 0)
