@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nygymankussainov <nygymankussainov@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/02 16:57:11 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/03 12:52:54 by nygymankuss      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,9 @@ int		main(int argc, char **argv)
 		farm->fd = open(argv[1], O_RDONLY);
 		if (validation(h_tab, farm, &hashcodes) && bfs(farm))
 		{
-			while (find_shortest_path(farm) == 1)
-			{
-				unvisit_rooms(farm);
-				bfs(farm);
-			}
-			// print_valid_data(farm, argv[1]);
+			find_shortest_path(farm);
+			unvisit_rooms(farm);
+			print_valid_data(farm, argv[1]);
 		}
 		else
 			write(2, "ERROR\n", 6);
