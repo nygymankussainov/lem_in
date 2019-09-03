@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/23 17:24:00 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/29 18:57:03 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/02 16:36:34 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	mark_room(t_farm *farm, t_hash_tab *h_tab, char *name, char c)
 	farm->start = c == 's' ? hash_func(name, farm->size) : farm->start;
 	farm->end = c == 'e' ? hash_func(name, farm->size) : farm->end;
 	room = c == 's' ? h_tab[farm->start].room : h_tab[farm->end].room;
+	room->dist = c == 's' ? 0 : room->dist;
 	while (room)
 	{
 		if (!ft_strcmp(room->name, name))

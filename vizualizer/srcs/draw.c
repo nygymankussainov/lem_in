@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 15:28:58 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/03 12:46:59 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/03 15:06:12 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,6 @@ void	ft_draw_circle(SDL_Renderer *ren, int xc, int yc, int r)
 	{
 		till = sqrt((r * r - i * i));
 		j = -till;
-		// SDL_RenderDrawPoint(ren, xc - j, yc - i);
-		// SDL_RenderDrawPoint(ren, xc - j, yc + i);
-		// SDL_RenderDrawPoint(ren, xc - till, yc - i);
-		// SDL_RenderDrawPoint(ren, xc - till, yc + i);
 		while (j <= till)
 		{
 			SDL_RenderDrawPoint(ren, xc - j, yc - i);
@@ -80,7 +76,7 @@ void	ft_draw_rooms(t_sdl *sdl)
 				SDL_SetRenderDrawColor(sdl->ren, 0xB7, 0x2E, 0x3E, 0x00);
 			else
 				SDL_SetRenderDrawColor(sdl->ren, 0xFF, 0xFF, 0xFF, 0x00);
-			ft_draw_circle(sdl->ren, ht[hc->hash_code].room->x, ht[hc->hash_code].room->y,
+			ft_draw_circle(sdl->ren, room->x, room->y,
 			(sdl->farm->room_count > 10) ? (SIZEX / 2) / sdl->farm->room_count - 5 : 25);
 			room = room->next;
 		}
