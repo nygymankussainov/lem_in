@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 15:10:05 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/04 00:03:11 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/04 18:27:36 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,36 +92,44 @@ void	ft_bell_ford(t_farm *farm)
 	t_room		*room;
 	t_room		**queue;
 	int			iter;
-	int			iterlink;
+	int			endqueue;
+	int			i;
+	bool		changes;
 
-	iter = 0;
-	iterlink = 2;
+	i = 0;
 	ft_make_room_inf(farm);
 	if (!(queue = (t_room**)malloc(sizeof(t_room*) * farm->room_count)))
 		exit(0);
-	queue[0] = farm->startroom;
-	while (iter < farm->room_count - 1)
+	changes = true;
+	while (i < farm->room_count && changes == true)
 	{
-		iterlink--;
-		room = queue[iter];
-		link = room->link;
-		while (link)
+		iter = 0;
+		endqueue = 1;
+		queue[0] = farm->startroom;
+		changes = false;
+		while (iter < farm->room_count && iter < endqueue)
 		{
-			if (!link->lock && link->room->pathlength > room->pathlength + link->weight)
+			room = queue[iter];
+			link = room->link;
+			while (link)
 			{
-				link->room->pathlength = room->pathlength + link->weight;
-				if (room->status != 'e')
+				if (!link->lock && link->room->pathlength > room->pathlength + link->weight)
 				{
-					queue[iter + iterlink] = link->room;
-					iterlink++;
+					link->room->pathlength = room->pathlength + link->weight;
+					queue[endqueue] = link->room;
+					changes = true;
+					endqueue++;
 				}
+				link = link->next;
 			}
-			link = link->next;
+			iter++;
+			ft_putendl(room->name);
+			ft_show_pathlengthes(farm);
+			ft_putchar('\n');
 		}
-		iter++;
-		ft_putendl(room->name);
-		ft_show_pathlengthes(farm);
-		ft_putchar('\n');
+		if (i == farm->room_count - 1 && changes == true)
+			exit(0);
+		i++;
 	}
 	free(queue);
 }
