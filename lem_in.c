@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/03 15:42:18 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/05 19:03:43 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int		main(int argc, char **argv)
 	t_farm		*farm;
 	t_hash_tab	*h_tab;
 	t_hashcodes	*hashcodes;
+	int			ret;
 
 	hashcodes = NULL;
 	if ((farm = (t_farm *)ft_memalloc(sizeof(t_farm))) && argc == 2
@@ -28,10 +29,14 @@ int		main(int argc, char **argv)
 		farm->fd = open(argv[1], O_RDONLY);
 		if (validation(h_tab, farm, &hashcodes) && bfs(farm))
 		{
-			find_shortest_path(farm);
+			while ((ret = is_free_path(farm)))
+			{
+				bellman_ford(farm);
+				find_shortest_path(farm, ret);
+			}
+			// print_valid_data(farm, argv[1]);
 			unvisit_rooms(farm);
-			print_valid_data(farm, argv[1]);
-			lem_in(farm);
+			go_ant(farm);
 		}
 		else
 			write(2, "ERROR\n", 6);

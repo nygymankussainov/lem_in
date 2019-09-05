@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+         #
+#    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/09/03 13:55:48 by hfrankly         ###   ########.fr        #
+#    Updated: 2019/09/05 19:22:49 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,12 @@ ARCHIVE = vizualizer.a
 
 NAME = vizualizer
 
-SDL = -L ~/.brew/Cellar/sdl2/2.0.9_1/lib -l SDL2-2.0.0
+SDL = -L ~/.brew/Cellar/sdl2/2.0.10/lib -l SDL2-2.0.0
 
 LIB = ../libft/ft_printf
 LIB_A = ../libft/libft.a $(LIB)/libftprintf.a 
 
-INCLUDES = -L../libft -lft -I../libft -I./includes -I ~/.brew/Cellar/sdl2/2.0.9_1/include/SDL2/ -I../ -I ../libft/ft_printf/
+INCLUDES = -L../libft -lft -I../libft -I./includes -I ~/.brew/Cellar/sdl2/2.0.10/include/SDL2/ -I../ -I ../libft/ft_printf/
 
 SRCS = ../validation/work_with_data.c ../hash_func.c ../validation/validate_coords.c ../validation/find_and_connect_rooms.c \
 		../validation/isint.c ../validation/validation.c ../validation/validate_rooms.c ../validation/write_data_in_sroom.c ../validation/validate_links.c ../validation/validate_ants.c \

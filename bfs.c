@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bfs.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nygymankussainov <nygymankussainov@stud    +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/29 17:57:30 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/03 12:49:05 by nygymankuss      ###   ########.fr       */
+/*   Updated: 2019/09/05 18:29:17 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ void	enqueue(t_queue **queue, t_room *room, t_queue **last)
 	}
 	else
 	{
+		new = *queue;
+		while (new)
+		{
+			if (new->room == room)
+				return ;
+			new = new->next;
+		}
 		if (!(new = (t_queue *)ft_memalloc(sizeof(t_queue))))
 			exit(0);
 		new->room = room;
@@ -65,7 +72,7 @@ int		calculate_distance(t_queue *queue, t_room *room, t_queue *last)
 	ret = 0;
 	while (queue)
 	{
-		link = room->link;
+		link = !room->dup ? room->link : room->dup->link;
 		ret = link->room->status == 'e' ? 1 : ret;
 		while (link)
 		{
@@ -75,14 +82,14 @@ int		calculate_distance(t_queue *queue, t_room *room, t_queue *last)
 				link->room->dist = room->dist + link->weight;
 				link->room->visited = 1;
 				link->room->prev = room;
-				printf("%s-%s in %d\n", link->room->prev->name, link->room->name, link->room->dist);
+				// printf("%s-%s in %d\n", link->room->prev->name, link->room->name, link->room->dist);
 			}
 			link = link->next;
 		}
 		dequeue(&queue);
 		room = queue ? queue->room : room;
 	}
-	printf("\n");
+	// printf("\n");
 	return (ret);
 }
 
@@ -91,12 +98,17 @@ int		bfs(t_farm *farm)
 	t_room	*room;
 	t_queue	*queue;
 	t_queue	*last;
+	int		ret;
 
 	queue = NULL;
 	room = find_startend(farm->h_tab[farm->start].room, 's');
 	last = NULL;
+	ret = is_free_path(farm);
 	enqueue(&queue, room, &last);
 	if (calculate_distance(queue, room, last))
+	{
+		find_shortest_path(farm, ret);
 		return (1);
+	}
 	return (0);
 }

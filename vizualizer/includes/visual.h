@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visual.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 15:44:57 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/03 13:57:50 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/05 19:18:50 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define VISUAL_H
 
 # include "../../lem_in.h"
-# include "/Users/hfrankly/.brew/Cellar/sdl2/2.0.9_1/include/SDL2/SDL.h"
+# include "/Users/vhazelnu/.brew/Cellar/sdl2/2.0.10/include/SDL2/SDL.h"
 # include <fcntl.h>
 # include <math.h>
 
