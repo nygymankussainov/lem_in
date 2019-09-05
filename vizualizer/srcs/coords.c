@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 15:27:17 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/02 12:40:22 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/05 19:37:15 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void		ft_change_coords(t_sdl *sdl)
 			* (sdl->map.xcenter - room->x);
 			room->y = SIZEY / 2 - (SIZEY / sdl->map.maxdif)
 			* (sdl->map.ycenter - room->y);
+			room->antnbr = -1;
 			room = room->next;
 		}
 		hc = hc->next;
