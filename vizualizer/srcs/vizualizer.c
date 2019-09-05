@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vizualizer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:16:39 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/03 14:54:59 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/05 19:24:39 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,14 +128,14 @@ void		vizualizer(t_farm *farm)
 	sdl = (t_sdl*)malloc(sizeof(t_sdl));
 	if (!(ft_init_sdl(sdl)))
 		exit(0);
-	sdl->fd = open("test", O_RDONLY);
+	sdl->fd = 0;
 	sdl->farm = farm;
 	sdl->stepsize = 100;
 	ft_change_coords(sdl);
 	SDL_RenderClear(sdl->ren);
 	ft_draw_graph(sdl);
 	SDL_RenderPresent(sdl->ren);
-	// ft_go_ant(sdl);
+	ft_go_ant(sdl);
 	while (!quit)
 	{
 		while (SDL_PollEvent(sdl->e) != 0)

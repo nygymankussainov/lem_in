@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 15:10:05 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/04 18:27:36 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/05 11:34:20 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void	ft_bell_ford(t_farm *farm)
 				if (!link->lock && link->room->pathlength > room->pathlength + link->weight)
 				{
 					link->room->pathlength = room->pathlength + link->weight;
+					link->room->prev = room;
 					queue[endqueue] = link->room;
 					changes = true;
 					endqueue++;
@@ -123,9 +124,6 @@ void	ft_bell_ford(t_farm *farm)
 				link = link->next;
 			}
 			iter++;
-			ft_putendl(room->name);
-			ft_show_pathlengthes(farm);
-			ft_putchar('\n');
 		}
 		if (i == farm->room_count - 1 && changes == true)
 			exit(0);
@@ -206,6 +204,9 @@ void    lem_in(t_farm *farm)
 	while (i < 1) // проверка скорости
 	{
     	ft_bell_ford(farm);
+		find_shortest_path(farm);
 		i++;
 	}
+	find_shortest_path(farm);
+	ft_putchar('\n');
 }

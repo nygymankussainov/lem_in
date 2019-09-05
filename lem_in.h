@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/03 23:25:26 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/05 17:58:32 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
-# include "vizualizer/includes/visual.h"
+// # include "vizualizer/includes/visual.h"
 # include "./libft/ft_printf/ft_printf.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdbool.h>
+# include <limits.h>
 
 typedef struct s_link		t_link;
 typedef struct s_room		t_room;
@@ -49,14 +50,15 @@ struct						s_room
 	int						x;
 	int						y;
 	int						dist;
-	int						pathlength;
 	char					*name;
 	char					status;
 	bool					visited;
-	bool					was;
+	bool					in;
+	bool					out;
 	t_link					*link;
 	struct s_room			*prev;
 	struct s_room			*next;
+	struct s_room			*dup;
 };
 
 struct						s_link
@@ -124,9 +126,10 @@ int							bfs(t_farm *farm);
 t_room						*find_startend(t_room *room, char c);
 void						dequeue(t_queue **queue);
 void						enqueue(t_queue **queue, t_room *room, t_queue **last);
-int							find_shortest_path(t_farm *farm);
+void						find_shortest_path(t_farm *farm, int ret);
 void						unvisit_rooms(t_farm *farm);
-void 						lem_in(t_farm *farm);
-void						ft_show_pathlengthes(t_farm *farm);
+void						bellman_ford(t_farm *farm);
+int							is_free_path(t_farm *farm);
+void						go_ant(t_farm *farm);
 
 #endif
