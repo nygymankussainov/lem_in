@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/05 19:03:43 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/06 16:09:21 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,13 @@ int		main(int argc, char **argv)
 			}
 			// print_valid_data(farm, argv[1]);
 			unvisit_rooms(farm);
-			go_ant(farm);
+			run_ants(farm);
 		}
 		else
 			write(2, "ERROR\n", 6);
 		farm->h_tab = h_tab;
 		farm->hashcodes = hashcodes;
+		delete_dup_rooms(farm);
 		free_all_structs(hashcodes, h_tab, farm);
 		exit(1);
 	}

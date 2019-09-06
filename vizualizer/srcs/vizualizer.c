@@ -6,11 +6,23 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:16:39 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/05 19:24:39 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/06 13:43:43 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/visual.h"
+
+void		ft_show_array(int *array, int size)
+{
+	int i;
+
+	i = 0;
+	while (i < size)
+	{
+		printf("%d: %d\n", i, array[i]);
+		i++;
+	}
+}
 
 void		ft_get_ants(t_sdl *sdl)
 {
@@ -62,6 +74,8 @@ void		ft_send_ants(t_sdl *sdl, int *length)
 			}
 			if (!pause)
 			{
+				if (i == 0)
+					printf("x = %d y = %d\n", sdl->ants[0].x, sdl->ants[0].y);
 				ft_move_ant(sdl, &(sdl->ants[i]), step[i]);
 				i++;
 			}
@@ -88,12 +102,12 @@ int			ft_do_move(t_sdl *sdl)
 	i = -1;
 	while (++i < sdl->arrsize)
 		length[i] = ft_get_link_length(sdl->ants[i].srcroom, sdl->ants[i].dstroom);
+	ft_show_array(length, sdl->arrsize);
 	ft_send_ants(sdl, length);
 	i = -1;
 	while (++i < sdl->arrsize)
 	{
 		sdl->ants[i].dstroom->antnbr = ft_atoi(&sdl->cmdline[i][1]);
-		if (sdl->ants[i].antnbr == sdl->ants[i].srcroom->antnbr)
 			sdl->ants[i].srcroom->antnbr = -1;
 	}
 	return (0);

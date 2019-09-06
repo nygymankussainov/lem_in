@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   go_ant.c                                           :+:      :+:    :+:   */
+/*   run_ants.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -28,7 +28,7 @@ int		check_lock(t_room *room, t_link *link)
 	return (0);
 }
 
-void	go(t_queue *queue, t_room *room, t_queue *last)
+void	run(t_queue *queue, t_room *room, t_queue *last)
 {
 	t_link	*link;
 	int		i;
@@ -41,7 +41,7 @@ void	go(t_queue *queue, t_room *room, t_queue *last)
 		link = !room->dup ? room->link : room->dup->link;
 		while (link)
 		{
-			if (check_lock(room, link) && !link->room->visited)
+			if (!link->room->visited && check_lock(room, link))
 			{
 				enqueue(&queue, link->room, &last);
 				link->room->visited = link->room-> status != 'e' ? 1 : link->room->visited;
@@ -63,7 +63,7 @@ void	go(t_queue *queue, t_room *room, t_queue *last)
 	}
 }
 
-void	go_ant(t_farm *farm)
+void	run_ants(t_farm *farm)
 {
 	t_room	*room;
 	t_queue	*queue;
@@ -73,5 +73,5 @@ void	go_ant(t_farm *farm)
 	room = find_startend(farm->h_tab[farm->start].room, 's');
 	last = NULL;
 	enqueue(&queue, room, &last);
-	go(queue, room, last);
+	run(queue, room, last);
 }
