@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/05 17:58:32 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/06 16:09:06 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void						find_shortest_path(t_farm *farm, int ret);
 void						unvisit_rooms(t_farm *farm);
 void						bellman_ford(t_farm *farm);
 int							is_free_path(t_farm *farm);
-void						go_ant(t_farm *farm);
+void						run_ants(t_farm *farm);
+void						delete_dup_rooms(t_farm *farm);
 
 #endif

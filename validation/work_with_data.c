@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   work_with_data.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 15:03:04 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/30 16:38:09 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/06 14:00:02 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,28 @@ int		isroom(char *line)
 		i++;
 	}
 	return (sp != 2 ? 0 : 1);
+}
+
+void	delete_dup_rooms(t_farm *farm)
+{
+	t_hashcodes	*hc;
+	t_room		*room;
+
+	hc = farm->hashcodes;
+	while (hc)
+	{
+		room = farm->h_tab[hc->hash_code].room;
+		while (room)
+		{
+			if (room->dup)
+			{
+				room->link = room->dup->link;
+				free(room->dup);
+			}
+			room = room->next;
+		}
+		hc = hc->next;
+	}
 }
 
 void	free_all_structs(t_hashcodes *hashcodes,
