@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/23 17:24:00 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/02 16:36:34 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/10 20:46:39 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int		ifstartend(t_farm *farm, t_hashcodes **hashcodes,
 	char	*name;
 	char	c;
 
-	if ((!ft_strcmp("##start", farm->line) && farm->start) ||
-		(!ft_strcmp("##end", farm->line) && farm->end))
+	if ((!ft_strcmp("##start", farm->line) && farm->start != -1) ||
+		(!ft_strcmp("##end", farm->line) && farm->end != -1))
 		return (0);
 	tmp = farm->room_count;
 	c = !ft_strcmp("##start", farm->line) ? 's' : 'e';
@@ -98,7 +98,7 @@ int		validate_rooms(t_hashcodes **hashcodes, t_hash_tab *h_tab,
 			farm->i = farm->i;
 		else if (islink(farm->line))
 		{
-			if (!farm->start || !farm->end ||
+			if (farm->start < 0 || farm->end < 0 ||
 				!farm->room_count || isduplicate(*coords))
 				return (0);
 			return (1);

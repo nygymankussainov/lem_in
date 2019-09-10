@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 15:03:04 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/06 14:00:02 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/09 14:47:20 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,27 @@ int		isroom(char *line)
 	return (sp != 2 ? 0 : 1);
 }
 
-void	delete_dup_rooms(t_farm *farm)
-{
-	t_hashcodes	*hc;
-	t_room		*room;
+// void	delete_dup_rooms(t_farm *farm)
+// {
+// 	t_hashcodes	*hc;
+// 	t_room		*room;
 
-	hc = farm->hashcodes;
-	while (hc)
-	{
-		room = farm->h_tab[hc->hash_code].room;
-		while (room)
-		{
-			if (room->dup)
-			{
-				room->link = room->dup->link;
-				free(room->dup);
-			}
-			room = room->next;
-		}
-		hc = hc->next;
-	}
-}
+// 	hc = farm->hashcodes;
+// 	while (hc)
+// 	{
+// 		room = farm->h_tab[hc->hash_code].room;
+// 		while (room)
+// 		{
+// 			if (room->dup)
+// 			{
+// 				room->link = room->dup->link;
+// 				free(room->dup);
+// 			}
+// 			room = room->next;
+// 		}
+// 		hc = hc->next;
+// 	}
+// }
 
 void	free_all_structs(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab, t_farm *farm)
