@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/29 17:57:30 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/05 18:29:17 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/10 20:08:38 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		calculate_distance(t_queue *queue, t_room *room, t_queue *last)
 	ret = 0;
 	while (queue)
 	{
-		link = !room->dup ? room->link : room->dup->link;
+		link = room->link;
 		ret = link->room->status == 'e' ? 1 : ret;
 		while (link)
 		{
@@ -107,8 +107,8 @@ int		bfs(t_farm *farm)
 	enqueue(&queue, room, &last);
 	if (calculate_distance(queue, room, last))
 	{
-		find_shortest_path(farm, ret);
-		return (1);
+		ret = find_shortest_path(farm, ret);
+		return (ret);
 	}
-	return (0);
+	return (-1);
 }

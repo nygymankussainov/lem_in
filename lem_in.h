@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/06 16:09:06 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/10 20:00:59 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,14 @@ struct						s_room
 	char					*name;
 	char					status;
 	bool					visited;
+	t_link					*link;
+	bool					dup;
 	bool					in;
 	bool					out;
-	t_link					*link;
+	struct s_room			*outroom;
+	struct s_room			*inroom;
 	struct s_room			*prev;
 	struct s_room			*next;
-	struct s_room			*dup;
 };
 
 struct						s_link
@@ -91,6 +93,12 @@ typedef struct				s_farm
 	t_hash_tab				*h_tab;
 	t_hashcodes				*hashcodes;
 }							t_farm;
+
+typedef struct				s_path
+{
+	t_room					*room;
+	struct s_path			*next;
+}							t_path;
 
 void						free_all_structs(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab, t_farm *farm);
@@ -126,11 +134,10 @@ int							bfs(t_farm *farm);
 t_room						*find_startend(t_room *room, char c);
 void						dequeue(t_queue **queue);
 void						enqueue(t_queue **queue, t_room *room, t_queue **last);
-void						find_shortest_path(t_farm *farm, int ret);
+int							find_shortest_path(t_farm *farm, int ret);
 void						unvisit_rooms(t_farm *farm);
-void						bellman_ford(t_farm *farm);
+int							bellman_ford(t_farm *farm);
 int							is_free_path(t_farm *farm);
 void						run_ants(t_farm *farm);
-void						delete_dup_rooms(t_farm *farm);
 
 #endif

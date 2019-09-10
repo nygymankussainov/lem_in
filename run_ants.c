@@ -18,11 +18,19 @@ int		check_lock(t_room *room, t_link *link)
 	t_link	*link_tmp;
 
 	room_tmp = link->room;
-	link_tmp = !room_tmp->dup ? room_tmp->link : room_tmp->dup->link;
+	link_tmp = room_tmp->link;
 	if (!link->lock)
 		return (0);
-	while (link_tmp->room != room)
-		link_tmp = link_tmp->next;
+	if (!room->dup)
+	{
+		while (link_tmp && link_tmp->room != room)
+			link_tmp = link_tmp->next;
+		if (room_tmp->dup && room_tmp->in && !room->dup)
+			link_tmp = room_tmp->outroom->link;
+	}
+	else if (room->dup && room->out)
+		while (link_tmp && link_tmp->room->name != room->name)
+			link_tmp = link_tmp->next;
 	if (link_tmp && !link_tmp->lock)
 		return (1);
 	return (0);
@@ -38,9 +46,16 @@ void	run(t_queue *queue, t_room *room, t_queue *last)
 	j = 0;
 	while (queue)
 	{
-		link = !room->dup ? room->link : room->dup->link;
+		link = room->link;
 		while (link)
 		{
+			if (room->outroom && room->outroom == link->room)
+			{
+				enqueue(&queue, link->room, &last);
+				link->room->visited = 1;
+				link = link->next;
+				continue ;
+			}
 			if (!link->room->visited && check_lock(room, link))
 			{
 				enqueue(&queue, link->room, &last);
