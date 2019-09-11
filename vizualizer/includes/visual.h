@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 15:44:57 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/05 20:23:57 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/10 12:54:16 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,8 @@ struct		s_point
 {
 	float			x;
 	float			y;
-	float			z;
 	float			x0;
 	float			y0;
-	float			z0;
 	int				color;
 };
 

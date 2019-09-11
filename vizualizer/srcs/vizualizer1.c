@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:17:24 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/02 12:40:30 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/10 12:10:32 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_room		*ft_find_ant_room(t_farm *farm, char *str)
 
 int		ft_get_link_length(const t_room *src, const t_room *dst)
 {
-	return (sqrt(pow((dst->x - src->x), 2) + pow(dst->y - src->y, 2)));
+	return (sqrt(pow(dst->x - src->x, 2) + pow(dst->y - src->y, 2)));
 }
 
 void		free_arr(char **arr)

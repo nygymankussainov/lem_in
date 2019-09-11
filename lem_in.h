@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/03 23:25:26 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/11 15:26:29 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,11 @@ struct						s_room
 	char					status;
 	bool					visited;
 	bool					was;
+	bool					induplicate;
+	bool					outduplicate;
 	t_link					*link;
+	t_room					*in;
+	t_room					*out;
 	struct s_room			*prev;
 	struct s_room			*next;
 };
@@ -64,6 +68,7 @@ struct						s_link
 	t_room					*room;
 	int						weight;
 	bool					lock;
+	bool					destroy;
 	struct s_link			*next;
 };
 
@@ -77,6 +82,7 @@ typedef struct				s_farm
 	int						ants;
 	int						room_count;
 	int						link_count;
+	int						duplicate_count;
 	int						start;
 	int						end;
 	int						recur;
@@ -86,6 +92,7 @@ typedef struct				s_farm
 	char					*name;
 	int						size;
 	t_room					*startroom;
+	t_room					*endroom;
 	t_hash_tab				*h_tab;
 	t_hashcodes				*hashcodes;
 }							t_farm;
@@ -128,5 +135,7 @@ int							find_shortest_path(t_farm *farm);
 void						unvisit_rooms(t_farm *farm);
 void 						lem_in(t_farm *farm);
 void						ft_show_pathlengthes(t_farm *farm);
+int							is_free_path(t_farm *farm);
+t_room						*ft_return_room(t_farm *farm, char *name);
 
 #endif
