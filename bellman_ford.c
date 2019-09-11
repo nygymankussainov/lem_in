@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 14:52:47 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/10 19:41:57 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/11 14:43:13 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,17 @@ int		calculate_neg_dist(t_queue **queue, t_room *room, t_queue *last)
 		link = room->link;
 		while (link && room->status != 'e')
 		{
-			ret = link->room->status == 'e' ? 1 : ret;
+			if (link->room)
+				ret = link->room->status == 'e' ? 1 : ret;
 			if (room->out && link->room->outroom == room)
 			{
 				link->room->visited = 1;
 				link = link->next;
 				continue ;
 			}
-			if (!link->lock && !link->room->visited && link->room->status != 'e')
+			if (link->room && !link->lock && !link->room->visited && link->room->status != 'e')
 				enqueue(queue, link->room, &last);
-			if (!link->room->visited && !link->lock && room->dist + link->weight < link->room->dist)
+			if (link->room && !link->room->visited && !link->lock && room->dist + link->weight < link->room->dist)
 			{
 				link->room->dist = room->dist + link->weight;
 				link->room->prev = room;
