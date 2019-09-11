@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bfs.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nygymankussainov <nygymankussainov@stud    +#+  +:+       +#+        */
+/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/29 17:57:30 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/03 12:49:05 by nygymankuss      ###   ########.fr       */
+/*   Updated: 2019/09/11 15:31:19 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,32 @@ int		calculate_distance(t_queue *queue, t_room *room, t_queue *last)
 
 int		bfs(t_farm *farm)
 {
+	t_room	**queue;
 	t_room	*room;
-	t_queue	*queue;
-	t_queue	*last;
+	t_link	*link;
+	int		iter;
+	int		endqueue;
 
-	queue = NULL;
-	room = find_startend(farm->h_tab[farm->start].room, 's');
-	last = NULL;
-	enqueue(&queue, room, &last);
-	if (calculate_distance(queue, room, last))
-		return (1);
-	return (0);
+	if (!(queue = (t_room**)malloc(sizeof(t_room*) * farm->room_count)))
+		return (0);
+	iter = 0;
+	endqueue = 1;
+	queue[iter] = farm->startroom;
+	while (queue[iter])
+	{
+		room = queue[iter];
+		link = room->link;
+		while (link)
+		{
+			if (link->room->prev == NULL)
+			{
+				queue[endqueue] = link->room;
+				link->room->prev = room;
+				endqueue++;
+			}
+			link = link->next;
+		}
+		iter++;
+	}
+	free(queue);
 }

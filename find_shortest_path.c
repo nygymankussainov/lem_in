@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_shortest_path.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nygymankussainov <nygymankussainov@stud    +#+  +:+       +#+        */
+/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:04:26 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/03 12:50:22 by nygymankuss      ###   ########.fr       */
+/*   Updated: 2019/09/11 15:30:24 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,31 +46,35 @@ void	unvisit_rooms(t_farm *farm)
 	}
 }
 
-int		find_shortest_path(t_farm *farm)
+t_room	*ft_roomcpy(t_room *room)
 {
-	t_room	*room;
-	t_room	*tmp;
-	t_link	*link;
-	int		ret;
+	t_room	*res;
 
-	room = find_startend(farm->h_tab[farm->end].room, 'e');
-	link = room->link;
-	if (!(ret = is_free_path(farm)))
-		return (0);
-	while (room->status != 's')
-	{
-		link = room->link;
-		printf("%s-", room->name);
-		while (link->room != room->prev)
-			link = link->next;
-		link->weight = -1;
-		tmp = room;
-		room = link->room;
-		link = room->link;
-		while (link->room != tmp)
-			link = link->next;
-		link->lock = 1;
-	}
-	printf("%s\n", room->name);
-	return (ret);
+	if (!(res = (t_room*)malloc(sizeof(t_room))))
+		exit(0);
+	res->antnbr = room->antnbr;
+	res->x = room->x;
+	res->y = room->y;
+	res->dist = room->dist;
+	res->pathlength = room->pathlength;
+	res->name = room->name;
+	res->status = room->status;
+	res->visited = room->visited;
+	if (!(res->link = (t_link*)malloc(sizeof(t_link))))
+		exit(0);
+	res->in = NULL;
+	res->out = NULL;
+	res->prev = room->prev;
+	res->next = room->next;
+	return (res);
 }
+
+// void	ft_make_room_duplicate(t_farm *farm, t_room *room)
+// {
+	
+// }
+
+// int		find_shortest_path(t_farm *farm)
+// {
+	
+// }

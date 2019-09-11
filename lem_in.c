@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/03 15:42:18 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/11 15:16:46 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,8 @@ int		main(int argc, char **argv)
 		farm->fd = open(argv[1], O_RDONLY);
 		if (validation(h_tab, farm, &hashcodes) && bfs(farm))
 		{
-			find_shortest_path(farm);
-			unvisit_rooms(farm);
-			print_valid_data(farm, argv[1]);
+			farm->startroom = find_startend(farm->h_tab[farm->start].room, 's');
+			farm->endroom = find_startend(farm->h_tab[farm->end].room, 'e');
 			lem_in(farm);
 		}
 		else

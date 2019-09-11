@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:16:39 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/05 22:39:29 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/11 13:58:17 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ void		ft_send_ants(t_sdl *sdl, int *length)
 		exit(0);
 	i = -1;
 	while (++i < sdl->arrsize)
+	{
 		step[i] = length[i] / sdl->stepsize;
+		step[i] = (step[i] == 0) ? 1 : step[i];
+	}
 	while (temp < sdl->stepsize)
 	{
 		i = 0;
@@ -71,19 +74,22 @@ void		ft_send_ants(t_sdl *sdl, int *length)
 					exit(0);
 				else if ((sdl->e->type == SDL_KEYDOWN && sdl->e->key.keysym.sym == SDLK_SPACE))
 					pause = (pause) ? 0 : 1;
-			}
-			if (!pause)
+			}	
+			if (!pause && sdl->ants[i].x == sdl->ants[i].dstroom->x)
 			{
-				if (i == 0)
-					printf("x = %d y = %d\n", sdl->ants[0].x, sdl->ants[0].y);
-				ft_move_ant(sdl, &(sdl->ants[i]), step[i]);
-				i++;
+				filledCircleColor(sdl->ren, sdl->ants[i].x, sdl->ants[i].y, sdl->ants[i].radius, 0xFF0058A6);
+				SDL_SetRenderDrawColor(sdl->ren, 0x00, 0x00, 0x00, 0x00);
 			}
+			else if (!pause)
+				ft_move_ant(sdl, &(sdl->ants[i]), step[i]);
+			if (!pause)
+				i++;
 		}
 		temp++;
 		SDL_RenderPresent(sdl->ren);
 		SDL_Delay(10);
 	}
+	free(step);
 }
 
 int			ft_do_move(t_sdl *sdl)
@@ -102,14 +108,13 @@ int			ft_do_move(t_sdl *sdl)
 	i = -1;
 	while (++i < sdl->arrsize)
 		length[i] = ft_get_link_length(sdl->ants[i].srcroom, sdl->ants[i].dstroom);
-	ft_show_array(length, sdl->arrsize);
 	ft_send_ants(sdl, length);
 	i = -1;
 	while (++i < sdl->arrsize)
-	{
+		sdl->ants[i].srcroom->antnbr = -1;
+	i = -1;
+	while (++i < sdl->arrsize)
 		sdl->ants[i].dstroom->antnbr = ft_atoi(&sdl->cmdline[i][1]);
-			sdl->ants[i].srcroom->antnbr = -1;
-	}
 	return (0);
 }
 

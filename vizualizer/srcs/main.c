@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 15:45:43 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/30 19:03:00 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/11 15:15:15 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int		main(int argc, char **argv)
 		if (validation(h_tab, farm, &hashcodes))
 			print_valid_data(farm, argv[1]);
 		else
+		{
 			write(2, "ERROR\n", 6);
+			exit(0);
+		}
 		farm->h_tab = h_tab;
 		farm->hashcodes = hashcodes;
 		vizualizer(farm);
