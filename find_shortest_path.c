@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:04:26 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/10 20:02:12 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/11 15:41:06 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ void	unvisit_rooms(t_farm *farm)
 		{
 			room->visited = 0;
 			if (room->dup)
+			{
 				room->outroom->visited = 0;
+			}
 			room = room->next;
 		}
 		tmp = tmp->next;
@@ -144,21 +146,24 @@ int		find_shortest_path(t_farm *farm, int ret)
 				create_dup_rooms(tmp);
 			if (tmp->room->status == 'e')
 			{
-				while (tmp->room->link->room != room)
+				while (tmp->room->link && tmp->room->link->room != room)
 					tmp->room->link = tmp->room->link->next;
-				tmp->room->link->room = room->outroom;
-				tmp->room->link->weight = -1;
+				if (tmp->room->link)
+				{
+					tmp->room->link->room = room->outroom;
+					tmp->room->link->weight = -1;
+				}
 			}
 		}
 	}
 	while (path)
 	{
-		printf("%s-", path->room->name);
+		// printf("%s-", path->room->name);
 		tmp = path->next;
 		free(path);
 		path = tmp;
 	}
-	printf("\n");
+	// printf("\n");
 	// printf("%s\n", room->name);
 	return (ret);
 }
