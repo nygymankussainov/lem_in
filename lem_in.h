@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/11 18:34:13 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/12 19:39:11 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ struct						s_link
 	t_room					*room;
 	int						weight;
 	bool					lock;
+	bool					destroy;
 	struct s_link			*next;
 };
 
@@ -87,6 +88,7 @@ typedef struct				s_farm
 	int						ants;
 	int						room_count;
 	int						link_count;
+	int						duplicate_count;
 	int						start;
 	int						end;
 	int						recur;

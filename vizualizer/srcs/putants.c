@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 00:54:20 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/05 23:06:23 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/10 13:04:51 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void		ft_draw_line(t_sdl *sdl, t_ant *ant, t_point s, t_point e, int step)
 	sign.y = s.y < e.y ? 1 : -1;
 	error[0] = delta.x - delta.y;
 	cur = s;
+	cur.x0 = cur.x;
+	cur.y0 = cur.y;
 	while (step)
 	{
 		if ((error[1] = error[0] * 2) > -delta.y)
@@ -42,7 +44,12 @@ void		ft_draw_line(t_sdl *sdl, t_ant *ant, t_point s, t_point e, int step)
 			error[0] += delta.x;
 			cur.y += sign.y;
 		}
-		step--;
+		if (sqrt(pow((cur.x - cur.x0), 2) + pow(cur.y - cur.y0, 2)) > 1)
+		{
+			cur.x0 = cur.x;
+			cur.y0 = cur.y;
+			step--;
+		}
 	}
 	ant->x = cur.x;
 	ant->y = cur.y;

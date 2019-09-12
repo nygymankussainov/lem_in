@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 15:44:57 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/06 13:43:31 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/12 19:38:22 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,8 @@ struct		s_point
 {
 	float			x;
 	float			y;
-	float			z;
 	float			x0;
 	float			y0;
-	float			z0;
 	int				color;
 };
 
