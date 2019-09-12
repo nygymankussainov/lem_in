@@ -6,7 +6,7 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/09/06 13:52:38 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/09/12 19:50:02 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ NAME = lem-in
 
 LIB = libft/ft_printf
 LIB_A = libft/libft.a $(LIB)/libftprintf.a 
+VISUAL = ./vizualizer
 
 INCLUDES = -I ./libft -I ./libft/ft_printf/ -I ./includes
 
@@ -33,6 +34,7 @@ all: $(ARCHIVE) $(NAME)
 
 $(ARCHIVE): $(OBJ)
 	@make -C $(LIB)
+	@make -C $(VISUAL)
 	@ar rc $(ARCHIVE) $(OBJ)
 	@ranlib $(ARCHIVE)
 
@@ -47,6 +49,7 @@ clean:
 	@rm -f $(ARCHIVE)
 	@rm -f $(NAME)
 	@rm -f $(OBJ)
+	@rm -f visual
 
 fclean: clean
 	@make fclean -C $(LIB)

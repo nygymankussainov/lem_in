@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 18:38:35 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/12 19:37:22 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/12 21:20:28 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	unvisit_rooms(t_farm *farm)
 	}
 }
 
-void	create_link(t_room *room)
+int		create_link(t_room *room)
 {
 	t_link	*link1;
 	t_link	*link2;
@@ -67,8 +67,10 @@ void	create_link(t_room *room)
 	out = room->outroom->link;
 	link1->room = room->outroom;
 	link1->lock = 1;
-	while (out->room != room->prev)
+	while (out && out->room != room->prev)
 		out = out->next;
+	if (!out)
+		return (0);
 	link2->room = out->room;
 	link2->weight = -1;
 	link2->lock = 0;
@@ -77,9 +79,10 @@ void	create_link(t_room *room)
 	out->room = room;
 	out->lock = 1;
 	out->weight = 0;
+	return (1);
 }
 
-void	create_dup_room(t_farm *farm, t_room *clone)
+int		create_dup_room(t_farm *farm, t_room *clone)
 {
 	t_room	*room;
 	t_room	*end;
@@ -99,7 +102,9 @@ void	create_dup_room(t_farm *farm, t_room *clone)
 		room->in = 1;
 		room->outroom->out = 1;
 	}
-	create_link(room);
+	if (!create_link(room))
+		return (0);
+	return (1);
 }
 
 int		find_shortest_path(t_farm *farm, int ret)
@@ -117,7 +122,8 @@ int		find_shortest_path(t_farm *farm, int ret)
 	while (room->status != 's')
 	{
 		if (main_room->prev->status != 's' && ret > 1)
-			create_dup_room(farm, main_room);
+			if (!create_dup_room(farm, main_room))
+				return (0);
 		link = room->link;
 		printf("%s-", room->name);
 		while (link->room != main_room->prev && link->room->name != main_room->prev->name)
