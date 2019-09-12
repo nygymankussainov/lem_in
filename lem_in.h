@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/10 20:00:59 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/11 18:34:13 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,12 @@ typedef struct				s_hash_tab
 	t_room					*room;
 }							t_hash_tab;
 
+typedef struct				s_path
+{
+	t_room					*room;
+	struct s_path			*next;
+}							t_path;
+
 typedef struct				s_farm
 {
 	int						ants;
@@ -89,16 +95,12 @@ typedef struct				s_farm
 	char					*line;
 	char					*name;
 	int						size;
+	struct s_path			**paths;
+	t_room					*endroom;
 	t_room					*startroom;
 	t_hash_tab				*h_tab;
 	t_hashcodes				*hashcodes;
 }							t_farm;
-
-typedef struct				s_path
-{
-	t_room					*room;
-	struct s_path			*next;
-}							t_path;
 
 void						free_all_structs(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab, t_farm *farm);
@@ -137,7 +139,7 @@ void						enqueue(t_queue **queue, t_room *room, t_queue **last);
 int							find_shortest_path(t_farm *farm, int ret);
 void						unvisit_rooms(t_farm *farm);
 int							bellman_ford(t_farm *farm);
-int							is_free_path(t_farm *farm);
+int							ft_count_paths(t_farm *farm);
 void						run_ants(t_farm *farm);
 
 #endif

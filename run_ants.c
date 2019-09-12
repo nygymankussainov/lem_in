@@ -36,6 +36,41 @@ int		check_lock(t_room *room, t_link *link)
 	return (0);
 }
 
+void	unlock_links(t_farm *farm)
+{
+	t_hashcodes	*tmp;
+	t_room		*room;
+	t_link		*link;
+	int			key;
+
+	tmp = farm->hashcodes;
+	key = 0;
+	while (tmp)
+	{
+		room = farm->h_tab[tmp->hash_code].room;
+		while (room)
+		{
+			link = room->link;
+			while (link)
+			{
+				link->lock = 0;
+				link = link->next;
+				if (!link && room->dup && !key)
+				{
+					if (room->in)
+						link = room->outroom->link;
+					else if (room->out)
+						link = room->inroom->link;
+					key = 1;
+				}
+			}
+			key = 0;
+			room = room->next;
+		}
+		tmp = tmp->next;
+	}
+}
+
 void	run(t_queue *queue, t_room *room, t_queue *last)
 {
 	t_link	*link;
@@ -78,15 +113,59 @@ void	run(t_queue *queue, t_room *room, t_queue *last)
 	}
 }
 
+void	check_link(t_room *room1, t_room *room2, t_path *path)
+{
+	t_path	*tmp;
+	t_link	*link;
+
+	tmp = path;
+	while (tmp)
+	{
+		if (tmp->room == room2 && tmp->room->next == room1)
+		{
+			link = room2->link;
+			while (link)
+			{
+				if (link->room->name == room1->name)
+					link->lock = 1;
+				link = link->next;
+			}
+			link = room1->link;
+			while (link)
+			{
+				if (link->room->name == room2->name)
+					link->lock = 1;
+				link = link->next;
+			}
+		}
+		tmp = tmp->next;	
+	}
+}
+
 void	run_ants(t_farm *farm)
 {
-	t_room	*room;
-	t_queue	*queue;
-	t_queue	*last;
+	t_room	*room1;
+	t_room	*room2;
+	t_path	*path;
+	int		i;
 
-	queue = NULL;
-	room = find_startend(farm->h_tab[farm->start].room, 's');
-	last = NULL;
-	enqueue(&queue, room, &last);
-	run(queue, room, last);
+	i = 0;
+	unvisit_rooms(farm);
+	unlock_links(farm);
+	i = 0;
+	while (farm->paths[i + 1])
+	{
+		path = farm->paths[i];
+		path->room = path->next->room;
+		while (path->room)
+		{
+			room1 = path->room;
+			room2 = path->next->room;
+			while (room1->name == room2->name)
+				room2 = path->next->room;
+			check_link(room1, room2, farm->paths[i + 1]);
+			path->room = path->room->next;
+		}
+		i++;
+	}
 }
