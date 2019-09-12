@@ -6,53 +6,28 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 15:27:17 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/05 19:37:15 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/12 22:10:20 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/visual.h"
 
-void		ft_change_coords(t_sdl *sdl)
+void	ft_find_max_coord(t_room *room, int *max, char c)
 {
-	t_hash_tab	*ht;
-	t_hashcodes	*hc;
-	t_room		*room;
-
-	sdl->map = ft_initmap(sdl->farm, ft_find_maxcoords(sdl->farm));
-	ht = sdl->farm->h_tab;
-	hc = sdl->farm->hashcodes;
-	while (hc)
-	{
-		room = ht[hc->hash_code].room;
+	if (c == 'x')
 		while (room)
 		{
-			room->x = SIZEX / 2 - (SIZEX / sdl->map.maxdif)
-			* (sdl->map.xcenter - room->x);
-			room->y = SIZEY / 2 - (SIZEY / sdl->map.maxdif)
-			* (sdl->map.ycenter - room->y);
-			room->antnbr = -1;
+			if (*max < room->x)
+				*max = room->x;
 			room = room->next;
 		}
-		hc = hc->next;
-	}
-}
-
-t_map	ft_initmap(t_farm *farm, int *maxcoords)
-{
-	t_map	map;
-	int		i;
-
-	i = -1;
-	if (maxcoords[0] - maxcoords[2] < maxcoords[1] - maxcoords[3])
-		map.maxdif = abs(maxcoords[1] - maxcoords[3]) + 2;
 	else
-		map.maxdif = abs(maxcoords[0] - maxcoords[2]) + 2;
-	map.xcenter = ft_find_max_infarm(farm, 'x')
-	- (maxcoords[0] - maxcoords[2]) / 2;
-	map.ycenter = ft_find_max_infarm(farm, 'y')
-	- (maxcoords[1] - maxcoords[3]) / 2;
-	free(maxcoords);
-	return (map);
+		while (room)
+		{
+			if (*max < room->y)
+				*max = room->y;
+			room = room->next;
+		}
 }
 
 int		ft_find_max_infarm(t_farm *farm, char c)
@@ -67,27 +42,35 @@ int		ft_find_max_infarm(t_farm *farm, char c)
 		while (hc)
 		{
 			room = farm->h_tab[hc->hash_code].room;
-			while (room)
-			{
-				if (max < room->x)
-					max = room->x;
-				room = room->next;
-			}
+			ft_find_max_coord(room, &max, 'x');
 			hc = hc->next;
-		}	
+		}
 	else
 		while (hc)
 		{
 			room = farm->h_tab[hc->hash_code].room;
-			while (room)
-			{
-				if (max < room->y)
-					max = room->y;
-				room = room->next;
-			}
+			ft_find_max_coord(room, &max, 'y');
 			hc = hc->next;
-		}	
+		}
 	return (max);
+}
+
+void	ft_find_min_coord(t_room *room, int *min, char c)
+{
+	if (c == 'x')
+		while (room)
+		{
+			if (*min > room->x)
+				*min = room->x;
+			room = room->next;
+		}
+	else
+		while (room)
+		{
+			if (*min > room->x)
+				*min = room->x;
+			room = room->next;
+		}
 }
 
 int		ft_find_min_infarm(t_farm *farm, char c)
@@ -102,27 +85,17 @@ int		ft_find_min_infarm(t_farm *farm, char c)
 		while (hc)
 		{
 			room = farm->h_tab[hc->hash_code].room;
-			while (room)
-			{
-				if (min > room->x)
-					min = room->x;
-				room = room->next;
-			}
+			ft_find_min_coord(room, &min, 'x');
 			hc = hc->next;
-		}	
+		}
 	else
 		while (hc)
 		{
 			room = farm->h_tab[hc->hash_code].room;
-			while (room)
-			{
-				if (min > room->y)
-					min = room->y;
-				room = room->next;
-			}
+			ft_find_min_coord(room, &min, 'y');
 			hc = hc->next;
-		}	
-		return (min);
+		}
+	return (min);
 }
 
 int		*ft_find_maxcoords(t_farm *farm)
