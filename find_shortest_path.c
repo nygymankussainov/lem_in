@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:04:26 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/11 15:30:24 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/11 17:26:34 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,18 @@ int		is_free_path(t_farm *farm)
 {
 	t_room	*room;
 	t_link	*link;
+	int		i;
 
+	i = 0;
 	room = find_startend(farm->h_tab[farm->start].room, 's');
 	link = room->link;
 	while (link)
 	{
 		if (!link->lock)
-			return (1);
+			i++;
 		link = link->next;
 	}
-	return (0);
+	return (i);
 }
 
 void	unvisit_rooms(t_farm *farm)
@@ -40,33 +42,166 @@ void	unvisit_rooms(t_farm *farm)
 		while (room)
 		{
 			room->visited = 0;
+			if (room->dup)
+			{
+				room->outroom->visited = 0;
+			}
 			room = room->next;
 		}
 		tmp = tmp->next;
 	}
 }
 
-t_room	*ft_roomcpy(t_room *room)
+void	manage_links(t_room *in, t_room *out)
 {
-	t_room	*res;
+	t_link	*linkin;
+	t_link	*linkout;
+	t_link	*tmp;
 
-	if (!(res = (t_room*)malloc(sizeof(t_room))))
+	if (!(linkin = (t_link *)ft_memalloc(sizeof(t_link))) ||
+		!(tmp = (t_link *)ft_memalloc(sizeof(t_link))))
 		exit(0);
-	res->antnbr = room->antnbr;
-	res->x = room->x;
-	res->y = room->y;
-	res->dist = room->dist;
-	res->pathlength = room->pathlength;
-	res->name = room->name;
-	res->status = room->status;
-	res->visited = room->visited;
-	if (!(res->link = (t_link*)malloc(sizeof(t_link))))
+	linkin->room = !in->prev->dup ? in->prev : in->prev->outroom;
+	linkin->weight = -1;
+	out->link = in->link;
+	tmp->room = out;
+	tmp->lock = 1;
+	tmp->next = linkin;
+	linkin = tmp;
+	in->link = linkin;
+	linkout = out->link;
+	while (linkout)
+	{
+		if (linkout->room == in->prev)
+		{
+			linkout->room = in;
+			linkout->weight = 0;
+			linkout->lock = 0;
+			break ;
+		}
+		linkout = linkout->next;
+	}
+}
+
+void	create_dup_rooms(t_path *path)
+{
+	t_room	*in;
+	t_room	*out;
+
+	if (!(out = (t_room *)ft_memalloc(sizeof(t_room))))
 		exit(0);
-	res->in = NULL;
-	res->out = NULL;
-	res->prev = room->prev;
-	res->next = room->next;
-	return (res);
+	in = path->room;
+	in->dup = 1;
+	in->in = 1;
+	in->outroom = out;
+	out->out = 1;
+	out->dup = 1;
+	out->inroom = in;
+	out->name = in->name;
+	out->x = in->x;
+	out->y = in->y;
+	out->dist = in->dist;
+	out->prev = in;
+	out->next = in->next;
+	manage_links(in, out);
+}
+
+int		ft_count_pathes(t_farm *farm)
+{
+	int		start;
+	int		end;
+	t_link	*link;
+
+	end = 0;
+	start = 0;
+	link = farm->startroom->link;
+	while (link)
+	{
+		link = link->next;
+		start++;
+	}
+	link = farm->endroom->link;
+	while (link)
+	{
+		end++;
+		link = link->next;
+	}
+	return ((start < end) ? start : end);
+}
+
+void	ft_add_path(t_farm *farm, t_path *newpath)
+{
+	int		i;
+
+	i = 0;
+	if (farm->pathes == NULL)
+		farm->pathes = (t_path**)malloc(sizeof(t_path*) * ft_count_pathes(farm));
+	while (farm->pathes[i])
+		i++;
+	farm->pathes[i] = newpath;
+}
+
+int		find_shortest_path(t_farm *farm, int ret)
+{
+	t_room	*room;
+	t_path	*path;
+	t_path	*new;
+	t_path	*tmp;
+	t_link	*locklink;
+
+	room = find_startend(farm->h_tab[farm->end].room, 'e');
+	if (!(path = (t_path *)ft_memalloc(sizeof(t_path))))
+		exit(0);
+	path->room = room;
+	room = room->prev;
+	if (room->status == 's')
+		ret = 0;
+	while (room)
+	{
+		if (!(new = (t_path *)ft_memalloc(sizeof(t_path))))
+			exit(0);
+		new->room = room;
+		new->next = path;
+		path = new;
+		room = room->prev;
+		locklink = path->room->link;
+		while (locklink->room != path->next->room)
+			locklink = locklink->next;
+		locklink->lock = 1;
+	}
+	if (ret > 1)
+	{
+		tmp = path;
+		while (tmp && tmp->room->status != 'e')
+		{
+			if (tmp->next->room->status == 'e')
+				room = tmp->room;
+			tmp = tmp->next;
+			if (!tmp->room->dup && !tmp->room->status)
+				create_dup_rooms(tmp);
+			if (tmp->room->status == 'e')
+			{
+				while (tmp->room->link && tmp->room->link->room != room)
+					tmp->room->link = tmp->room->link->next;
+				if (tmp->room->link)
+				{
+					tmp->room->link->room = room->outroom;
+					tmp->room->link->weight = -1;
+				}
+			}
+		}
+	}
+	ft_add_path(farm->pathes, path);
+	while (path)
+	{
+		printf("%s-", path->room->name);
+		tmp = path->next;
+		free(path);
+		path = tmp;
+	}
+	printf("\n");
+	// printf("%s\n", room->name);
+	return (ret);
 }
 
 // void	ft_make_room_duplicate(t_farm *farm, t_room *room)

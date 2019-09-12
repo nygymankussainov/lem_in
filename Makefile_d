@@ -3,16 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile_d                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+         #
+#    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/09/03 13:52:21 by hfrankly         ###   ########.fr        #
+#    Updated: 2019/09/06 13:52:46 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = lem-in
-
-SDL = -L vizualizer/lib -l SDL2-2.0.0
 
 LIB = libft/ft_printf
 LIB_A = libft/libft.a $(LIB)/libftprintf.a 
@@ -21,15 +19,12 @@ INCLUDES = -I ./libft -I ./libft/ft_printf/ -I ./includes -I ./vizualizer/includ
 
 SRC = lem_in.c hash_func.c validation/validate_coords.c validation/find_and_connect_rooms.c bfs.c find_shortest_path.c \
 		validation/isint.c validation/validation.c validation/validate_rooms.c validation/write_data_in_sroom.c validation/validate_links.c validation/validate_ants.c \
-<<<<<<< HEAD
-		helpful_func.c \
-		vizualizer/srcs/bresenham.c vizualizer/srcs/coords.c vizualizer/srcs/draw.c vizualizer/srcs/putants.c vizualizer/srcs/vizualizer.c vizualizer/srcs/vizualizer1.c vizualizer/srcs/sdl.c
-=======
+		helpful_func.c validation/work_with_data.c bellman_ford.c run_ants.c \
 
 all: $(NAME)
 
 $(NAME):
-	@gcc -Wall -Wextra -Werror -o $(NAME) $(SRC) $(LIB_A) $(SDL) -g
+	@gcc -Wall -Wextra -Werror -o $(NAME) $(SRC) $(LIB_A) -g
 
 clean:
 	@rm -f $(NAME)

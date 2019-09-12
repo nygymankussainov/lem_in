@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/11 15:16:46 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/11 16:44:23 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int		main(int argc, char **argv)
 	t_farm		*farm;
 	t_hash_tab	*h_tab;
 	t_hashcodes	*hashcodes;
+	int			ret;
 
 	hashcodes = NULL;
 	if ((farm = (t_farm *)ft_memalloc(sizeof(t_farm))) && argc == 2
@@ -26,11 +27,20 @@ int		main(int argc, char **argv)
 			* (farm->size * 4))))
 			exit(0);
 		farm->fd = open(argv[1], O_RDONLY);
-		if (validation(h_tab, farm, &hashcodes) && bfs(farm))
+		if (validation(h_tab, farm, &hashcodes) && (ret = bfs(farm) >= 0))
 		{
-			farm->startroom = find_startend(farm->h_tab[farm->start].room, 's');
-			farm->endroom = find_startend(farm->h_tab[farm->end].room, 'e');
-			lem_in(farm);
+			if (ret > 0)
+				while ((ret = is_free_path(farm)))
+				{
+					if (!bellman_ford(farm))
+						break ;
+					ret = find_shortest_path(farm, ret);
+					if (ret <= 1)
+						break ;
+				}
+			// print_valid_data(farm, argv[1]);
+			unvisit_rooms(farm);
+			run_ants(farm);
 		}
 		else
 			write(2, "ERROR\n", 6);

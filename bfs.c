@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/29 17:57:30 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/11 15:31:19 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/11 16:00:43 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ void	enqueue(t_queue **queue, t_room *room, t_queue **last)
 	}
 	else
 	{
+		new = *queue;
+		while (new)
+		{
+			if (new->room == room)
+				return ;
+			new = new->next;
+		}
 		if (!(new = (t_queue *)ft_memalloc(sizeof(t_queue))))
 			exit(0);
 		new->room = room;
@@ -75,45 +82,33 @@ int		calculate_distance(t_queue *queue, t_room *room, t_queue *last)
 				link->room->dist = room->dist + link->weight;
 				link->room->visited = 1;
 				link->room->prev = room;
-				printf("%s-%s in %d\n", link->room->prev->name, link->room->name, link->room->dist);
+				// printf("%s-%s in %d\n", link->room->prev->name, link->room->name, link->room->dist);
 			}
 			link = link->next;
 		}
 		dequeue(&queue);
 		room = queue ? queue->room : room;
 	}
-	printf("\n");
+	// printf("\n");
 	return (ret);
 }
 
 int		bfs(t_farm *farm)
 {
-	t_room	**queue;
 	t_room	*room;
-	t_link	*link;
-	int		iter;
-	int		endqueue;
+	t_queue	*queue;
+	t_queue	*last;
+	int		ret;
 
-	if (!(queue = (t_room**)malloc(sizeof(t_room*) * farm->room_count)))
-		return (0);
-	iter = 0;
-	endqueue = 1;
-	queue[iter] = farm->startroom;
-	while (queue[iter])
+	queue = NULL;
+	room = find_startend(farm->h_tab[farm->start].room, 's');
+	last = NULL;
+	ret = is_free_path(farm);
+	enqueue(&queue, room, &last);
+	if (calculate_distance(queue, room, last))
 	{
-		room = queue[iter];
-		link = room->link;
-		while (link)
-		{
-			if (link->room->prev == NULL)
-			{
-				queue[endqueue] = link->room;
-				link->room->prev = room;
-				endqueue++;
-			}
-			link = link->next;
-		}
-		iter++;
+		ret = find_shortest_path(farm, ret);
+		return (ret);
 	}
-	free(queue);
+	return (-1);
 }

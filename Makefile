@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+         #
+#    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/09/03 14:11:45 by hfrankly         ###   ########.fr        #
+#    Updated: 2019/09/06 13:52:38 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ INCLUDES = -I ./libft -I ./libft/ft_printf/ -I ./includes
 
 SRC = lem_in.c hash_func.c validation/validate_coords.c validation/find_and_connect_rooms.c bfs.c find_shortest_path.c \
 		validation/isint.c validation/validation.c validation/validate_rooms.c validation/write_data_in_sroom.c validation/validate_links.c validation/validate_ants.c \
-		helpful_func.c validation/work_with_data.c algorithm/algo.c \
+		helpful_func.c validation/work_with_data.c bellman_ford.c run_ants.c \
 
 OBJ = $(SRC:.c=.o)
 

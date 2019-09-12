@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 15:10:05 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/11 15:30:40 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/11 15:54:02 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,14 +240,9 @@ void    lem_in(t_farm *farm)
 	{
 		// find_shortest_path(farm);
     	ft_bell_ford(farm);
-		pathcount++;
+		find_shortest_path(farm);
+		i++;
 	}
-	i = 0;
-	ft_refresh_graph(farm);
-	print_links(farm->hashcodes, farm->h_tab);
-	// while (i < 1)
-	// {
-	// 	ft_find_path(farm, pathcount);
-	// 	i++;
-	// }
+	find_shortest_path(farm);
+	ft_putchar('\n');
 }
