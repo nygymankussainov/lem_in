@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 14:52:47 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/11 14:43:13 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/12 19:09:16 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	assign_inf_dist(t_farm *farm)
 		while (room)
 		{
 			room->dist = room->status != 's' ? INT_MAX : room->dist;
-			if (room->dup)
+			if (room->outroom)
 				room->outroom->dist = INT_MAX;
 			room = room->next;
 		}
@@ -47,17 +47,21 @@ int		calculate_neg_dist(t_queue **queue, t_room *room, t_queue *last)
 		{
 			if (link->room)
 				ret = link->room->status == 'e' ? 1 : ret;
-			if (room->out && link->room->outroom == room)
-			{
-				link->room->visited = 1;
-				link = link->next;
-				continue ;
-			}
-			if (link->room && !link->lock && !link->room->visited && link->room->status != 'e')
+			if (!link->lock && !link->room->visited && link->room->status != 'e')
 				enqueue(queue, link->room, &last);
-			if (link->room && !link->room->visited && !link->lock && room->dist + link->weight < link->room->dist)
+			if (!link->lock && room->dist + link->weight < link->room->dist)
 			{
 				link->room->dist = room->dist + link->weight;
+				if (link->room->inroom)
+				{
+					link->room->inroom->dist = link->room->dist;
+					link->room->inroom->prev = room;
+				}
+				else if (link->room->outroom)
+				{
+					link->room->outroom->dist = link->room->dist;
+					link->room->outroom->prev = room;
+				}
 				link->room->prev = room;
 				// printf("%s-%s in %d\n", link->room->prev->name, link->room->name, link->room->dist);
 				change = 1;
@@ -66,6 +70,10 @@ int		calculate_neg_dist(t_queue **queue, t_room *room, t_queue *last)
 		}
 		dequeue(queue);
 		room->visited = 1;
+		if (room->inroom)
+			room->inroom->visited = 1;
+		else if (room->outroom)
+			room->outroom->visited = 1;
 		room = *queue ? (*queue)->room : room;
 	}
 	ret = ret && change ? 2 : ret;
