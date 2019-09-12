@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/10 20:04:35 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/11 20:01:56 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,18 @@ int		main(int argc, char **argv)
 			* (farm->size * 4))))
 			exit(0);
 		farm->fd = open(argv[1], O_RDONLY);
-		if (validation(h_tab, farm, &hashcodes) && (ret = bfs(farm) >= 0))
+		if (validation(h_tab, farm, &hashcodes) && ((ret = bfs(farm)) >= 0))
 		{
 			if (ret > 0)
-				while ((ret = is_free_path(farm)))
+				while (ret > 1)
 				{
 					if (!bellman_ford(farm))
 						break ;
-					ret = find_shortest_path(farm, ret);
-					if (ret <= 1)
+					if (!find_shortest_path(farm, ret) || ret <= 1)
 						break ;
+					ret--;
 				}
 			// print_valid_data(farm, argv[1]);
-			unvisit_rooms(farm);
 			run_ants(farm);
 		}
 		else

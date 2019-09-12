@@ -5,29 +5,46 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/01 17:04:26 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/11 15:41:06 by vhazelnu         ###   ########.fr       */
+/*   Created: 2019/09/11 18:38:35 by vhazelnu          #+#    #+#             */
+/*   Updated: 2019/09/11 19:53:16 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		is_free_path(t_farm *farm)
+int		ft_count_paths(t_farm *farm)
 {
-	t_room	*room;
-	t_link	*link;
+	int		start;
+	int		end;
+	t_link  *link;
+
+	end = 0;
+	start = 0;
+	link = farm->startroom->link;
+	while (link)
+	{
+		link = link->next;
+		start++;
+	}
+	link = farm->endroom->link;
+	while (link)
+	{
+		end++;
+		link = link->next;
+	}
+	return ((start < end) ? start : end);
+}
+
+void	ft_add_path(t_farm *farm, t_path *newpath)
+{
 	int		i;
 
 	i = 0;
-	room = find_startend(farm->h_tab[farm->start].room, 's');
-	link = room->link;
-	while (link)
-	{
-		if (!link->lock)
-			i++;
-		link = link->next;
-	}
-	return (i);
+	if (farm->paths == NULL)
+		farm->paths = (t_path**)ft_memalloc(sizeof(t_path*) * ft_count_paths(farm));
+	while (farm->paths[i])
+		i++;
+	farm->paths[i] = newpath;
 }
 
 void	unvisit_rooms(t_farm *farm)
@@ -43,9 +60,7 @@ void	unvisit_rooms(t_farm *farm)
 		{
 			room->visited = 0;
 			if (room->dup)
-			{
 				room->outroom->visited = 0;
-			}
 			room = room->next;
 		}
 		tmp = tmp->next;
@@ -114,8 +129,8 @@ int		find_shortest_path(t_farm *farm, int ret)
 	t_path	*tmp;
 	t_link	*locklink;
 
-	room = find_startend(farm->h_tab[farm->end].room, 'e');
-	if (!(path = (t_path *)ft_memalloc(sizeof(t_path))))
+	room = farm->endroom;
+	if (!(path = (t_path *)ft_memalloc(sizeof(t_path) * ret + 1)))
 		exit(0);
 	path->room = room;
 	room = room->prev;
@@ -146,23 +161,22 @@ int		find_shortest_path(t_farm *farm, int ret)
 				create_dup_rooms(tmp);
 			if (tmp->room->status == 'e')
 			{
-				while (tmp->room->link && tmp->room->link->room != room)
-					tmp->room->link = tmp->room->link->next;
-				if (tmp->room->link)
+				locklink = tmp->room->link;
+				while (locklink && locklink->room != room)
+					locklink = locklink->next;
+				if (locklink)
 				{
-					tmp->room->link->room = room->outroom;
-					tmp->room->link->weight = -1;
+					locklink->room = room->outroom;
+					locklink->weight = -1;
 				}
 			}
 		}
 	}
-	while (path)
-	{
-		// printf("%s-", path->room->name);
-		tmp = path->next;
-		free(path);
-		path = tmp;
-	}
+	ft_add_path(farm, path);
+	// while (path)
+	// {
+	// 	// printf("%s-", path->room->name);
+	// }
 	// printf("\n");
 	// printf("%s\n", room->name);
 	return (ret);
