@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_ants.c                                           :+:      :+:    :+:   */
+/*   run_ant.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 17:57:58 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/05 19:14:42 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/12 18:27:23 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,54 +21,15 @@ int		check_lock(t_room *room, t_link *link)
 	link_tmp = room_tmp->link;
 	if (!link->lock)
 		return (0);
-	if (!room->dup)
+	while (link_tmp && link_tmp->room->name != room->name)
 	{
-		while (link_tmp && link_tmp->room != room)
-			link_tmp = link_tmp->next;
-		if (room_tmp->dup && room_tmp->in && !room->dup)
-			link_tmp = room_tmp->outroom->link;
+		link_tmp = link_tmp->next;
+		if (!link_tmp)
+			link_tmp = room_tmp->outroom ? room_tmp->outroom->link : link_tmp;
 	}
-	else if (room->dup && room->out)
-		while (link_tmp && link_tmp->room->name != room->name)
-			link_tmp = link_tmp->next;
 	if (link_tmp && !link_tmp->lock)
 		return (1);
 	return (0);
-}
-
-void	unlock_links(t_farm *farm)
-{
-	t_hashcodes	*tmp;
-	t_room		*room;
-	t_link		*link;
-	int			key;
-
-	tmp = farm->hashcodes;
-	key = 0;
-	while (tmp)
-	{
-		room = farm->h_tab[tmp->hash_code].room;
-		while (room)
-		{
-			link = room->link;
-			while (link)
-			{
-				link->lock = 0;
-				link = link->next;
-				if (!link && room->dup && !key)
-				{
-					if (room->in)
-						link = room->outroom->link;
-					else if (room->out)
-						link = room->inroom->link;
-					key = 1;
-				}
-			}
-			key = 0;
-			room = room->next;
-		}
-		tmp = tmp->next;
-	}
 }
 
 void	run(t_queue *queue, t_room *room, t_queue *last)
@@ -81,17 +42,11 @@ void	run(t_queue *queue, t_room *room, t_queue *last)
 	j = 0;
 	while (queue)
 	{
+		room = room->outroom ? room->outroom : room;
 		link = room->link;
 		while (link)
 		{
-			if (room->outroom && room->outroom == link->room)
-			{
-				enqueue(&queue, link->room, &last);
-				link->room->visited = 1;
-				link = link->next;
-				continue ;
-			}
-			if (!link->room->visited && check_lock(room, link))
+			if (check_lock(room, link) && !link->room->visited)
 			{
 				enqueue(&queue, link->room, &last);
 				link->room->visited = link->room-> status != 'e' ? 1 : link->room->visited;
@@ -113,59 +68,15 @@ void	run(t_queue *queue, t_room *room, t_queue *last)
 	}
 }
 
-void	check_link(t_room *room1, t_room *room2, t_path *path)
-{
-	t_path	*tmp;
-	t_link	*link;
-
-	tmp = path;
-	while (tmp)
-	{
-		if (tmp->room == room2 && tmp->room->next == room1)
-		{
-			link = room2->link;
-			while (link)
-			{
-				if (link->room->name == room1->name)
-					link->lock = 1;
-				link = link->next;
-			}
-			link = room1->link;
-			while (link)
-			{
-				if (link->room->name == room2->name)
-					link->lock = 1;
-				link = link->next;
-			}
-		}
-		tmp = tmp->next;	
-	}
-}
-
 void	run_ants(t_farm *farm)
 {
-	t_room	*room1;
-	t_room	*room2;
-	t_path	*path;
-	int		i;
+	t_room	*room;
+	t_queue	*queue;
+	t_queue	*last;
 
-	i = 0;
-	unvisit_rooms(farm);
-	unlock_links(farm);
-	i = 0;
-	while (farm->paths[i + 1])
-	{
-		path = farm->paths[i];
-		path->room = path->next->room;
-		while (path->room)
-		{
-			room1 = path->room;
-			room2 = path->next->room;
-			while (room1->name == room2->name)
-				room2 = path->next->room;
-			check_link(room1, room2, farm->paths[i + 1]);
-			path->room = path->room->next;
-		}
-		i++;
-	}
+	queue = NULL;
+	room = find_startend(farm->h_tab[farm->start].room, 's');
+	last = NULL;
+	enqueue(&queue, room, &last);
+	run(queue, room, last);
 }
