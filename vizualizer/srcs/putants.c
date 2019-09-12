@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 00:54:20 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/10 13:04:51 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/12 22:38:51 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,20 @@ float		ft_get_line_length(int x0, int y0, int x1, int y1)
 	return (sqrt(pow((x1 - x0), 2) + pow(y1 - y0, 2)));
 }
 
-void		ft_draw_line(t_sdl *sdl, t_ant *ant, t_point s, t_point e, int step)
+void		ft_draw_line(t_sdl *sdl, t_ant *ant, t_point way, int step)
 {
 	t_point	delta;
 	t_point	sign;
 	t_point	cur;
 	int		error[2];
 
-	delta.x = fabs(e.x - s.x);
-	delta.y = fabs(e.y - s.y);
-	sign.x = s.x < e.x ? 1 : -1;
-	sign.y = s.y < e.y ? 1 : -1;
+	delta.x = fabs(way.x - way.x0);
+	delta.y = fabs(way.y - way.y0);
+	sign.x = way.x0 < way.x ? 1 : -1;
+	sign.y = way.y0 < way.y ? 1 : -1;
 	error[0] = delta.x - delta.y;
-	cur = s;
+	cur.x = way.x0;
+	cur.y = way.y0;
 	cur.x0 = cur.x;
 	cur.y0 = cur.y;
 	while (step)
@@ -60,14 +61,12 @@ void		ft_draw_line(t_sdl *sdl, t_ant *ant, t_point s, t_point e, int step)
 void		ft_move_ant(t_sdl *sdl, t_ant *ant, int step)
 {
 	t_line	line;
+	t_point	way;
 
-	line.p0.x = ant->x;
-	line.p0.y = ant->y;
-	line.p1.x = ant->dstroom->x;
-	line.p1.y = ant->dstroom->y;
-	line.ydir = line.p1.y - line.p0.y;
-	line.xdir = line.p1.x - line.p0.x;
-	line.k = (float)(line.ydir) / (float)(line.xdir);
-	ft_draw_line(sdl, ant, line.p0, line.p1, step);
+	way.x0 = ant->x;
+	way.y0 = ant->y;
+	way.y = ant->dstroom->y;
+	way.x = ant->dstroom->x;
+	ft_draw_line(sdl, ant, way, step);
 	ant->srcroom->antnbr = 0;
 }
