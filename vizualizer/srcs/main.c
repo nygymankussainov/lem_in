@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 15:45:43 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/12 22:21:22 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/13 11:07:14 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,10 @@ int		main(int argc, char **argv)
 	t_hashcodes	*hashcodes;
 
 	hashcodes = NULL;
-	if ((farm = (t_farm *)ft_memalloc(sizeof(t_farm))) && argc == 2
-		&& (farm->size = count_room(argv[1])))
+	if ((farm = (t_farm *)ft_memalloc(sizeof(t_farm)))
+	&& argc == 2 && (farm->size = count_room(argv[1])) &&
+	(h_tab = (t_hash_tab *)ft_memalloc(sizeof(t_hash_tab) * (farm->size * 4))))
 	{
-		if (!(h_tab = (t_hash_tab *)ft_memalloc(sizeof(t_hash_tab)
-			* (farm->size * 4))))
-			exit(0);
 		farm->fd = open(argv[1], O_RDONLY);
 		if (!validation(h_tab, farm, &hashcodes))
 		{
