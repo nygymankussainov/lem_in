@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:16:39 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/13 12:09:36 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/13 15:52:29 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void		ft_send_ants1(t_sdl *sdl, int *i, int *step)
 		&& sdl->e->key.keysym.sym == SDLK_SPACE))
 			pause = (pause) ? 0 : 1;
 	}
-	if (!pause && sdl->ants[*i].x == sdl->ants[*i].dstroom->x)
+	if (!pause && sdl->ants[*i].x == sdl->ants[*i].dstroom->x
+	&& sdl->ants[*i].y == sdl->ants[*i].dstroom->y)
 	{
 		filledCircleColor(sdl->ren, sdl->ants[*i].x,
 		sdl->ants[*i].y, sdl->ants[*i].radius, 0xFF0058A6);
@@ -123,7 +124,7 @@ void		vizualizer(t_farm *farm)
 	sdl = (t_sdl*)malloc(sizeof(t_sdl));
 	if (!(ft_init_sdl(sdl)))
 		exit(0);
-	sdl->fd = 0;
+	sdl->fd = open("test", O_RDONLY);
 	sdl->farm = farm;
 	sdl->stepsize = 100;
 	ft_change_coords(sdl);
