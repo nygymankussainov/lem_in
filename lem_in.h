@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/12 16:42:46 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/13 14:14:15 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ struct						s_room
 	int						y;
 	int						dist;
 	int						pathlength;
+	int						pathpart;
 	char					*name;
 	char					status;
 	bool					visited;

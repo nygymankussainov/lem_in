@@ -6,7 +6,7 @@
 #    By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/09/12 14:24:33 by hfrankly         ###   ########.fr        #
+#    Updated: 2019/09/13 14:00:17 by hfrankly         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ CCFL = -Wall -Wextra -Werror
 
 .PHONY: all clean fclean re
 
-all: $(ARCHIVE) $(NAME)
+all: $(NAME)
 
 $(ARCHIVE): $(OBJ)
 	@make -C $(LIB)
@@ -39,7 +39,8 @@ $(ARCHIVE): $(OBJ)
 %.o: %.c $(INCLUDES)
 	@gcc -Wall -Wextra -Werror -c $<
 
-$(NAME): $(OBJ)
+$(NAME): 
+	@make -C $(LIB)
 	@gcc -Wall -Wextra -Werror -o $(NAME) $(SRC) $(LIB_A) $(SDL) -g
 
 clean:
