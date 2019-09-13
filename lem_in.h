@@ -6,14 +6,13 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/11 17:25:02 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/13 13:06:11 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
-// # include "vizualizer/includes/visual.h"
 # include "./libft/ft_printf/ft_printf.h"
 # include <fcntl.h>
 # include <stdio.h>
@@ -51,15 +50,17 @@ struct						s_room
 	int						x;
 	int						y;
 	int						dist;
+	int						pathlength;
 	char					*name;
 	char					status;
+	bool					was;
 	bool					visited;
+	bool					induplicate;
+	bool					outduplicate;
 	t_link					*link;
-	bool					dup;
-	bool					in;
-	bool					out;
-	struct s_room			*outroom;
-	struct s_room			*inroom;
+	struct s_room			*in;
+	struct s_room			*out;
+	struct s_room			*parent;
 	struct s_room			*prev;
 	struct s_room			*next;
 };
@@ -77,6 +78,12 @@ typedef struct				s_hash_tab
 {
 	t_room					*room;
 }							t_hash_tab;
+
+typedef struct				s_path
+{
+	t_room					*room;
+	struct s_path			*next;
+}							t_path;
 
 typedef struct				s_farm
 {
@@ -98,12 +105,6 @@ typedef struct				s_farm
 	t_hash_tab				*h_tab;
 	t_hashcodes				*hashcodes;
 }							t_farm;
-
-typedef struct				s_path
-{
-	t_room					*room;
-	struct s_path			*next;
-}							t_path;
 
 void						free_all_structs(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab, t_farm *farm);
@@ -139,10 +140,15 @@ int							bfs(t_farm *farm);
 t_room						*find_startend(t_room *room, char c);
 void						dequeue(t_queue **queue);
 void						enqueue(t_queue **queue, t_room *room, t_queue **last);
+
 int							find_shortest_path(t_farm *farm, int ret);
 void						unvisit_rooms(t_farm *farm);
-int							bellman_ford(t_farm *farm);
 int							is_free_path(t_farm *farm);
-void						run_ants(t_farm *farm);
+t_room						*ft_return_room(t_farm *farm, char *name);
+void						ft_reverse_shortest_path(t_farm *farm);
+void						ft_make_room_duplicate(t_room *room);
+void						ft_make_rooms_duplicates(t_farm *farm);
+void						lem_in(t_farm *farm);
+void						ft_show_pathlengthes(t_farm *farm);
 
 #endif
