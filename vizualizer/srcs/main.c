@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 15:45:43 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/13 11:07:14 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/13 14:23:16 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int		main(int argc, char **argv)
 		}
 		farm->h_tab = h_tab;
 		farm->hashcodes = hashcodes;
+		ft_putstr("hr");
 		vizualizer(farm);
 		free_all_structs(hashcodes, h_tab, farm);
 		return (1);
