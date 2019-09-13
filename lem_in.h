@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/11 15:26:29 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/12 16:42:46 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,9 @@ struct						s_room
 	bool					induplicate;
 	bool					outduplicate;
 	t_link					*link;
-	t_room					*in;
-	t_room					*out;
+	struct s_room			*in;
+	struct s_room			*out;
+	struct s_room			*parent;
 	struct s_room			*prev;
 	struct s_room			*next;
 };
@@ -137,5 +138,8 @@ void 						lem_in(t_farm *farm);
 void						ft_show_pathlengthes(t_farm *farm);
 int							is_free_path(t_farm *farm);
 t_room						*ft_return_room(t_farm *farm, char *name);
+void						ft_reverse_shortest_path(t_farm *farm);
+void						ft_make_room_duplicate(t_room *room);
+void						ft_make_rooms_duplicates(t_farm *farm);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/11 15:16:46 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/12 22:17:05 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,7 @@ int		main(int argc, char **argv)
 			exit(0);
 		farm->fd = open(argv[1], O_RDONLY);
 		if (validation(h_tab, farm, &hashcodes) && bfs(farm))
-		{
-			farm->startroom = find_startend(farm->h_tab[farm->start].room, 's');
-			farm->endroom = find_startend(farm->h_tab[farm->end].room, 'e');
 			lem_in(farm);
-		}
 		else
 			write(2, "ERROR\n", 6);
 		farm->h_tab = h_tab;
