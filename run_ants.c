@@ -37,9 +37,13 @@ void	run(t_queue *queue, t_room *room, t_queue *last)
 	t_link	*link;
 	int		i;
 	int		j;
+	int		k;
+	int		sp;
 
 	i = 0;
 	j = 0;
+	k = 0;
+	sp = 0;
 	while (queue)
 	{
 		room = room->outroom ? room->outroom : room;
@@ -50,20 +54,26 @@ void	run(t_queue *queue, t_room *room, t_queue *last)
 			{
 				enqueue(&queue, link->room, &last);
 				link->room->visited = link->room-> status != 'e' ? 1 : link->room->visited;
-				printf("L%d-%s", j, link->room->name);
+				if (sp)
+					ft_printf(" ");
+				ft_printf("L%d-%s", j, link->room->name);
 				i += room->status == 's' ? 1 : 0;
 				j++;
-				if (j < i || (room->status == 's' && link->next))
-					printf(" ");
+				sp++;
+				if (link->room->status == 'e')
+					k++;
+				if (room->status != 's')
+					break ;
 			}
 			link = link->next;
 		}
 		dequeue(&queue);
 		room = queue ? queue->room : room;
-		if (j >= i)
+		if (j >= i && queue)
 		{
-			j = 0;
-			printf("\n");
+			sp = 0;
+			j = k;
+			ft_printf("\n");
 		}
 	}
 }

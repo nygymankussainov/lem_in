@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 18:38:35 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/12 21:20:28 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/13 15:15:12 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,11 @@ int		create_link(t_room *room)
 	while (out && out->room != room->prev)
 		out = out->next;
 	if (!out)
+	{
+		free(link1);
+		free(link2);
 		return (0);
+	}
 	link2->room = out->room;
 	link2->weight = -1;
 	link2->lock = 0;
@@ -125,7 +129,6 @@ int		find_shortest_path(t_farm *farm, int ret)
 			if (!create_dup_room(farm, main_room))
 				return (0);
 		link = room->link;
-		printf("%s-", room->name);
 		while (link->room != main_room->prev && link->room->name != main_room->prev->name)
 		{
 			link = link->next;
@@ -146,6 +149,5 @@ int		find_shortest_path(t_farm *farm, int ret)
 		}
 		link->lock = 1;
 	}
-	printf("%s\n", room->name);
 	return (ret);
 }
