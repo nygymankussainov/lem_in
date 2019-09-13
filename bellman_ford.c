@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 14:52:47 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/12 19:09:16 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/13 14:00:34 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int		calculate_neg_dist(t_queue **queue, t_room *room, t_queue *last)
 					link->room->outroom->prev = room;
 				}
 				link->room->prev = room;
-				// printf("%s-%s in %d\n", link->room->prev->name, link->room->name, link->room->dist);
 				change = 1;
 			}
 			link = link->next;

@@ -6,7 +6,7 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/09/12 19:50:02 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/09/13 13:34:30 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,9 @@ VISUAL = ./vizualizer
 
 INCLUDES = -I ./libft -I ./libft/ft_printf/ -I ./includes
 
-SRC = lem_in.c hash_func.c validation/validate_coords.c validation/find_and_connect_rooms.c bfs.c find_shortest_path.c \
+SRC = lem_in.c hash_func.c validation/validate_coords.c validation/find_and_connect_rooms.c bfs.c find_shortest_path.c bellman_ford.c run_ants.c \
 		validation/isint.c validation/validation.c validation/validate_rooms.c validation/write_data_in_sroom.c validation/validate_links.c validation/validate_ants.c \
-		helpful_func.c validation/work_with_data.c bellman_ford.c run_ants.c \
+		validation/work_with_data.c \
 
 OBJ = $(SRC:.c=.o)
 
@@ -42,7 +42,7 @@ $(ARCHIVE): $(OBJ)
 	@gcc -Wall -Wextra -Werror -c $<
 
 $(NAME): $(OBJ)
-	@gcc -Wall -Wextra -Werror -o $(NAME) $(SRC) $(LIB_A) $(SDL) -g
+	@gcc -Wall -Wextra -Werror -o $(NAME) $(ARCHIVE) $(LIB_A) -g
 
 clean:
 	@make clean -C $(LIB)
