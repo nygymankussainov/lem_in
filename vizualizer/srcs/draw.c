@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 15:28:58 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/05 21:04:12 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/12 22:12:22 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	ft_draw_link(t_sdl *sdl, const t_room *room)
 		coords[3] = hroom->room->y;
 		hroom = hroom->next;
 		SDL_SetRenderDrawColor(sdl->ren, 0xAA, 0xAA, 0xAA, 0xFF);
-		SDL_RenderDrawLine(sdl->ren, coords[0], coords[1], coords[2], coords[3]);
+		SDL_RenderDrawLine(sdl->ren, coords[0],
+		coords[1], coords[2], coords[3]);
 	}
 	free(coords);
 }
@@ -79,7 +80,8 @@ void	ft_draw_rooms(t_sdl *sdl)
 			else
 				color = 0xFFFFFFFF;
 			filledCircleColor(sdl->ren, room->x, room->y,
-			(sdl->farm->room_count > 10) ? (SIZEX / 2) / sdl->farm->room_count - 5 : 20, color);
+			(sdl->farm->room_count > 10) ? (SIZEX / 2)
+			/ sdl->farm->room_count - 5 : 20, color);
 			room = room->next;
 		}
 		hc = hc->next;
