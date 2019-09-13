@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 14:20:12 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/13 13:09:04 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/13 16:20:33 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,32 @@ t_room	*ft_find_next_room(t_room *room)
 	t_link *tmplink;
 
 	tmplink = room->link;
-	while (tmplink && tmplink->room->prev != room)
+	while (tmplink && tmplink->room->prev != room && tmplink->room->pathpart)
 		tmplink = tmplink->next;
 	return (tmplink->room);
 }
 
-void	ft_create_out_link(t_room *out, t_link **linkout, t_room *room)
+void	ft_create_out_link(t_room *out, t_link **linkout, t_room *linkroom)
 {
 	t_link	*link;
 	t_link	*newlink;
 	t_room	*need_find;
 
-	(*linkout)->room = room;
+	(*linkout)->room = linkroom;
 	(*linkout)->weight = 1;
-	link = room->link;
-	need_find = (ft_find_next_room(out->parent) == room) ? room : NULL; // если это next_room, то in не занял линк
-	while (link && link->room != out->parent)
+	link = linkroom->link;
+	need_find = (ft_find_next_room(out->parent) == linkroom) ? linkroom : NULL; // если это next_room, то in не занял линк
+	if (need_find == NULL)
+	{
+		while (link->next)
+			link = link->next;
+		if (!(link->next = (t_link*)malloc(sizeof(t_link))))
+			exit(0);
 		link = link->next;
+	}
+	else
+		while (link && link->room != out->parent)
+			link = link->next;
 	link->room = out;
 	link->lock = 1;
 	if (!(newlink = (t_link*)malloc(sizeof(t_link))))
@@ -141,6 +150,7 @@ void    ft_reverse_shortest_path(t_farm *farm)
 		while (link && link->room != tmproom)
 			link = link->next;
 		link->lock = 1;
+		tmproom->pathpart++;
 		tmproom = tmproom->prev;
 	}
 }
