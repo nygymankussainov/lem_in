@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/23 17:24:00 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/10 20:46:39 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/13 19:54:01 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	mark_room(t_farm *farm, t_hash_tab *h_tab, char *name, char c)
 	{
 		if (!ft_strcmp(room->name, name))
 		{
+			farm->startroom = c == 's' ? room : farm->startroom;
+			farm->endroom = c == 'e' ? room : farm->endroom;
 			room->status = c;
 			return ;
 		}

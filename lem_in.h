@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/13 13:30:58 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/13 20:13:04 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,6 @@ typedef struct				s_hash_tab
 	t_room					*room;
 }							t_hash_tab;
 
-typedef struct				s_path
-{
-	t_room					*room;
-	struct s_path			*next;
-}							t_path;
-
 typedef struct				s_farm
 {
 	int						ants;
@@ -101,6 +95,12 @@ typedef struct				s_farm
 	t_hash_tab				*h_tab;
 	t_hashcodes				*hashcodes;
 }							t_farm;
+
+typedef struct				s_ant
+{
+	int						index;
+	t_room					*pos;	
+}							t_ant;
 
 void						free_all_structs(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab, t_farm *farm);
@@ -133,7 +133,6 @@ int							isroom(char *line);
 void						print_links(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab);
 int							bfs(t_farm *farm);
-t_room						*find_startend(t_room *room, char c);
 void						dequeue(t_queue **queue);
 void						enqueue(t_queue **queue, t_room *room, t_queue **last);
 int							find_shortest_path(t_farm *farm, int ret);

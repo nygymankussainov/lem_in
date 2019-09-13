@@ -32,9 +32,22 @@ int		check_lock(t_room *room, t_link *link)
 	return (0);
 }
 
-void	run(t_queue *queue, t_room *room, t_queue *last)
+void	run(t_queue *queue, t_room *room, int paths, int steps)
 {
 	t_link	*link;
+	t_queue *last;
+
+	last = queue;
+	while (queue)
+	{
+		
+	}
+}
+
+void	run(t_queue *queue, t_room *room, int paths, int steps)
+{
+	t_link	*link;
+	t_queue	*last;
 	int		i;
 	int		j;
 	int		k;
@@ -44,13 +57,14 @@ void	run(t_queue *queue, t_room *room, t_queue *last)
 	j = 0;
 	k = 0;
 	sp = 0;
+	last = queue;
 	while (queue)
 	{
 		room = room->outroom ? room->outroom : room;
 		link = room->link;
 		while (link)
 		{
-			if (check_lock(room, link) && !link->room->visited)
+			if (!link->room->visited && check_lock(room, link))
 			{
 				enqueue(&queue, link->room, &last);
 				link->room->visited = link->room-> status != 'e' ? 1 : link->room->visited;
@@ -78,15 +92,61 @@ void	run(t_queue *queue, t_room *room, t_queue *last)
 	}
 }
 
+int		count_paths(t_queue *queue, t_room *room, t_queue *last, int *steps)
+{
+	t_link	*link;
+	int		i;
+
+	i = 0;
+	*steps = 0;
+	while (queue)
+	{
+		room = room->outroom ? room->outroom : room;
+		link = room->link;
+		while (link)
+		{
+			if (!link->room->visited && check_lock(room, link))
+			{
+				enqueue(&queue, link->room, &last);
+				link->room->visited = link->room-> status != 'e' ? 1 : link->room->visited;
+				(*steps)++;
+				if (link->room->status == 'e')
+					i++;
+				if (room->status != 's')
+					break ;
+			}
+			link = link->next;
+		}
+		dequeue(&queue);
+		room = queue ? queue->room : room;
+	}
+	return (i);
+}
+
 void	run_ants(t_farm *farm)
 {
-	t_room	*room;
 	t_queue	*queue;
 	t_queue	*last;
+	t_ant	*ant;
+	int		i;
+	int		steps;
 
 	queue = NULL;
-	room = find_startend(farm->h_tab[farm->start].room, 's');
 	last = NULL;
-	enqueue(&queue, room, &last);
-	run(queue, room, last);
+	i = 0;
+	if (!(ant = (t_ant *)ft_memalloc(sizeof(t_ant) * farm->ants)))
+		exit(0);
+	while (i < farm->ants)
+	{
+		ant[i].index = i;
+		ant[i++].pos = farm->startroom;
+	}
+	enqueue(&queue, farm->startroom, &last);
+	unvisit_rooms(farm);
+	i = count_paths(queue, farm->startroom, last, &steps);
+	unvisit_rooms(farm);
+	queue = NULL;
+	last = NULL;
+	enqueue(&queue, farm->startroom, &last);
+	run(queue, farm->startroom, i, steps);
 }

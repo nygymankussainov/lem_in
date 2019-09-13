@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 14:52:47 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/13 14:00:34 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/13 20:14:09 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int		calculate_neg_dist(t_queue **queue, t_room *room, t_queue *last)
 
 int		bellman_ford(t_farm *farm)
 {
-	t_room	*room;
 	t_queue	*queue;
 	t_queue	*last;
 	int		i;
@@ -94,9 +93,8 @@ int		bellman_ford(t_farm *farm)
 	while (i++ < farm->room_count - 1)
 	{
 		unvisit_rooms(farm);
-		room = find_startend(farm->h_tab[farm->start].room, 's');
-		enqueue(&queue, room, &last);
-		ret = calculate_neg_dist(&queue, room, last);
+		enqueue(&queue, farm->startroom, &last);
+		ret = calculate_neg_dist(&queue, farm->startroom, last);
 		if (ret == 1)
 			return (1);
 		else if (!ret)
