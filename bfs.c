@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/29 17:57:30 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/13 13:28:43 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/13 19:54:54 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,6 @@ void	enqueue(t_queue **queue, t_room *room, t_queue **last)
 	}
 }
 
-t_room	*find_startend(t_room *room, char c)
-{
-	while (room)
-	{
-		if (room->status == c)
-		{
-			room->visited = c == 's' ? 1 : room->visited;
-			return (room);
-		}
-		room = room->next;
-	}
-	return (NULL);
-}
-
 int		calculate_distance(t_queue *queue, t_room *room, t_queue *last)
 {
 	t_link	*link;
@@ -100,8 +86,6 @@ int		bfs(t_farm *farm)
 	int		ret;
 
 	queue = NULL;
-	farm->endroom = find_startend(farm->h_tab[farm->end].room, 'e');
-	farm->startroom = find_startend(farm->h_tab[farm->start].room, 's');
 	last = NULL;
 	ret = ft_count_paths(farm);
 	enqueue(&queue, farm->startroom, &last);

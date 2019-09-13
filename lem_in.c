@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/13 15:16:29 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/13 20:21:22 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ int		main(int argc, char **argv)
 					if (!find_shortest_path(farm, ret) || ret <= 1)
 						break ;
 				}
-			// print_valid_data(farm, argv[1]);
-			unvisit_rooms(farm);
+			print_valid_data(farm, argv[1]);
 			run_ants(farm);
 		}
 		else

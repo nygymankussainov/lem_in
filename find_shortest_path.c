@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 18:38:35 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/13 15:15:12 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/13 20:26:44 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int		create_link(t_room *room)
 	link1->next = link2;
 	room->link = link1;
 	out->room = room;
-	out->lock = 1;
 	out->weight = 0;
 	return (1);
 }
@@ -91,7 +90,7 @@ int		create_dup_room(t_farm *farm, t_room *clone)
 	t_room	*room;
 	t_room	*end;
 
-	end = find_startend(farm->h_tab[farm->end].room, 'e');
+	end = farm->endroom;
 	while (end != clone)
 		end = end->prev;
 	room = end->prev;
@@ -118,7 +117,7 @@ int		find_shortest_path(t_farm *farm, int ret)
 	t_link	*link;
 	t_room	*main_room;
 
-	room = find_startend(farm->h_tab[farm->end].room, 'e');
+	room = farm->endroom;
 	main_room = room;
 	link = room->link;
 	if (room->status == 's')
