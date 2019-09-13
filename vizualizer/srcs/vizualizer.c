@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:16:39 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/12 22:17:40 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/13 12:09:36 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void		vizualizer(t_farm *farm)
 	sdl = (t_sdl*)malloc(sizeof(t_sdl));
 	if (!(ft_init_sdl(sdl)))
 		exit(0);
-	sdl->fd = open("test", O_RDONLY); // тут изменить на нуль
+	sdl->fd = 0;
 	sdl->farm = farm;
 	sdl->stepsize = 100;
 	ft_change_coords(sdl);

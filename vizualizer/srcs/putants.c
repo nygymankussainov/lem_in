@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 00:54:20 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/12 22:38:51 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/13 10:48:21 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,36 @@ float		ft_get_line_length(int x0, int y0, int x1, int y1)
 	return (sqrt(pow((x1 - x0), 2) + pow(y1 - y0, 2)));
 }
 
+int			ft_if_draw(int *error, t_point *delta, t_point *sign, t_point *cur)
+{
+	if ((error[1] = error[0] * 2) > -delta->y)
+	{
+		error[0] -= delta->y;
+		cur->x += sign->x;
+	}
+	if (error[1] < delta->x)
+	{
+		error[0] += delta->x;
+		cur->y += sign->y;
+	}
+	if (sqrt(pow((cur->x - cur->x0), 2) + pow(cur->y - cur->y0, 2)) > 1)
+	{
+		cur->x0 = cur->x;
+		cur->y0 = cur->y;
+		return (1);
+	}
+	return (0);
+}
+
 void		ft_draw_line(t_sdl *sdl, t_ant *ant, t_point way, int step)
 {
 	t_point	delta;
 	t_point	sign;
 	t_point	cur;
-	int		error[2];
+	int		*error;
 
+	if (!(error = (int*)malloc(8)))
+		exit(0);
 	delta.x = fabs(way.x - way.x0);
 	delta.y = fabs(way.y - way.y0);
 	sign.x = way.x0 < way.x ? 1 : -1;
@@ -34,24 +57,8 @@ void		ft_draw_line(t_sdl *sdl, t_ant *ant, t_point way, int step)
 	cur.x0 = cur.x;
 	cur.y0 = cur.y;
 	while (step)
-	{
-		if ((error[1] = error[0] * 2) > -delta.y)
-		{
-			error[0] -= delta.y;
-			cur.x += sign.x;
-		}
-		if (error[1] < delta.x)
-		{
-			error[0] += delta.x;
-			cur.y += sign.y;
-		}
-		if (sqrt(pow((cur.x - cur.x0), 2) + pow(cur.y - cur.y0, 2)) > 1)
-		{
-			cur.x0 = cur.x;
-			cur.y0 = cur.y;
+		if (ft_if_draw(error, &delta, &sign, &cur))
 			step--;
-		}
-	}
 	ant->x = cur.x;
 	ant->y = cur.y;
 	filledCircleColor(sdl->ren, ant->x, ant->y, ant->radius, 0xFF0058A6);
