@@ -3,55 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   vizualizer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:16:39 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/12 19:38:07 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/13 16:19:50 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/visual.h"
 
-void		ft_show_array(int *array, int size)
+void		ft_send_ants1(t_sdl *sdl, int *i, int *step)
 {
-	int i;
+	int		pause;
 
-	i = 0;
-	while (i < size)
+	pause = 0;
+	if (SDL_PollEvent(sdl->e) != 0)
 	{
-		printf("%d: %d\n", i, array[i]);
-		i++;
+		if (sdl->e->type == SDL_QUIT ||
+		(sdl->e->type == SDL_KEYDOWN && sdl->e->key.keysym.sym == SDLK_ESCAPE))
+			exit(0);
+		else if ((sdl->e->type == SDL_KEYDOWN
+		&& sdl->e->key.keysym.sym == SDLK_SPACE))
+			pause = (pause) ? 0 : 1;
 	}
-}
-
-void		ft_get_ants(t_sdl *sdl)
-{
-	int			i;
-	t_hash_tab	*ht;
-	t_hashcodes	*hc;
-
-	i = -1;
-	ht = sdl->farm->h_tab;
-	hc = sdl->farm->hashcodes;
-	while (++i < sdl->arrsize)
+	if (!pause && sdl->ants[*i].x == sdl->ants[*i].dstroom->x
+	&& sdl->ants[*i].y == sdl->ants[*i].dstroom->y)
 	{
-		sdl->ants[i].srcroom = ft_find_ant_room(sdl->farm, &sdl->cmdline[i][1]);
-		sdl->ants[i].dstroom = sdl->farm->h_tab[hash_func(&sdl->cmdline[i][3], sdl->farm->size)].room;
-		sdl->ants[i].x = sdl->ants[i].srcroom->x;
-		sdl->ants[i].y = sdl->ants[i].srcroom->y;
-		sdl->ants[i].radius = 10;
+		filledCircleColor(sdl->ren, sdl->ants[*i].x,
+		sdl->ants[*i].y, sdl->ants[*i].radius, 0xFF0058A6);
+		SDL_SetRenderDrawColor(sdl->ren, 0x00, 0x00, 0x00, 0x00);
 	}
+	else if (!pause)
+		ft_move_ant(sdl, &(sdl->ants[*i]), step[*i]);
+	if (!pause)
+		(*i)++;
 }
 
 void		ft_send_ants(t_sdl *sdl, int *length)
 {
 	int		temp;
 	int		*step;
-	int		pause;
 	int		i;
 
 	temp = 0;
-	pause = 0;
 	if (!(step = (int*)malloc(sizeof(int) * sdl->arrsize)))
 		exit(0);
 	i = -1;
@@ -66,25 +60,7 @@ void		ft_send_ants(t_sdl *sdl, int *length)
 		SDL_RenderClear(sdl->ren);
 		ft_draw_graph(sdl);
 		while (i < sdl->arrsize)
-		{
-			if (SDL_PollEvent(sdl->e) != 0)
-			{
-				if (sdl->e->type == SDL_QUIT ||
-				(sdl->e->type == SDL_KEYDOWN && sdl->e->key.keysym.sym == SDLK_ESCAPE))
-					exit(0);
-				else if ((sdl->e->type == SDL_KEYDOWN && sdl->e->key.keysym.sym == SDLK_SPACE))
-					pause = (pause) ? 0 : 1;
-			}	
-			if (!pause && sdl->ants[i].x == sdl->ants[i].dstroom->x)
-			{
-				filledCircleColor(sdl->ren, sdl->ants[i].x, sdl->ants[i].y, sdl->ants[i].radius, 0xFF0058A6);
-				SDL_SetRenderDrawColor(sdl->ren, 0x00, 0x00, 0x00, 0x00);
-			}
-			else if (!pause)
-				ft_move_ant(sdl, &(sdl->ants[i]), step[i]);
-			if (!pause)
-				i++;
-		}
+			ft_send_ants1(sdl, &i, step);
 		temp++;
 		SDL_RenderPresent(sdl->ren);
 		SDL_Delay(10);
@@ -107,7 +83,8 @@ int			ft_do_move(t_sdl *sdl)
 	ft_get_ants(sdl);
 	i = -1;
 	while (++i < sdl->arrsize)
-		length[i] = ft_get_link_length(sdl->ants[i].srcroom, sdl->ants[i].dstroom);
+		length[i] = ft_get_link_length(sdl->ants[i].srcroom,
+		sdl->ants[i].dstroom);
 	ft_send_ants(sdl, length);
 	i = -1;
 	while (++i < sdl->arrsize)
