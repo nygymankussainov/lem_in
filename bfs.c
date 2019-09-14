@@ -3,49 +3,95 @@
 /*                                                        :::      ::::::::   */
 /*   bfs.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/29 17:57:30 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/12 16:51:09 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/14 12:15:20 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		bfs(t_farm *farm)
+void	dequeue(t_queue **queue)
 {
-	t_room	**queue;
-	t_room	*room;
-	t_link	*link;
-	int		iter;
-	int		endqueue;
+	t_queue *head;
 
-	if (!(queue = (t_room**)malloc(sizeof(t_room*) * farm->room_count)))
-		return (0);
-	iter = 0;
-	endqueue = 1;
-	farm->startroom = find_startend(farm->h_tab[farm->start].room, 's');
-	farm->endroom = find_startend(farm->h_tab[farm->end].room, 'e');
-	queue[iter] = farm->startroom;
-	while (queue[iter])
+	head = *queue;
+	*queue = (*queue)->next;
+	free(head);
+	head = NULL;
+}
+
+void	enqueue(t_queue **queue, t_room *room, t_queue **last)
+{
+	t_queue	*new;
+
+	if (!*queue)
 	{
-		room = queue[iter];
+		if (!(*queue = (t_queue *)ft_memalloc(sizeof(t_queue))))
+			exit(0);
+		(*queue)->room = room;
+		*last = *queue;
+	}
+	else
+	{
+		new = *queue;
+		while (new)
+		{
+			if (new->room == room)
+				return ;
+			new = new->next;
+		}
+		if (!(new = (t_queue *)ft_memalloc(sizeof(t_queue))))
+			exit(0);
+		new->room = room;
+		(*last)->next = new;
+		*last = new;
+	}
+}
+
+int		calculate_distance(t_queue *queue, t_room *room, t_queue *last)
+{
+	t_link	*link;
+	int		ret;
+
+	ret = 0;
+	while (queue)
+	{
 		link = room->link;
+		ret = link->room->status == 'e' ? 1 : ret;
 		while (link)
 		{
-			if (link->room->prev == NULL && link->room->status != 's')
+			if (!link->room->visited)
 			{
-				queue[endqueue] = link->room;
+				enqueue(&queue, link->room, &last);
+				link->room->dist = room->dist + link->weight;
+				link->room->visited = 1;
 				link->room->prev = room;
-				if (link->room->status == 'e')
-					return (1);
-				endqueue++;
 			}
 			link = link->next;
 		}
-		iter++;
+		dequeue(&queue);
+		room = queue ? queue->room : room;
 	}
-	free(queue);
-	ft_putstr("There is no end");
-	return (0);
+	return (ret);
+}
+
+int		bfs(t_farm *farm)
+{
+	t_queue	*queue;
+	t_queue	*last;
+	int		ret;
+
+	queue = NULL;
+	last = NULL;
+	ret = ft_count_paths(farm);
+	enqueue(&queue, farm->startroom, &last);
+	if (calculate_distance(queue, farm->startroom, last))
+	{
+		if (!find_shortest_path(farm, ret))
+			return (0);
+		return (ret);
+	}
+	return (-1);
 }

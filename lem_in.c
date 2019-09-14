@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/12 22:17:05 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/14 19:01:12 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int		main(int argc, char **argv)
 	t_farm		*farm;
 	t_hash_tab	*h_tab;
 	t_hashcodes	*hashcodes;
+	int			ret;
 
 	hashcodes = NULL;
 	if ((farm = (t_farm *)ft_memalloc(sizeof(t_farm))) && argc == 2
@@ -26,8 +27,20 @@ int		main(int argc, char **argv)
 			* (farm->size * 4))))
 			exit(0);
 		farm->fd = open(argv[1], O_RDONLY);
-		if (validation(h_tab, farm, &hashcodes) && bfs(farm))
-			lem_in(farm);
+		if (validation(h_tab, farm, &hashcodes) && ((ret = bfs(farm)) >= 0))
+		{
+			if (ret > 0)
+				while (ret > 1)
+				{
+					ret--;
+					if (!bellman_ford(farm))
+						break ;
+					if (!find_shortest_path(farm, ret) || ret <= 1)
+						break ;
+				}
+			print_valid_data(farm, argv[1]);
+			run_ants(farm);
+		}
 		else
 			write(2, "ERROR\n", 6);
 		farm->h_tab = h_tab;

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   putants.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 00:54:20 by hfrankly          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/09/13 15:51:46 by hfrankly         ###   ########.fr       */
+=======
+/*   Updated: 2019/09/13 19:06:30 by vhazelnu         ###   ########.fr       */
+>>>>>>> 43b80336e926d58b6b88e9e6003b862d508d91ff
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +71,6 @@ void		ft_draw_line(t_sdl *sdl, t_ant *ant, t_point way, int step)
 
 void		ft_move_ant(t_sdl *sdl, t_ant *ant, int step)
 {
-	t_line	line;
 	t_point	way;
 
 	way.x0 = ant->x;

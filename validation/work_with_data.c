@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   work_with_data.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 15:03:04 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/08/30 16:38:09 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/13 15:11:59 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,23 @@ int		isroom(char *line)
 	return (sp != 2 ? 0 : 1);
 }
 
+void	delete_dup_room(t_room *room)
+{
+	t_link	*link;
+	t_link	*tmp;
+
+	link = room->link;
+	while (link)
+	{
+		tmp = link->next;
+		free(link);
+		link = NULL;
+		link = tmp;
+	}
+	free(room);
+	room = NULL;
+}
+
 void	free_all_structs(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab, t_farm *farm)
 {
@@ -59,6 +76,8 @@ void	free_all_structs(t_hashcodes *hashcodes,
 				free(h_tab[hashcodes->hash_code].room->link);
 				h_tab[hashcodes->hash_code].room->link = tmp;
 			}
+			if (h_tab[hashcodes->hash_code].room->outroom)
+				delete_dup_room(h_tab[hashcodes->hash_code].room->outroom);
 			ft_strdel(&h_tab[hashcodes->hash_code].room->name);
 			free(h_tab[hashcodes->hash_code].room);
 			h_tab[hashcodes->hash_code].room = tmp2;
