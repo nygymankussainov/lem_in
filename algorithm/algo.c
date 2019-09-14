@@ -6,15 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 15:10:05 by hfrankly          #+#    #+#             */
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*   Updated: 2019/09/05 11:34:20 by vhazelnu         ###   ########.fr       */
-=======
-/*   Updated: 2019/09/11 15:30:40 by hfrankly         ###   ########.fr       */
->>>>>>> 08fda258dfe575afcff394b40502ac3783422379
-=======
-/*   Updated: 2019/09/13 13:07:35 by hfrankly         ###   ########.fr       */
->>>>>>> c5a59b464f7a7c04a8dbdb4a46f01bd459c12899
+/*   Updated: 2019/09/14 16:40:34 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,31 +195,9 @@ void    lem_in(t_farm *farm)
 		ft_make_rooms_duplicates(farm);
     	// ft_bell_ford(farm);
 		// find_shortest_path(farm);
-<<<<<<< HEAD
-    	ft_bell_ford(farm);
-<<<<<<< HEAD
-		find_shortest_path(farm);
-		i++;
-	}
-	find_shortest_path(farm);
-	ft_putchar('\n');
-=======
-		pathcount++;
-	}
-	i = 0;
-	ft_refresh_graph(farm);
-	print_links(farm->hashcodes, farm->h_tab);
-	// while (i < 1)
-	// {
-	// 	ft_find_path(farm, pathcount);
-	// 	i++;
-	// }
->>>>>>> 08fda258dfe575afcff394b40502ac3783422379
-=======
 		pathcount++;
 	}
 	// ft_refresh_graph(farm);
 	// print_links(farm->hashcodes, farm->h_tab);
 	ft_show_pathlengthes(farm);
->>>>>>> c5a59b464f7a7c04a8dbdb4a46f01bd459c12899
 }
