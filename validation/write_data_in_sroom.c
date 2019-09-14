@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/23 18:03:57 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/01 16:43:09 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/14 12:14:59 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int		is_collision_and_duplicate(t_hash_tab *h_tab, t_coords *coords,
 		}
 	if (!(tmp = (t_room *)ft_memalloc(sizeof(t_room))))
 		return (0);
+	tmp->path = -1;
 	tmp->name = ft_strdup(farm->name);
 	tmp->x = coords->x;
 	tmp->y = coords->y;

@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/29 17:57:30 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/13 19:54:54 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/14 12:15:20 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,12 @@ int		calculate_distance(t_queue *queue, t_room *room, t_queue *last)
 				link->room->dist = room->dist + link->weight;
 				link->room->visited = 1;
 				link->room->prev = room;
-				// printf("%s-%s in %d\n", link->room->prev->name, link->room->name, link->room->dist);
 			}
 			link = link->next;
 		}
 		dequeue(&queue);
 		room = queue ? queue->room : room;
 	}
-	// printf("\n");
 	return (ret);
 }
 
