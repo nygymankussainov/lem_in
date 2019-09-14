@@ -6,14 +6,14 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/13 20:13:04 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/14 16:33:51 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
-// # include "vizualizer/includes/visual.h"
+# include "vizualizer/includes/visual.h"
 # include "./libft/ft_printf/ft_printf.h"
 # include <fcntl.h>
 # include <stdio.h>
@@ -46,6 +46,7 @@ typedef struct				s_coords
 
 struct						s_room
 {
+	int						path;
 	int						antnbr;
 	int						x;
 	int						y;
@@ -89,18 +90,18 @@ typedef struct				s_farm
 	char					*line;
 	char					*name;
 	int						size;
-	struct s_path			**paths;
 	t_room					*endroom;
 	t_room					*startroom;
 	t_hash_tab				*h_tab;
 	t_hashcodes				*hashcodes;
 }							t_farm;
 
-typedef struct				s_ant
+typedef struct				s_path
 {
 	int						index;
-	t_room					*pos;	
-}							t_ant;
+	int						steps;
+}							t_path;
+
 
 void						free_all_structs(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab, t_farm *farm);

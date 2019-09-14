@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 18:38:35 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/13 20:26:44 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/14 13:14:24 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int		create_link(t_room *room)
 	room->link = link1;
 	out->room = room;
 	out->weight = 0;
+	out->room->path = -1;
 	return (1);
 }
 
