@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/13 14:14:15 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/14 19:36:21 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdbool.h>
+# include <limits.h>
 
 typedef struct s_link		t_link;
 typedef struct s_room		t_room;
@@ -45,22 +46,20 @@ typedef struct				s_coords
 
 struct						s_room
 {
+	int						path;
 	int						antnbr;
 	int						x;
 	int						y;
 	int						dist;
-	int						pathlength;
-	int						pathpart;
 	char					*name;
 	char					status;
 	bool					visited;
-	bool					was;
-	bool					induplicate;
-	bool					outduplicate;
 	t_link					*link;
-	struct s_room			*in;
-	struct s_room			*out;
-	struct s_room			*parent;
+	bool					dup;
+	bool					in;
+	bool					out;
+	struct s_room			*outroom;
+	struct s_room			*inroom;
 	struct s_room			*prev;
 	struct s_room			*next;
 };
@@ -70,7 +69,6 @@ struct						s_link
 	t_room					*room;
 	int						weight;
 	bool					lock;
-	bool					destroy;
 	struct s_link			*next;
 };
 
@@ -84,7 +82,6 @@ typedef struct				s_farm
 	int						ants;
 	int						room_count;
 	int						link_count;
-	int						duplicate_count;
 	int						start;
 	int						end;
 	int						recur;
@@ -93,11 +90,18 @@ typedef struct				s_farm
 	char					*line;
 	char					*name;
 	int						size;
-	t_room					*startroom;
 	t_room					*endroom;
+	t_room					*startroom;
 	t_hash_tab				*h_tab;
 	t_hashcodes				*hashcodes;
 }							t_farm;
+
+typedef struct				s_path
+{
+	int						index;
+	int						steps;
+}							t_path;
+
 
 void						free_all_structs(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab, t_farm *farm);
@@ -130,17 +134,14 @@ int							isroom(char *line);
 void						print_links(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab);
 int							bfs(t_farm *farm);
-t_room						*find_startend(t_room *room, char c);
 void						dequeue(t_queue **queue);
 void						enqueue(t_queue **queue, t_room *room, t_queue **last);
-int							find_shortest_path(t_farm *farm);
+int							find_shortest_path(t_farm *farm, int ret);
 void						unvisit_rooms(t_farm *farm);
-void 						lem_in(t_farm *farm);
-void						ft_show_pathlengthes(t_farm *farm);
-int							is_free_path(t_farm *farm);
-t_room						*ft_return_room(t_farm *farm, char *name);
-void						ft_reverse_shortest_path(t_farm *farm);
-void						ft_make_room_duplicate(t_room *room);
-void						ft_make_rooms_duplicates(t_farm *farm);
+int							bellman_ford(t_farm *farm);
+int							ft_count_paths(t_farm *farm);
+void						run_ants(t_farm *farm);
+void						ft_qsort(int *array, int size);
+void						ft_show_array(int *arr, int size);
 
 #endif
