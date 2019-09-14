@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/14 17:03:08 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/14 19:56:30 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		main(int argc, char **argv)
 					if (!find_shortest_path(farm, ret) || ret <= 1)
 						break ;
 				}
-			print_valid_data(farm, argv[1]);
+			// print_valid_data(farm, argv[1]);
 			run_ants(farm);
 		}
 		else

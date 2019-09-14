@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/09/14 16:41:49 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/09/14 17:02:36 by vhazelnu         ###   ########.fr        #
+#    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
+#    Updated: 2019/09/14 19:45:47 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ INCLUDES = -I ./libft -I ./libft/ft_printf/ -I ./includes
 
 SRC = lem_in.c hash_func.c validation/validate_coords.c validation/find_and_connect_rooms.c bfs.c find_shortest_path.c bellman_ford.c run_ants.c \
 		validation/isint.c validation/validation.c validation/validate_rooms.c validation/write_data_in_sroom.c validation/validate_links.c validation/validate_ants.c \
-		validation/work_with_data.c \
+		validation/work_with_data.c qsort.c \
 
 OBJ = $(SRC:.c=.o)
 
@@ -39,10 +39,10 @@ $(ARCHIVE): $(OBJ)
 	@ranlib $(ARCHIVE)
 
 %.o: %.c $(INCLUDES)
-	@gcc $(CCFL) -c $<
+	@gcc -Wall -Wextra -Werror -c $<
 
-$(NAME): 
-	@gcc $(CCFL) -o $(NAME) $(ARCHIVE) $(LIB_A) $(SDL) -g
+$(NAME): $(OBJ)
+	@gcc -Wall -Wextra -Werror -o $(NAME) $(ARCHIVE) $(LIB_A) -g
 
 clean:
 	@make clean -C $(LIB)

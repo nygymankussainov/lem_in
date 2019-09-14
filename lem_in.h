@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/14 17:33:39 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/14 21:34:04 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct				s_path
 {
 	int						index;
 	int						steps;
+	bool					checked;
 }							t_path;
 
 
@@ -141,5 +142,8 @@ void						unvisit_rooms(t_farm *farm, int i);
 int							bellman_ford(t_farm *farm);
 int							ft_count_paths(t_farm *farm);
 void						run_ants(t_farm *farm);
+void						ft_show_array(int *arr, int size);
+int							sort_paths(t_path *path, int size);
+void						sort_arr_path(t_path *path, int size);
 
 #endif
