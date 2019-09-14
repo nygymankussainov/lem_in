@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/09/14 12:03:42 by vhazelnu         ###   ########.fr        #
+#    Created: 2019/09/14 16:41:49 by vhazelnu          #+#    #+#              #
+#    Updated: 2019/09/14 17:02:36 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,10 +39,10 @@ $(ARCHIVE): $(OBJ)
 	@ranlib $(ARCHIVE)
 
 %.o: %.c $(INCLUDES)
-	@gcc -Wall -Wextra -Werror -c $<
+	@gcc $(CCFL) -c $<
 
-$(NAME): $(OBJ)
-	@gcc -Wall -Wextra -Werror -o $(NAME) $(ARCHIVE) $(LIB_A) -g
+$(NAME): 
+	@gcc $(CCFL) -o $(NAME) $(ARCHIVE) $(LIB_A) $(SDL) -g
 
 clean:
 	@make clean -C $(LIB)
