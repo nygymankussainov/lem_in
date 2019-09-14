@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:15:44 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/14 15:30:42 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/14 16:03:33 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	ft_close_sdl(t_sdl *sdl)
 	Mix_FreeMusic(sdl->music);
 	SDL_DestroyWindow(sdl->win);
 	SDL_DestroyRenderer(sdl->ren);
+	Mix_Quit();
 	SDL_Quit();
 	free(sdl);
 }
