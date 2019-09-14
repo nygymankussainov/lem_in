@@ -32,41 +32,41 @@ int		check_lock(t_room *room, t_link *link)
 	return (0);
 }
 
-void	run(t_farm *farm, int size, t_path *path)
-{
-	t_link	*link;
-	t_queue	*queue;
-	t_queue	*last;
-	t_room	*room;
-	int		i;
+// void	run(t_farm *farm, int size, t_path *path)
+// {
+// 	t_link	*link;
+// 	t_queue	*queue;
+// 	t_queue	*last;
+// 	t_room	*room;
+// 	int		i;
 
-	queue = NULL;
-	last = NULL;
-	room = farm->startroom;
-	enqueue(&queue, room, &last);
-	i = 0;
-	while (queue)
-	{
-		room = room->outroom ? room->outroom : room;
-		link = room->link;
-		while (link)
-		{
-			if (!link->room->visited && check_lock(room, link) &&
-				farm->ants > path[i].steps)
-			{
-				enqueue(&queue, link->room, &last);
-				link->room->visited = link->room-> status != 'e' ? 1 : link->room->visited;
-				if (link->room->status == 'e')
-					i++;
-				if (room->status != 's')
-					break ;
-			}
-			link = link->next;
-		}
-		dequeue(&queue);
-		room = queue ? queue->room : room;
-	}
-}
+// 	queue = NULL;
+// 	last = NULL;
+// 	room = farm->startroom;
+// 	enqueue(&queue, room, &last);
+// 	i = 0;
+// 	while (queue)
+// 	{
+// 		room = room->outroom ? room->outroom : room;
+// 		link = room->link;
+// 		while (link)
+// 		{
+// 			if (!link->room->visited && check_lock(room, link) &&
+// 				farm->ants > 0)
+// 			{
+// 				enqueue(&queue, link->room, &last);
+// 				link->room->visited = link->room-> status != 'e' ? 1 : link->room->visited;
+// 				if (link->room->status == 'e')
+// 					i++;
+// 				if (room->status != 's')
+// 					break ;
+// 			}
+// 			link = link->next;
+// 		}
+// 		dequeue(&queue);
+// 		room = queue ? queue->room : room;
+// 	}
+// }
 
 int		count_paths(t_queue *queue, t_room *room, t_queue *last, t_farm *farm)
 {
@@ -188,6 +188,29 @@ void	reindex_paths(t_queue *queue, t_room *room, t_path *path)
 	}
 }
 
+void	sort_arr_path(t_path *path, int size)
+{
+	int		i;
+	int		j;
+	t_path	tmp;
+
+	i = 0;
+	while (i < size)
+	{
+		j = 0;
+		while (j < size)
+		{
+			if (path[j].index == i)
+				break ;
+			j++;
+		}
+		tmp = path[i];
+		path[i] = path[j];
+		path[j] = tmp;
+		i++;
+	}
+}
+
 void	run_ants(t_farm *farm)
 {
 	t_queue	*queue;
@@ -219,5 +242,5 @@ void	run_ants(t_farm *farm)
 	unvisit_rooms(farm, 0);
 	free(ant);
 	free(path);
-	run(farm, i, path);
+	// run(farm, i, path);
 }

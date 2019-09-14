@@ -6,33 +6,24 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:42:16 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/14 21:33:59 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/14 21:37:48 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	sort_arr_path(t_path *path, int size)
+int		ft_if_sort(t_path *path, int size)
 {
 	int		i;
-	int		j;
-	t_path	tmp;
 
 	i = 0;
-	while (i < size)
+	while (i < size - 1)
 	{
-		j = 0;
-		while (j < size)
-		{
-			if (path[j].index == i)
-				break ;
-			j++;
-		}
-		tmp = path[i];
-		path[i] = path[j];
-		path[j] = tmp;
+		if (path[i].steps > path[i + 1].steps)
+			return (0);
 		i++;
 	}
+	return (1);
 }
 
 void	ft_qsort(int *s_arr, int size)
@@ -90,12 +81,9 @@ void	ft_array_to_path(int *array, t_path *path, int size)
 int		sort_paths(t_path *path, int size)
 {
 	int		*array;
-	int		i;
 
-	i = 0;
-	while (i < size - 1)
-		if (path[i].steps > path[++i].steps)
-			return (1);
+	if (ft_if_sort(path, size))
+		return (1);
 	array = ft_path_into_array(path, size);
 	ft_qsort(array, size);
 	ft_array_to_path(array, path, size);
