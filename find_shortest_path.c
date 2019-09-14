@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 18:38:35 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/14 13:14:24 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/14 17:33:24 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		ft_count_paths(t_farm *farm)
 	return ((start < end) ? start : end);
 }
 
-void	unvisit_rooms(t_farm *farm)
+void	unvisit_rooms(t_farm *farm, int i)
 {
 	t_hashcodes	*tmp;
 	t_room		*room;
@@ -46,9 +46,13 @@ void	unvisit_rooms(t_farm *farm)
 		room = farm->h_tab[tmp->hash_code].room;
 		while (room)
 		{
+			room->dist = i == 1 ? -1 : room->dist;
 			room->visited = 0;
 			if (room->outroom)
+			{
 				room->outroom->visited = 0;
+				room->outroom->dist = i == 1 ? -1 : room->outroom->dist;
+			}
 			room = room->next;
 		}
 		tmp = tmp->next;
