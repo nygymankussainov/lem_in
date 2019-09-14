@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:16:39 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/14 15:34:19 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/14 16:19:10 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int			ft_do_move(t_sdl *sdl)
 	i = -1;
 	while (++i < sdl->arrsize)
 		sdl->ants[i].dstroom->antnbr = ft_atoi(&sdl->cmdline[i][1]);
+	free(length);
+	free(sdl->ants);
 	return (0);
 }
 
