@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 15:44:57 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/13 12:30:10 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/14 15:30:32 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 # define VISUAL_H
 
 # include "../../lem_in.h"
+# include <stdio.h>
+# include <string.h>
 # include "SDL2/SDL.h"
 # include "SDL2_GFX/SDL2_gfxPrimitives.h"
+# include "SDL2_MIX/SDL_mixer.h"
 # include <fcntl.h>
 # include <math.h>
 
@@ -47,6 +50,7 @@ struct		s_sdl
 	SDL_Texture		*text;
 	SDL_Renderer	*ren;
 	SDL_Event		*e;
+	Mix_Music		*music;
 	char			**cmdline;
 	int				stepsize;
 	int				arrsize;
@@ -110,5 +114,7 @@ int			ft_init_sdl(t_sdl *sdl);
 void		ft_close_sdl(t_sdl *sdl);
 int			ft_array_size(char **arr);
 void		free_arr(char **str);
+void		ft_play_muzlo(t_sdl *sdl);
+void		ft_events(t_sdl *sdl, bool *pause);
 
 #endif
