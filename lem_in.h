@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/14 21:34:04 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/15 21:02:15 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@
 typedef struct s_link		t_link;
 typedef struct s_room		t_room;
 typedef struct s_queue		t_queue;
-typedef struct s_qelem		t_qelem;
+typedef struct s_path		t_path;
 
 struct						s_queue
 {
+	int						index;
+	int						steps;
 	t_room					*room;
 	t_queue					*next;
 };
@@ -96,12 +98,13 @@ typedef struct				s_farm
 	t_hashcodes				*hashcodes;
 }							t_farm;
 
-typedef struct				s_path
+struct						s_path
 {
 	int						index;
 	int						steps;
 	bool					checked;
-}							t_path;
+	t_queue					*queue;
+};
 
 
 void						free_all_structs(t_hashcodes *hashcodes,
