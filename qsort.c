@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:42:16 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/14 21:37:48 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/15 20:32:04 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ int		sort_paths(t_path *path, int size)
 {
 	int		*array;
 
-	if (ft_if_sort(path, size))
-		return (1);
 	array = ft_path_into_array(path, size);
 	ft_qsort(array, size);
 	ft_array_to_path(array, path, size);
