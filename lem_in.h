@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/15 21:02:15 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/16 15:16:24 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,5 +148,14 @@ void						run_ants(t_farm *farm);
 void						ft_show_array(int *arr, int size);
 int							sort_paths(t_path *path, int size);
 void						sort_arr_path(t_path *path, int size);
+void						create_queue_of_paths(t_queue *queue, t_path *path,
+	t_room *room, int size);
+void						sort_arr_path(t_path *path, int size);
+void						reindex_paths(t_queue *queue, t_room *room, t_path *path);
+void						count_steps(t_queue *queue, t_room *room,
+	t_queue *last, t_path *path);
+int							count_paths(t_queue *queue, t_room *room,
+	t_queue *last, t_farm *farm);
+int							check_lock(t_room *room, t_link *link);
 
 #endif
