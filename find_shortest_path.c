@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 18:38:35 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/14 17:33:24 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/16 14:58:07 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,12 @@ void	unvisit_rooms(t_farm *farm, int i)
 		room = farm->h_tab[tmp->hash_code].room;
 		while (room)
 		{
+			room->antnbr = i == 2 ? -1 : room->antnbr;
 			room->dist = i == 1 ? -1 : room->dist;
 			room->visited = 0;
 			if (room->outroom)
 			{
+				room->outroom->antnbr = i == 2 ? -1 : room->outroom->antnbr;
 				room->outroom->visited = 0;
 				room->outroom->dist = i == 1 ? -1 : room->outroom->dist;
 			}
