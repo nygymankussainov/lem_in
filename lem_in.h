@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/16 15:16:24 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/17 21:47:04 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,5 +157,8 @@ void						count_steps(t_queue *queue, t_room *room,
 int							count_paths(t_queue *queue, t_room *room,
 	t_queue *last, t_farm *farm);
 int							check_lock(t_room *room, t_link *link);
+int							push_ants_from_start(t_path *path, int i, int ant, int sp);
+int							push_ant_further(int ant, t_queue *q_path, int sp);
+int							push_ants_to_end(t_path *path, int i, int sp);
 
 #endif

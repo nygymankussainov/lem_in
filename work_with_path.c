@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 14:52:29 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/16 14:53:08 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/17 14:12:42 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		count_paths(t_queue *queue, t_room *room, t_queue *last, t_farm *farm)
 			{
 				if (!link->room->status)
 					enqueue(&queue, link->room, &last);
-				link->room->visited = link->room-> status != 'e' ? 1 : link->room->visited;
+				link->room->visited = link->room->status != 'e' ? 1 : link->room->visited;
 				if (room->status == 's')
 					link->room->dist = j;
 				else if (!link->room->status)
@@ -77,7 +77,7 @@ void	count_steps(t_queue *queue, t_room *room, t_queue *last, t_path *path)
 					path[link->room->dist].steps++;
 					path[link->room->dist].index = link->room->dist;
 				}
-				link->room->visited = link->room-> status != 'e' ? 1 : link->room->visited;
+				link->room->visited = link->room->status != 'e' ? 1 : link->room->visited;
 				if (room->status != 's')
 					break ;
 			}
@@ -121,7 +121,7 @@ void	reindex_paths(t_queue *queue, t_room *room, t_path *path)
 					else if (link->room->outroom)
 						link->room->outroom->path = link->room->path;
 				}
-				link->room->visited = link->room-> status != 'e' ? 1 : link->room->visited;
+				link->room->visited = link->room->status != 'e' ? 1 : link->room->visited;
 				if (room->status != 's')
 					break ;
 			}
@@ -188,13 +188,17 @@ void	create_queue_of_paths(t_queue *queue, t_path *path, t_room *room, int size)
 						enqueue(&path[link->room->path].queue, link->room, &last2);
 					}
 					else
+					{
+						if (room->path < 0)
+							room->path = 0;
 						enqueue(&path[room->path].queue, link->room, &last2);
+					}
 					if (link->room->status != 'e')
 					{
 						last2->index = path[link->room->path].index;
 						last2->steps = path[link->room->path].steps;
 					}
-					link->room->visited = link->room-> status != 'e' ? 1 : link->room->visited;
+					link->room->visited = link->room->status != 'e' ? 1 : link->room->visited;
 					if (room->status != 's')
 						break ;
 				}
