@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:04:26 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/13 13:06:10 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/17 13:36:25 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,28 @@ int		is_free_path(t_farm *farm)
 	return (i);
 }
 
-// void	unvisit_rooms(t_farm *farm)
-// {
-// 	t_hashcodes	*tmp;
-// 	t_room		*room;
+void	unvisit_rooms(t_farm *farm)
+{
+	t_hashcodes	*tmp;
+	t_room		*room;
 
-// 	tmp = farm->hashcodes;
-// 	while (tmp)
-// 	{
-// 		room = farm->h_tab[tmp->hash_code].room;
-// 		while (room)
-// 		{
-// 			room->visited = 0;
-// 			if (room->dup)
-// 			{
-// 				room->outroom->visited = 0;
-// 			}
-// 			room = room->next;
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// }
+	tmp = farm->hashcodes;
+	while (tmp)
+	{
+		room = farm->h_tab[tmp->hash_code].room;
+		while (room)
+		{
+			room->visited = 0;
+			if (room->in)
+			{
+				room->in->visited = 0;
+				room->out->visited = 0;
+			}
+			room = room->next;
+		}
+		tmp = tmp->next;
+	}
+}
 
 // void	ft_make_room_duplicate(t_farm *farm, t_room *room)
 // {

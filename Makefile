@@ -6,11 +6,7 @@
 #    By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2019/09/13 13:19:14 by hfrankly         ###   ########.fr        #
-=======
-#    Updated: 2019/09/13 14:00:17 by hfrankly         ###   ########.fr        #
->>>>>>> a4e9cdb02707b68e9611e71f224db57784c0af62
+#    Updated: 2019/09/17 21:27:21 by hfrankly         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,17 +17,19 @@ NAME = lem-in
 LIB = libft/ft_printf
 LIB_A = libft/libft.a $(LIB)/libftprintf.a 
 
-INCLUDES = -I ./libft -I ./libft/ft_printf/ -I ./includes
+INCLUDES = -I ./libft -I ./libft/ft_printf/ -I .
 
-SRC = lem_in.c hash_func.c helpful_func.c validation/validate_coords.c validation/find_and_connect_rooms.c bfs.c find_shortest_path.c \
+W/P = algorithm/work_with_pathes
+SA = algorithm/send_ants
+
+SRC = lem_in.c hash_func.c validation/validate_coords.c validation/find_and_connect_rooms.c bfs.c find_shortest_path.c \
 		validation/isint.c validation/validation.c validation/validate_rooms.c validation/write_data_in_sroom.c validation/validate_links.c validation/validate_ants.c \
-		helpful_func.c validation/work_with_data.c algorithm/algo.c algorithm/work_with_pathes.c \
+		helpful_func.c validation/work_with_data.c algorithm/algo.c $(W/P)/reverse_path.c $(W/P)/make_duplicate_room.c \
+		$(W/P)/create_links.c $(W/P)/init_duplicates.c $(SA)/send_ants.c $(SA)/pickout_pathes.c \
 
 OBJ = $(SRC:.c=.o)
 
 CCFL = -Wall -Wextra -Werror
-
-.PHONY: all clean fclean re
 
 all: $(NAME)
 
@@ -40,12 +38,12 @@ $(ARCHIVE): $(OBJ)
 	@ar rc $(ARCHIVE) $(OBJ)
 	@ranlib $(ARCHIVE)
 
-%.o: %.c $(INCLUDES)
-	@gcc -Wall -Wextra -Werror -c $<
+%.o: %.c
+	@gcc $(INCLUDES) -Wall -Wextra -Werror -c $<
 
 $(NAME): 
 	@make -C $(LIB)
-	@gcc -Wall -Wextra -Werror -o $(NAME) $(SRC) $(LIB_A) $(SDL) -g
+	@gcc -Wall -Wextra -Werror $(INCLUDES) -o $(NAME) $(SRC) $(LIB_A) $(SDL) -g
 
 clean:
 	@make clean -C $(LIB)
@@ -57,3 +55,5 @@ fclean: clean
 	@make fclean -C $(LIB)
 
 re: fclean all
+
+.PHONY: all clean fclean re
