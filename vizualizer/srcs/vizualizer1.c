@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:17:24 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/12 21:44:14 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/18 16:03:00 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,19 @@ void		ft_get_ants(t_sdl *sdl)
 	int			i;
 	t_hash_tab	*ht;
 	t_hashcodes	*hc;
+	int			offset;
 
 	i = -1;
 	ht = sdl->farm->h_tab;
 	hc = sdl->farm->hashcodes;
 	while (++i < sdl->arrsize)
 	{
+		offset = 0;
 		sdl->ants[i].srcroom = ft_find_ant_room(sdl->farm, &sdl->cmdline[i][1]);
-		sdl->ants[i].dstroom = sdl->farm->h_tab[hash_func(&sdl->cmdline[i][3],
+		while (sdl->cmdline[i][offset] != '-')
+			offset++;
+		offset++;
+		sdl->ants[i].dstroom = sdl->farm->h_tab[hash_func(&sdl->cmdline[i][offset],
 		sdl->farm->size)].room;
 		sdl->ants[i].x = sdl->ants[i].srcroom->x;
 		sdl->ants[i].y = sdl->ants[i].srcroom->y;
@@ -79,12 +84,15 @@ void		ft_get_ants(t_sdl *sdl)
 	}
 }
 
-int			ft_array_size(char **arr)
+void		ft_events(t_sdl *sdl, bool *pause)
 {
-	int		count;
-
-	count = 0;
-	while (arr[count])
-		count++;
-	return (count);
+	if (sdl->e->type == SDL_QUIT ||
+	(sdl->e->type == SDL_KEYDOWN && sdl->e->key.keysym.sym == SDLK_ESCAPE))
+		exit(0);
+	if ((sdl->e->type == SDL_KEYDOWN
+	&& sdl->e->key.keysym.sym == SDLK_SPACE))
+	{
+		*pause = (*pause) ? 0 : 1;
+		Mix_PauseMusic();
+	}
 }
