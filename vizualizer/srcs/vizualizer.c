@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:16:39 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/18 14:48:19 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/18 17:12:06 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,24 @@
 
 void		ft_send_ants1(t_sdl *sdl, int *i, int *step)
 {
-	int		pause;
+	static bool pause;
 
-	pause = 0;
 	if (SDL_PollEvent(sdl->e) != 0)
-	{
-		if (sdl->e->type == SDL_QUIT ||
-		(sdl->e->type == SDL_KEYDOWN && sdl->e->key.keysym.sym == SDLK_ESCAPE))
-			exit(0);
-		else if ((sdl->e->type == SDL_KEYDOWN
-		&& sdl->e->key.keysym.sym == SDLK_SPACE))
-			pause = (pause) ? 0 : 1;
-	}
-	if (!pause && sdl->ants[*i].x == sdl->ants[*i].dstroom->x
+		ft_events(sdl, &pause);
+	if (pause == 0 && sdl->ants[*i].x == sdl->ants[*i].dstroom->x
 	&& sdl->ants[*i].y == sdl->ants[*i].dstroom->y)
 	{
+		Mix_ResumeMusic();
 		filledCircleColor(sdl->ren, sdl->ants[*i].x,
 		sdl->ants[*i].y, sdl->ants[*i].radius, 0xFF0058A6);
 		SDL_SetRenderDrawColor(sdl->ren, 0x00, 0x00, 0x00, 0x00);
 	}
-	else if (!pause)
+	else if (pause == 0)
+	{
+		Mix_ResumeMusic();
 		ft_move_ant(sdl, &(sdl->ants[*i]), step[*i]);
-	if (!pause)
+	}
+	if (pause == 0)
 		(*i)++;
 }
 
@@ -92,6 +88,8 @@ int			ft_do_move(t_sdl *sdl)
 	i = -1;
 	while (++i < sdl->arrsize)
 		sdl->ants[i].dstroom->antnbr = ft_atoi(&sdl->cmdline[i][1]);
+	free(length);
+	free(sdl->ants);
 	return (0);
 }
 
@@ -126,7 +124,8 @@ void		vizualizer(t_farm *farm)
 		exit(0);
 	sdl->fd = 0;
 	sdl->farm = farm;
-	sdl->stepsize = 100;
+	sdl->stepsize = 200;
+	ft_play_muzlo(sdl);
 	ft_change_coords(sdl);
 	SDL_RenderClear(sdl->ren);
 	ft_draw_graph(sdl);

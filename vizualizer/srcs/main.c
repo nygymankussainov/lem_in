@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 15:45:43 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/13 15:22:26 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/14 16:40:55 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/visual.h"
+
+int		ft_array_size(char **arr)
+{
+	int		count;
+
+	count = 0;
+	while (arr[count])
+		count++;
+	return (count);
+}
 
 int		main(int argc, char **argv)
 {

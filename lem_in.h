@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/14 19:36:21 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/17 21:47:04 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@
 typedef struct s_link		t_link;
 typedef struct s_room		t_room;
 typedef struct s_queue		t_queue;
-typedef struct s_qelem		t_qelem;
+typedef struct s_path		t_path;
 
 struct						s_queue
 {
+	int						index;
+	int						steps;
 	t_room					*room;
 	t_queue					*next;
 };
@@ -96,11 +98,13 @@ typedef struct				s_farm
 	t_hashcodes				*hashcodes;
 }							t_farm;
 
-typedef struct				s_path
+struct						s_path
 {
 	int						index;
 	int						steps;
-}							t_path;
+	bool					checked;
+	t_queue					*queue;
+};
 
 
 void						free_all_structs(t_hashcodes *hashcodes,
@@ -137,11 +141,24 @@ int							bfs(t_farm *farm);
 void						dequeue(t_queue **queue);
 void						enqueue(t_queue **queue, t_room *room, t_queue **last);
 int							find_shortest_path(t_farm *farm, int ret);
-void						unvisit_rooms(t_farm *farm);
+void						unvisit_rooms(t_farm *farm, int i);
 int							bellman_ford(t_farm *farm);
 int							ft_count_paths(t_farm *farm);
 void						run_ants(t_farm *farm);
-void						ft_qsort(int *array, int size);
 void						ft_show_array(int *arr, int size);
+int							sort_paths(t_path *path, int size);
+void						sort_arr_path(t_path *path, int size);
+void						create_queue_of_paths(t_queue *queue, t_path *path,
+	t_room *room, int size);
+void						sort_arr_path(t_path *path, int size);
+void						reindex_paths(t_queue *queue, t_room *room, t_path *path);
+void						count_steps(t_queue *queue, t_room *room,
+	t_queue *last, t_path *path);
+int							count_paths(t_queue *queue, t_room *room,
+	t_queue *last, t_farm *farm);
+int							check_lock(t_room *room, t_link *link);
+int							push_ants_from_start(t_path *path, int i, int ant, int sp);
+int							push_ant_further(int ant, t_queue *q_path, int sp);
+int							push_ants_to_end(t_path *path, int i, int sp);
 
 #endif

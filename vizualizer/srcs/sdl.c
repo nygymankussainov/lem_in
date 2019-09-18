@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:15:44 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/02 12:40:10 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/18 15:10:59 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int		ft_init_sdl(t_sdl *sdl)
 	else
 	{
 		SDL_CreateWindowAndRenderer(SIZEX, SIZEY, 0, &sdl->win, &sdl->ren);
+		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048 < 0))
+			return (0);
 		if (sdl->win == NULL || sdl->ren == NULL)
 			return (0);
 	}
@@ -33,8 +35,20 @@ int		ft_init_sdl(t_sdl *sdl)
 void	ft_close_sdl(t_sdl *sdl)
 {
 	free(sdl->e);
+	Mix_FreeMusic(sdl->music);
 	SDL_DestroyWindow(sdl->win);
 	SDL_DestroyRenderer(sdl->ren);
+	Mix_Quit();
 	SDL_Quit();
 	free(sdl);
+}
+
+void	ft_play_muzlo(t_sdl *sdl)
+{
+	sdl->music = Mix_LoadMUS("/Users/hfrankly/workdir/lem_in123/vizualizer/muzlo.wav");
+	if (sdl->music == NULL)
+		exit(0);
+	Mix_PlayMusic(sdl->music, -1);
+	if (Mix_PlayingMusic() == 0)
+		Mix_PlayMusic(sdl->music, -1);
 }
