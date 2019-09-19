@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 15:10:05 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/18 14:44:58 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/19 12:18:18 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void    lem_in(t_farm *farm)
 	count = 0;
 	pathnbr = 1;
 	farm->duplicate_count = 0;
-	while (pathnbr < 3)
+	while (pathnbr < 2)
 	{
 		if (!ft_reverse_shortest_path(farm, pathnbr))
 			break ;
@@ -131,18 +131,18 @@ void    lem_in(t_farm *farm)
 		pathnbr++;
 	}
 	ft_reverse_shortest_path(farm, pathnbr);
-	// pathes = ft_pickout_pathes(farm, pathnbr);
+	pathes = ft_pickout_pathes(farm, pathnbr);
 	// output
-	// while (count < pathnbr)
-	// {
-	// 	path = pathes[count];
-	// 	while (path)
-	// 	{
-	// 		ft_printf("%s-", path->room->name);
-	// 		path = path->prev;
-	// 	}
-	// 	ft_putchar('\n');
-	// 	count++;
-	// }
+	while (count < pathnbr)
+	{
+		path = pathes[count];
+		while (path)
+		{
+			ft_printf("%s-", path->room->name);
+			path = path->prev;
+		}
+		ft_putchar('\n');
+		count++;
+	}
 	// ft_send_ants(farm, pathnbr);
 }
