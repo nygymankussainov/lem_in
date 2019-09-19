@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 21:24:32 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/19 13:16:49 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/19 13:54:43 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,10 @@ t_link	*ft_get_next_link(t_room *room)
 {
 	t_link	*tmplink;
 
-
 	tmplink = room->link;
 	while (tmplink)
 	{
-		if (tmplink->lock == 1 && ft_if_destroy(room, tmplink->room) == 0)
+		if (tmplink->lock == 1 && tmplink->room->visited == 0 && ft_if_destroy(room, tmplink->room) == 0)
 		{
 			if (room->parent && room->parent->out == tmplink->room)
 			{
