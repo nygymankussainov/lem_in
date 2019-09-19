@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 21:24:32 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/19 13:15:03 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/19 13:16:49 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,17 @@ t_link	*ft_get_next_link(t_room *room)
 	return (tmplink);
 }
 
+void	ft_visit(t_room *room)
+{
+	if (room->parent)
+	{
+		room->parent->out->visited = 1;
+		room->parent->in->visited = 1;
+	}
+	else
+		room->visited = 1;
+}
+
 t_path	*ft_get_path(t_farm *farm, t_room *room)
 {
 	t_path	*path;
@@ -71,18 +82,13 @@ t_path	*ft_get_path(t_farm *farm, t_room *room)
 	t_link	*link;
 
 	path = ft_path_init(farm, room);
-	room->visited = 1;
-	if (room->parent)
-	{
-		room->parent->out->visited = 1;
-		room->parent->in->visited = 1;
-	}
+	ft_visit(room);
 	while (room != farm->endroom)
 	{
 		link = ft_get_next_link(room);
 		if (!(path->next = (t_path*)malloc(sizeof(t_path))))
 			exit(0);
-		link->room->visited = 1;
+		ft_visit(link->room);
 		tmppath = path;
 		path->next->room = link->room;
 		path = path->next;
