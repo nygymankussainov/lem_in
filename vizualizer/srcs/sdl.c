@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:15:44 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/18 15:00:49 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/19 13:52:29 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_close_sdl(t_sdl *sdl)
 
 void	ft_play_muzlo(t_sdl *sdl)
 {
-	sdl->music = Mix_LoadMUS("/Users/vhazelnu/personal_github/lem_in/vizualizer/muzlo.wav");
+	sdl->music = Mix_LoadMUS("vizualizer/cover_st.wav");
 	if (sdl->music == NULL)
 		exit(0);
 	Mix_PlayMusic(sdl->music, -1);
