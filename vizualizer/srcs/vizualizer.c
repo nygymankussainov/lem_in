@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:16:39 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/19 13:45:42 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/19 13:48:18 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,11 +134,13 @@ void		vizualizer(t_farm *farm)
 	while (!quit)
 	{
 		while (SDL_PollEvent(sdl->e) != 0)
+		{
 			if (sdl->e->type == SDL_QUIT ||
 		(sdl->e->type == SDL_KEYDOWN && sdl->e->key.keysym.sym == SDLK_ESCAPE))
 				quit = 1;
 			if (sdl->e->type == SDL_KEYDOWN && sdl->e->key.keysym.sym == SDLK_SPACE)
 				Mix_PauseMusic();
+		}
 	}
 	ft_close_sdl(sdl);
 }
