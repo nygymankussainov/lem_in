@@ -126,27 +126,21 @@ void	run(t_farm *farm, int size, t_path *path)
 	}
 }
 
-void	run_ants(t_farm *farm)
+void	run_ants(t_farm *farm, t_path *path)
 {
-	t_queue	*queue;
-	t_queue	*last;
-	t_path	*path;
-	int		i;
-
-	queue = NULL;
-	last = NULL;
-	i = count_paths(queue, farm->startroom, last, farm);
-	if (!(path = (t_path *)ft_memalloc(sizeof(t_path) * i)))
-		exit(0);
-	unvisit_rooms(farm, 0);
-	count_steps(queue, farm->startroom, last, path);
-	sort_paths(path, i);
-	unvisit_rooms(farm, 0);
-	reindex_paths(queue, farm->startroom, path);
-	sort_arr_path(path, i);
-	unvisit_rooms(farm, 0);
-	create_queue_of_paths(queue, path, farm->startroom, i);
+	// if (!(path = (t_path *)ft_memalloc(sizeof(t_path) * i)))
+	// 	exit(0);
+	// unvisit_rooms(farm, 0);
+	// count_steps(queue, farm->startroom, last, path);
+	// sort_paths(path, i);
+	// unvisit_rooms(farm, 0);
+	// reindex_paths(queue, farm->startroom, path);
+	// sort_arr_path(path, i);
+	// unvisit_rooms(farm, 0);
+	// create_queue_of_paths(queue, path, farm->startroom, i);
 	unvisit_rooms(farm, 2);
-	run(farm, i, path);
+	run(farm, farm->path_nb, path);
+	while (path->queue)
+		dequeue(&path->queue);
 	free(path);
 }
