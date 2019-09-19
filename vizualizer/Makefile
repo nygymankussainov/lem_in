@@ -6,7 +6,7 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/09/18 14:57:05 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/09/19 13:52:02 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,8 +40,11 @@ $(ARCHIVE): $(OBJ)
 %.o: %.c $(INCLUDES)
 	@gcc -Wall -Wextra -Werror -c $<
 
-$(NAME): $(OBJ)
-	@gcc $(CCFL) -o ../$(NAME) $(SDL) $(ARCHIVE) $(LIB_A)
+$(NAME):
+	@make -C ../libft
+	@make -C ../libft/ft_printf
+	@gcc -Wall -Wextra -Werror -o $(NAME) $(SDL) $(ARCHIVE) $(LIB_A)
+	@mv -f $(NAME) ..
 
 clean:
 	@make clean -C $(LIB)
