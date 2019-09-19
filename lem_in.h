@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/17 21:47:04 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/19 21:28:19 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct				s_farm
 	char					*line;
 	char					*name;
 	int						size;
+	int						path_nb;
 	t_room					*endroom;
 	t_room					*startroom;
 	t_hash_tab				*h_tab;
@@ -104,6 +105,7 @@ struct						s_path
 	int						steps;
 	bool					checked;
 	t_queue					*queue;
+	t_path					*next;
 };
 
 
@@ -137,14 +139,14 @@ int							count_room(char *argv);
 int							isroom(char *line);
 void						print_links(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab);
-int							bfs(t_farm *farm);
+int							bfs(t_farm *farm, t_path **path);
 void						dequeue(t_queue **queue);
 void						enqueue(t_queue **queue, t_room *room, t_queue **last);
-int							find_shortest_path(t_farm *farm, int ret);
+int							find_shortest_path(t_farm *farm, t_path **path, int ret);
 void						unvisit_rooms(t_farm *farm, int i);
 int							bellman_ford(t_farm *farm);
 int							ft_count_paths(t_farm *farm);
-void						run_ants(t_farm *farm);
+void						run_ants(t_farm *farm, t_path *path);
 void						ft_show_array(int *arr, int size);
 int							sort_paths(t_path *path, int size);
 void						sort_arr_path(t_path *path, int size);
@@ -160,5 +162,7 @@ int							check_lock(t_room *room, t_link *link);
 int							push_ants_from_start(t_path *path, int i, int ant, int sp);
 int							push_ant_further(int ant, t_queue *q_path, int sp);
 int							push_ants_to_end(t_path *path, int i, int sp);
+int							create_paths(t_farm *farm, t_path **path);
+int							count_short_paths(t_path *path);
 
 #endif

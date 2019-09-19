@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 18:38:35 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/16 14:58:07 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/19 22:40:46 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int		create_dup_room(t_farm *farm, t_room *clone)
 	return (1);
 }
 
-int		find_shortest_path(t_farm *farm, int ret)
+int		find_shortest_path(t_farm *farm, t_path **path, int ret)
 {
 	t_room	*room;
 	t_room	*tmp;
@@ -155,5 +155,7 @@ int		find_shortest_path(t_farm *farm, int ret)
 		}
 		link->lock = 1;
 	}
+	if (!create_paths(farm, path))
+		return (0);
 	return (ret);
 }

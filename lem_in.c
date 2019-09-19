@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/18 17:53:43 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/19 22:12:44 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ int		main(int argc, char **argv)
 	t_farm		*farm;
 	t_hash_tab	*h_tab;
 	t_hashcodes	*hashcodes;
+	t_path		*path;
 	int			ret;
 
 	hashcodes = NULL;
+	path = NULL;
 	if ((farm = (t_farm *)ft_memalloc(sizeof(t_farm))) && argc == 2
 		&& (farm->size = count_room(argv[1])))
 	{
@@ -27,19 +29,18 @@ int		main(int argc, char **argv)
 			* (farm->size * 4))))
 			exit(0);
 		farm->fd = open(argv[1], O_RDONLY);
-		if (validation(h_tab, farm, &hashcodes) && ((ret = bfs(farm)) >= 0))
+		if (validation(h_tab, farm, &hashcodes) && ((ret = bfs(farm, &path)) >= 0))
 		{
-			if (ret > 0)
-				while (ret > 1)
-				{
-					ret--;
-					if (!bellman_ford(farm))
-						break ;
-					if (!find_shortest_path(farm, ret) || ret <= 1)
-						break ;
-				}
+			while (ret > 0)
+			{
+				if (!bellman_ford(farm))
+					break ;
+				ret = find_shortest_path(farm, &path, ret);
+				// if (! || ret <= 1)
+				// 	break ;
+			}
 			print_valid_data(farm, argv[1]);
-			run_ants(farm);
+			run_ants(farm, path);
 		}
 		else
 			write(2, "ERROR\n", 6);
