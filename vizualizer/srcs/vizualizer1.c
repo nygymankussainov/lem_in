@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:17:24 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/18 16:03:00 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/19 14:22:10 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void		ft_get_ants(t_sdl *sdl)
 	while (++i < sdl->arrsize)
 	{
 		offset = 0;
+		sdl->ants[i].antnbr = ft_atoi(&sdl->cmdline[i][1]);
 		sdl->ants[i].srcroom = ft_find_ant_room(sdl->farm, &sdl->cmdline[i][1]);
 		while (sdl->cmdline[i][offset] != '-')
 			offset++;
@@ -81,6 +82,7 @@ void		ft_get_ants(t_sdl *sdl)
 		sdl->ants[i].x = sdl->ants[i].srcroom->x;
 		sdl->ants[i].y = sdl->ants[i].srcroom->y;
 		sdl->ants[i].radius = 10;
+		sdl->ants[i].color = ((sdl->ants[i].antnbr + 1) * 0x0011AAEE) | 0xFF000000;
 	}
 }
 

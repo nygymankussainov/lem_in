@@ -6,11 +6,13 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:16:39 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/19 13:48:18 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/19 14:22:21 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/visual.h"
+
+//0xFF0058A6
 
 void		ft_send_ants1(t_sdl *sdl, int *i, int *step)
 {
@@ -23,7 +25,7 @@ void		ft_send_ants1(t_sdl *sdl, int *i, int *step)
 	{
 		Mix_ResumeMusic();
 		filledCircleColor(sdl->ren, sdl->ants[*i].dstroom->x,
-		sdl->ants[*i].dstroom->y, sdl->ants[*i].radius, 0xFF0058A6);
+		sdl->ants[*i].dstroom->y, sdl->ants[*i].radius, sdl->ants[*i].color);
 		SDL_SetRenderDrawColor(sdl->ren, 0x00, 0x00, 0x00, 0x00);
 	}
 	else if (pause == 0)
