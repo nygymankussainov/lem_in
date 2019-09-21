@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/18 14:28:41 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/20 14:47:32 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ struct						s_room
 	int						dist;
 	int						pathlength;
 	int						pathnbr;
+	int						pathpart;
 	char					*name;
 	char					status;
 	bool					was;
@@ -158,11 +159,17 @@ void						ft_create_out_link_if_nextroom(t_room *out, t_link **linkout, t_room *
 t_room						*ft_roomcpy(t_room *room);
 void						ft_init_duplicates(t_room **room, t_link **linkout, t_link **linkin);
 void    					ft_send_ants_algo(t_farm *farm, int pathcount);
-void						ft_connect_in_out(t_link **linkout, t_link **linkin, t_room *room);
+void						ft_connect_in_and_out(t_link **linkout, t_link **linkin, t_room *room);
 t_path						**ft_pickout_pathes(t_farm *farm, int pathcount);
 t_path						*ft_get_path(t_farm *farm, t_room *room);
 t_link						*ft_get_next_link(t_room *room);
 bool						ft_if_destroy(t_room *room1, t_room *room2);
+void						ft_refresh_graph(t_farm *farm);
+t_room						*ft_room_refresh(t_room *room);
+void						ft_link_refresh(t_room *room, t_room *linkroom, t_link *link);
+void						ft_change_vars(t_room **room, t_room **linkroom);
+void						ft_connect_with_parent(t_room *src, t_room *dst);
+void						ft_free_room(t_room **room);
 
 #endif
 

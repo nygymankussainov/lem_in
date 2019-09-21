@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 21:24:32 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/19 13:54:43 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/21 14:28:57 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ bool	ft_if_destroy(t_room *room1, t_room *room2)
 	link = room2->link;
 	while (link)
 	{
-		if (link->room == room1)
+		if (!ft_strcmp(link->room->name, room1->name))
 			break ;
 		link = link->next;
 	}
-	if (link->lock == true)
+	if (link->lock == true || link->destroy == true)
 		return (1);
 	return (0);
 }

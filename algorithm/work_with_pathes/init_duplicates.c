@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 13:18:22 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/17 22:09:55 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/19 21:47:51 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_room	*ft_roomcpy(t_room *room)
 	res->name = room->name;
 	res->status = room->status;
 	res->pathnbr = room->pathnbr;
+	res->pathpart = room->pathpart;
 	if (!(res->link = (t_link*)malloc(sizeof(t_link))))
 		exit(0);
 	res->in = NULL;

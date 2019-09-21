@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 21:22:38 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/17 18:23:26 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/19 20:28:53 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_make_room_duplicate(t_room *room)
 			ft_create_out_link(room->out, &linkout, link->room, nextroom);
 		link = link->next;
 	}
-	ft_connect_in_out(&linkout, &linkin, room);
+	ft_connect_in_and_out(&linkout, &linkin, room);
 }
 
 void	ft_make_rooms_duplicates(t_farm *farm)

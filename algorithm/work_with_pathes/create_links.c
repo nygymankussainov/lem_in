@@ -6,13 +6,13 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 21:27:11 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/17 18:37:00 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/19 20:29:02 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	ft_connect_in_out(t_link **linkout, t_link **linkin, t_room *room)
+void	ft_connect_in_and_out(t_link **linkout, t_link **linkin, t_room *room)
 {
 	(*linkout)->room = room->in;
 	(*linkout)->weight = 0;

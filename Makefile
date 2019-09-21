@@ -6,7 +6,7 @@
 #    By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/09/17 21:27:21 by hfrankly         ###   ########.fr        #
+#    Updated: 2019/09/20 13:41:40 by hfrankly         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,11 +21,13 @@ INCLUDES = -I ./libft -I ./libft/ft_printf/ -I .
 
 W/P = algorithm/work_with_pathes
 SA = algorithm/send_ants
+RF = algorithm/refresh
 
 SRC = lem_in.c hash_func.c validation/validate_coords.c validation/find_and_connect_rooms.c bfs.c find_shortest_path.c \
 		validation/isint.c validation/validation.c validation/validate_rooms.c validation/write_data_in_sroom.c validation/validate_links.c validation/validate_ants.c \
 		helpful_func.c validation/work_with_data.c algorithm/algo.c $(W/P)/reverse_path.c $(W/P)/make_duplicate_room.c \
-		$(W/P)/create_links.c $(W/P)/init_duplicates.c $(SA)/send_ants.c $(SA)/pickout_pathes.c \
+		$(W/P)/create_links.c $(W/P)/init_duplicates.c $(SA)/send_ants.c $(SA)/pickout_pathes.c $(RF)/refresh_graph.c \
+		$(RF)/rooms_management.c
 
 OBJ = $(SRC:.c=.o)
 

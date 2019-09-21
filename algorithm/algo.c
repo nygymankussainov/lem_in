@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 15:10:05 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/19 12:18:18 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/20 14:20:20 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,8 @@ void	ft_bell_ford(t_farm *farm)
 void    lem_in(t_farm *farm)
 {
 	int		pathnbr;
-	t_path	**pathes;
-	t_path	*path;
+	// t_path	**pathes;
+	// t_path	*path;
 	int		count;
 
 	count = 0;
@@ -131,18 +131,19 @@ void    lem_in(t_farm *farm)
 		pathnbr++;
 	}
 	ft_reverse_shortest_path(farm, pathnbr);
-	pathes = ft_pickout_pathes(farm, pathnbr);
+	ft_refresh_graph(farm);
+	// pathes = ft_pickout_pathes(farm, pathnbr);
 	// output
-	while (count < pathnbr)
-	{
-		path = pathes[count];
-		while (path)
-		{
-			ft_printf("%s-", path->room->name);
-			path = path->prev;
-		}
-		ft_putchar('\n');
-		count++;
-	}
+	// while (count < pathnbr)
+	// {
+	// 	path = pathes[count];
+	// 	while (path)
+	// 	{
+	// 		ft_printf("%s-", path->room->name);
+	// 		path = path->prev;
+	// 	}
+	// 	ft_putchar('\n');
+	// 	count++;
+	// }
 	// ft_send_ants(farm, pathnbr);
 }
