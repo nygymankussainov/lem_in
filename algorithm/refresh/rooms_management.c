@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 13:23:33 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/20 13:29:41 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/22 12:47:42 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_connect_with_parent(t_room *src, t_room *dst)
 	t_link	*link;
 
 	link = src->link;
-	while (link && link->room != dst)
+	while (link && ft_strcmp(dst->name, link->room->name))
 		link = link->next;
 	if (link == NULL)
 		return ;
@@ -33,6 +33,7 @@ void	ft_free_room(t_room **room)
 	while (link)
 	{
 		tmplink = link->next;
+		link->next = NULL;
 		free(link);
 		link = tmplink;
 	}

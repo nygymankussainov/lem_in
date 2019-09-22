@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 14:44:48 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/21 16:13:49 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/22 14:04:46 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,34 +39,17 @@ void	ft_change_vars(t_room **room, t_room **linkroom)
 	link = (*linkroom)->link;
 	while (link)
 	{
-		if (link->lock == 1 && (*room)->pathpart == link->room->pathpart)
-			break ;
+		if (link->lock == 1)
+		{
+			(*linkroom) = link->room;
+			if ((*room)->prev == link->room)
+				break ;
+		}
 		link = link->next;
 	}
-	(*linkroom) = link->room;
+	if (link)
+		(*linkroom) = link->room;
 }
-
-// void	ft_link_refresh(t_room *room, t_room *linkroom, t_link *link)
-// {
-// 	t_link	*tmplink;
-
-// 	if (linkroom == room->parent->out)
-// 		ft_change_vars(&room, &linkroom);
-// 	ft_connect_with_parent(linkroom, room);
-// 	tmplink = room->parent->link;
-// 	while (ft_strcmp(tmplink->room->name, linkroom->name))
-// 		tmplink = tmplink->next;
-// 	tmplink->room = linkroom;
-// 	if (linkroom->prev && !ft_strcmp(linkroom->prev->name, room->name))
-// 		tmplink->lock = true;
-// 	else
-// 		tmplink->lock = false;
-// 	if (ft_if_destroy(room, linkroom) && room->outduplicate && linkroom->induplicate)
-// 	{
-// 		tmplink->destroy = true;
-// 		tmplink->lock = false;
-// 	}
-// }
 
 void	ft_change_link(t_room *room, t_link **link)
 {
@@ -129,8 +112,8 @@ t_room	*ft_room_refresh(t_room *room)
 		link = link->next;
 	}
 	res = room->parent;
-	// ft_free_room(&room->parent->out);
-	// ft_free_room(&room);
+	// ft_free_room(&res->out);
+	// ft_free_room(&res->in);
 	return (res);
 }
 

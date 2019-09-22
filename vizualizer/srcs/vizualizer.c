@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:16:39 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/18 14:29:01 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/22 14:11:00 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void		vizualizer(t_farm *farm)
 	sdl->fd = 0;
 	sdl->farm = farm;
 	sdl->stepsize = 200;
-	ft_play_muzlo(sdl);
+	// ft_play_muzlo(sdl);
 	ft_change_coords(sdl);
 	SDL_RenderClear(sdl->ren);
 	ft_draw_graph(sdl);

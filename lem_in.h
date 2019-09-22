@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/20 14:47:32 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/22 13:57:48 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ struct						s_room
 	struct s_room			*out;
 	struct s_room			*parent;
 	struct s_room			*prev;
+	struct s_room			*forw;
 	struct s_room			*next;
 };
 

@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 13:18:22 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/19 21:47:51 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/22 12:25:42 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ void	ft_init_duplicates(t_room **room, t_link **linkout, t_link **linkin)
 	(*room)->in = ft_roomcpy(*room);
 	(*room)->out = ft_roomcpy(*room);
 	(*room)->in->induplicate = true;
+	(*room)->in->outduplicate = false;
 	(*room)->out->outduplicate = true;
+	(*room)->out->induplicate = false;
 	*linkout = (*room)->out->link;
 	*linkin = (*room)->in->link;
 }
