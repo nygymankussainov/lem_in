@@ -58,7 +58,7 @@ int		ants_left_in_path(t_path path)
 {
 	t_queue		*q_path;
 
-	q_path = path.queue;
+	q_path = path.list;
 	while (q_path)
 	{
 		if (q_path->room->antnbr >= 0 && q_path->room->status != 'e')
@@ -140,7 +140,7 @@ void	run_ants(t_farm *farm, t_path *path)
 	// create_queue_of_paths(queue, path, farm->startroom, i);
 	unvisit_rooms(farm, 2);
 	run(farm, farm->path_nb, path);
-	while (path->queue)
-		dequeue(&path->queue);
+	while (path->list)
+		dequeue(&path->list);
 	free(path);
 }

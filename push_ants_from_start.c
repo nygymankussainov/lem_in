@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 16:51:34 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/17 21:52:51 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/23 16:22:32 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		push_ants_from_start(t_path *path, int i, int ant, int sp)
 	t_queue	*q_path;
 	int		save;
 
-	q_path = path[i].queue;
+	q_path = path[i].list;
 	save = -1;
 	if (q_path && (q_path->room->antnbr < 0 || q_path->room->status == 'e'))
 	{

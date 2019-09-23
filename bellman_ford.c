@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 14:52:47 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/14 17:33:56 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/23 18:35:01 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		calculate_neg_dist(t_queue **queue, t_room *room, t_queue *last)
 			if (link->room)
 				ret = link->room->status == 'e' ? 1 : ret;
 			if (!link->lock && !link->room->visited && link->room->status != 'e')
-				enqueue(queue, link->room, &last);
+				enqueue(queue, link->room, &last, 0);
 			if (!link->lock && room->dist + link->weight < link->room->dist)
 			{
 				link->room->dist = room->dist + link->weight;
@@ -79,7 +79,7 @@ int		calculate_neg_dist(t_queue **queue, t_room *room, t_queue *last)
 	return (ret);
 }
 
-int		bellman_ford(t_farm *farm)
+int		bellman_ford(t_farm *farm, t_path *path)
 {
 	t_queue	*queue;
 	t_queue	*last;
@@ -89,11 +89,12 @@ int		bellman_ford(t_farm *farm)
 	i = 0;
 	queue = NULL;
 	last = NULL;
+	create_dup_rooms(path);
 	assign_inf_dist(farm);
 	while (i++ < farm->room_count - 1)
 	{
 		unvisit_rooms(farm, 0);
-		enqueue(&queue, farm->startroom, &last);
+		enqueue(&queue, farm->startroom, &last, 0);
 		ret = calculate_neg_dist(&queue, farm->startroom, last);
 		if (ret == 1)
 			return (1);

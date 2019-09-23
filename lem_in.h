@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/19 21:28:19 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/23 18:34:58 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ struct						s_queue
 	int						index;
 	int						steps;
 	t_room					*room;
+	t_room					*prevroom;
 	t_queue					*next;
 };
 
@@ -104,10 +105,10 @@ struct						s_path
 	int						index;
 	int						steps;
 	bool					checked;
-	t_queue					*queue;
+	int						size;
+	t_queue					*list;
 	t_path					*next;
 };
-
 
 void						free_all_structs(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab, t_farm *farm);
@@ -141,10 +142,10 @@ void						print_links(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab);
 int							bfs(t_farm *farm, t_path **path);
 void						dequeue(t_queue **queue);
-void						enqueue(t_queue **queue, t_room *room, t_queue **last);
+void						enqueue(t_queue **queue, t_room *room, t_queue **last, bool begin);
 int							find_shortest_path(t_farm *farm, t_path **path, int ret);
 void						unvisit_rooms(t_farm *farm, int i);
-int							bellman_ford(t_farm *farm);
+int							bellman_ford(t_farm *farm, t_path *path);
 int							ft_count_paths(t_farm *farm);
 void						run_ants(t_farm *farm, t_path *path);
 void						ft_show_array(int *arr, int size);
@@ -164,5 +165,7 @@ int							push_ant_further(int ant, t_queue *q_path, int sp);
 int							push_ants_to_end(t_path *path, int i, int sp);
 int							create_paths(t_farm *farm, t_path **path);
 int							count_short_paths(t_path *path);
+void						create_dup_rooms(t_path *path);
+int							expression(t_path *path, int i);
 
 #endif

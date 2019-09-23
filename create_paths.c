@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 20:11:22 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/19 21:32:46 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/23 16:17:40 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int		free_paths(t_path **path, int size)
 		tmp = (*path)->next;
 		while (i < size)
 		{
-			while ((*path)[i].queue)
-				dequeue(&(*path)[i].queue);
+			while ((*path)[i].list)
+				dequeue(&(*path)[i].list);
 			i++;
 		}
 		free(*path);
@@ -62,7 +62,7 @@ int		create_paths(t_farm *farm, t_path **path)
 
 	queue = NULL;
 	last = NULL;
-	i = count_paths(queue, farm->startroom, last, farm);
+	i = 1;
 	if (!*path)
 	{
 		if (!(*path = (t_path *)ft_memalloc(sizeof(t_path) * i)))
@@ -70,6 +70,7 @@ int		create_paths(t_farm *farm, t_path **path)
 	}
 	else
 	{
+		i = count_paths(queue, farm->startroom, last, farm);
 		if (!(new = (t_path *)ft_memalloc(sizeof(t_path) * i)))
 			exit(0);
 		new->next = *path;
