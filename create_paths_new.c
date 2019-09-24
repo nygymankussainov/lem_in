@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:47:38 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/23 20:01:48 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/24 20:02:28 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,8 @@ int		create_paths(t_farm *farm, t_path **path)
 	queue = NULL;
 	last = NULL;
 	inverse_edges(farm->endroom);
+	printf("BEFORE DUPLICATE\n");
+	print_graph(farm);
 	if (!*path)
 	{
 		if (!(*path = (t_path *)ft_memalloc(sizeof(t_path) * 1)))

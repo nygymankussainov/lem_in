@@ -14,20 +14,12 @@
 
 int		check_lock(t_room *room, t_link *link)
 {
-	t_room	*room_tmp;
-	t_link	*link_tmp;
+	t_link	*link2;
 
-	room_tmp = link->room;
-	link_tmp = room_tmp->link;
-	if (!link->lock)
-		return (0);
-	while (link_tmp && link_tmp->room->name != room->name)
-	{
-		link_tmp = link_tmp->next;
-		if (!link_tmp)
-			link_tmp = room_tmp->outroom ? room_tmp->outroom->link : link_tmp;
-	}
-	if (link_tmp && !link_tmp->lock)
+	link2 = link->room->link;
+	while (link2 && link2->room != room)
+		link2 = link2->next;
+	if (link->lock && !link2->lock)
 		return (1);
 	return (0);
 }

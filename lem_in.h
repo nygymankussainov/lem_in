@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/23 18:34:58 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/24 19:18:51 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,5 +167,9 @@ int							create_paths(t_farm *farm, t_path **path);
 int							count_short_paths(t_path *path);
 void						create_dup_rooms(t_path *path);
 int							expression(t_path *path, int i);
+void						change_prev_rooms(t_room *room);
+void						delete_dup_rooms(t_path *path);
+void						print_graph(t_farm *farm);
+void						reverse_edges(t_farm *farm);
 
 #endif

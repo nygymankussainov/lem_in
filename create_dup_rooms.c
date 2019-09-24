@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 15:32:36 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/23 19:35:32 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/24 15:46:28 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	change_prev_rooms(t_room *room)
 	while (link)
 	{
 		if (link->room->name != room->name &&
+			link->room->prev &&
 			link->room->prev->name == room->name)
 			link->room->prev = room;
 		link = link->next;
@@ -82,8 +83,7 @@ void	create_dup_rooms(t_path *path)
 {
 	int		i;
 	t_queue	*list;
-	// t_room	*start;
-	// t_link	*link;
+	t_link	*link;
 
 	i = 0;
 	while (i < path->size)
@@ -93,13 +93,18 @@ void	create_dup_rooms(t_path *path)
 		{
 			if (!list->room->dup && !list->room->status)
 				duplicate_room(list);
+			else if (list->room->status == 'e')
+			{
+				link = list->room->link;
+				while (link)
+				{
+					if (link->room == list->prevroom)
+						link->room = link->room->outroom;
+					link = link->next;
+				}
+			}
 			list = list->next;
 		}
-		// start = path[i].list->room;
-		// link = start->link;
-		// while (link && link->room != path[i].list->next->room)
-		// 	link = link->next;
-		// link->lock = 1;
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 14:52:47 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/23 18:35:01 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/24 17:26:02 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ int		bellman_ford(t_farm *farm, t_path *path)
 	queue = NULL;
 	last = NULL;
 	create_dup_rooms(path);
+	printf("AFTER DUPLICATE\n");
+	print_graph(farm);
 	assign_inf_dist(farm);
 	while (i++ < farm->room_count - 1)
 	{
@@ -97,9 +99,16 @@ int		bellman_ford(t_farm *farm, t_path *path)
 		enqueue(&queue, farm->startroom, &last, 0);
 		ret = calculate_neg_dist(&queue, farm->startroom, last);
 		if (ret == 1)
+		{
+			delete_dup_rooms(path);
 			return (1);
+		}
 		else if (!ret)
+		{
+			delete_dup_rooms(path);
 			return (0);
+		}
 	}
+	delete_dup_rooms(path);
 	return (1);
 }

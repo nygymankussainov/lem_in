@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 14:52:29 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/23 16:18:26 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/24 20:06:49 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int		count_paths(t_queue *queue, t_room *room, t_queue *last, t_farm *farm)
 	unvisit_rooms(farm, 1);
 	while (queue)
 	{
-		room = room->outroom ? room->outroom : room;
 		link = room->link;
 		while (link)
 		{
@@ -37,10 +36,6 @@ int		count_paths(t_queue *queue, t_room *room, t_queue *last, t_farm *farm)
 					link->room->dist = j;
 				else if (!link->room->status)
 					link->room->dist = room->dist;
-				if (link->room->inroom)
-					link->room->inroom->dist = link->room->dist;
-				else if (link->room->outroom)
-					link->room->outroom->dist = link->room->dist;
 				if (link->room->status == 'e')
 					i++;
 				if (room->status != 's')
@@ -64,7 +59,6 @@ void	count_steps(t_queue *queue, t_room *room, t_queue *last, t_path *path)
 	enqueue(&queue, room, &last, 0);
 	while (queue)
 	{
-		room = room->outroom ? room->outroom : room;
 		link = room->link;
 		while (link)
 		{
@@ -100,7 +94,6 @@ void	reindex_paths(t_queue *queue, t_room *room, t_path *path)
 	i = 0;
 	while (queue)
 	{
-		room = room->outroom ? room->outroom : room;
 		link = room->link;
 		while (link)
 		{
@@ -116,10 +109,6 @@ void	reindex_paths(t_queue *queue, t_room *room, t_path *path)
 					}
 					else
 						link->room->path = room->path;
-					if (link->room->inroom)
-						link->room->inroom->path = link->room->path;
-					else if (link->room->outroom)
-						link->room->outroom->path = link->room->path;
 				}
 				link->room->visited = link->room->status != 'e' ? 1 : link->room->visited;
 				if (room->status != 's')
@@ -174,7 +163,6 @@ void	create_queue_of_paths(t_queue *queue, t_path *path, t_room *room, int size)
 		enqueue(&queue, room, &last1, 0);
 		while (queue)
 		{
-			room = room->outroom ? room->outroom : room;
 			link = room->link;
 			while (link)
 			{
