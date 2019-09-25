@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/29 17:57:30 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/13 12:40:29 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/24 16:14:11 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ int		bfs(t_farm *farm)
 				queue[endqueue] = link->room;
 				link->room->prev = room;
 				if (link->room->status == 'e')
+				{
+					free(queue);
 					return (1);
+				}
 				endqueue++;
 			}
 			link = link->next;

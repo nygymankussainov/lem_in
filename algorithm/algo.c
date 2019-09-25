@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 15:10:05 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/22 14:06:34 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/25 15:40:23 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ft_make_room_inf(t_farm *farm)
 		{
 			if (room->in != NULL)
 			{
+				room->pathlength = 2147483637;
 				room->in->pathlength = 2147483637;
 				room->out->pathlength = 2147483637;
 			}
@@ -38,17 +39,7 @@ void	ft_make_room_inf(t_farm *farm)
 		}
 		hc = hc->next;
 	}
-	room = ht[farm->start].room;
-	while (room)
-	{
-		if (room->status == 's')
-		{
-			room->pathlength = 0;
-			farm->startroom = room;
-			break;
-		}
-		room = room->next;
-	}
+	farm->startroom->pathlength = 0;
 }
 
 void	ft_bell_ford(t_farm *farm)
@@ -66,7 +57,7 @@ void	ft_bell_ford(t_farm *farm)
 		return ;
 	ft_make_room_inf(farm);
 	farm->room_count += farm->duplicate_count;
-	if (!(queue = (t_room**)malloc(sizeof(t_room*) * farm->room_count)))
+	if (!(queue = (t_room**)ft_memalloc(sizeof(t_room*) * farm->room_count * 2)))
 		exit(0);
 	while (i < farm->room_count)
 	{
@@ -91,15 +82,12 @@ void	ft_bell_ford(t_farm *farm)
 				}
 				link = link->next;
 			}
-			// ft_show_pathlengthes(farm);
-			// ft_putchar('\n');
 			iter++;
 		}
 		unvisit_rooms(farm);
 		if (changes == false)
 		{
-			free(queue);
-			return ;
+			break;
 		}
 		if (i == farm->room_count)
 		{
@@ -108,8 +96,8 @@ void	ft_bell_ford(t_farm *farm)
 		}
 		i++;
 	}
-	farm->room_count -= farm->duplicate_count;
 	free(queue);
+	farm->room_count -= farm->duplicate_count;
 }
 
 void    lem_in(t_farm *farm)
@@ -122,7 +110,7 @@ void    lem_in(t_farm *farm)
 	count = 0;
 	pathnbr = 1;
 	farm->duplicate_count = 0;
-	while (pathnbr < 2)
+	while (pathnbr < 3)
 	{
 		if (!ft_reverse_shortest_path(farm, pathnbr))
 			break ;
@@ -131,8 +119,10 @@ void    lem_in(t_farm *farm)
 		pathnbr++;
 	}
 	ft_reverse_shortest_path(farm, pathnbr);
+	ft_putendl("refresh");
 	ft_refresh_graph(farm);
 	unvisit_rooms(farm);
+	ft_putendl("pathes");
 	pathes = ft_pickout_pathes(farm, pathnbr);
 	// output
 	while (count < pathnbr)

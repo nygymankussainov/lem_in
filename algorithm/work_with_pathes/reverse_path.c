@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 14:20:12 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/22 14:02:19 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/24 14:03:09 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int		ft_reverse_shortest_path(t_farm *farm, int pathnbr)
 		}
 		else
 			tmproom->pathpart++;
-		// tmproom->prev->forw = tmproom;
 		tmproom = tmproom->prev;
 	}
 	ft_putchar('\n');

@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:04:26 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/17 13:36:25 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/25 13:38:29 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,3 @@ void	unvisit_rooms(t_farm *farm)
 		tmp = tmp->next;
 	}
 }
-
-// void	ft_make_room_duplicate(t_farm *farm, t_room *room)
-// {
-	
-// }
-
-// int		find_shortest_path(t_farm *farm)
-// {
-	
-// }

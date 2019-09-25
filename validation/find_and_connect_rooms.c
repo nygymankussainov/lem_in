@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_and_connect_rooms.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:30:36 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/01 17:49:02 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/24 14:28:32 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ t_link	*create_slink(t_room *room, char *linkname)
 		room->link = new;
 	}
 	else
+	{
 		if (!(room->link = (t_link *)ft_memalloc(sizeof(t_link))))
 			return (NULL);
+		room->link->next = NULL;
+	}
 	room->link->weight = 1;
 	return (room->link);
 }

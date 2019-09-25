@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 21:27:11 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/19 20:29:02 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/24 15:30:41 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,17 @@ t_room *linkroom, t_room *nextroom)
 		link = linkroom->link;
 		while (link->next)
 			link = link->next;
-		if (!(link->next = (t_link*)malloc(sizeof(t_link))))
+		if (!(link->next = (t_link*)ft_memalloc(sizeof(t_link))))
 			exit(0);
 		link = link->next;
 		link->room = out;
 		link->lock = 1;
+		link->next = NULL;
 	}
-	if (!((*linkout)->next = (t_link*)malloc(sizeof(t_link))))
+	if (!((*linkout)->next = (t_link*)ft_memalloc(sizeof(t_link))))
 		exit(0);
 	(*linkout) = (*linkout)->next;
+	(*linkout)->next = NULL;
 }
 
 void	ft_create_in_link(t_room *in, t_link **linkin,
@@ -82,7 +84,8 @@ t_room *linkroom, t_room *nextroom)
 		link = link->next;
 	link->room = in;
 	link->weight = 1;
-	if (!((*linkin)->next = (t_link*)malloc(sizeof(t_link))))
+	if (!((*linkin)->next = (t_link*)ft_memalloc(sizeof(t_link))))
 		exit(0);
 	(*linkin) = (*linkin)->next;
+	(*linkin)->next = NULL;
 }

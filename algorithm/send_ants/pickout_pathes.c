@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 21:24:32 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/22 13:30:01 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/25 15:32:50 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ t_path	*ft_get_path(t_farm *farm, t_room *room)
 	t_link	*link;
 
 	path = ft_path_init(farm, room);
+	unvisit_rooms(farm);
 	ft_visit(room);
 	while (room != farm->endroom)
 	{
@@ -87,6 +88,9 @@ t_path	*ft_get_path(t_farm *farm, t_room *room)
 		path = path->next;
 		path->prev = tmppath;
 		room = link->room;
+		if (room->antnbr == 1)
+			ft_printf("already being: %s\n", room->name);
+		room->antnbr = 1;
 	}
 	path->next = NULL;
 	return (path);

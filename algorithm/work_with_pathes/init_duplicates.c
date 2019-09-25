@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 13:18:22 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/22 12:25:42 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/24 16:28:46 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_room	*ft_roomcpy(t_room *room)
 {
 	t_room	*res;
 
-	if (!(res = (t_room*)malloc(sizeof(t_room))))
+	if (!(res = (t_room*)ft_memalloc(sizeof(t_room))))
 		exit(0);
 	res->antnbr = room->antnbr;
 	res->dist = room->dist;
@@ -24,12 +24,11 @@ t_room	*ft_roomcpy(t_room *room)
 	res->status = room->status;
 	res->pathnbr = room->pathnbr;
 	res->pathpart = room->pathpart;
-	if (!(res->link = (t_link*)malloc(sizeof(t_link))))
+	if (!(res->link = (t_link*)ft_memalloc(sizeof(t_link))))
 		exit(0);
 	res->in = NULL;
 	res->out = NULL;
 	res->prev = room->prev;
-	res->next = room->next;
 	res->parent = room;
 	return (res);
 }

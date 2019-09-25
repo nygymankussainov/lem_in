@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 14:44:48 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/22 14:04:46 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/25 15:40:51 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,11 @@ bool	ft_check_destroy_link(t_room *room1, t_room *room2)
 void	ft_link_refresh(t_room *room, t_room *linkroom, t_link *link)
 {
 	t_link	*parentlink;
-
+	t_room	*inputroom;
+	
+	inputroom = room;
+	if (!ft_strcmp(room->name, "Hnf3") || !ft_strcmp(room->name, "Zmn4"))
+		ft_putstr("here");
 	if (linkroom == room->parent->out)
 		ft_change_vars(&room, &linkroom);
 	else
@@ -99,21 +103,39 @@ void	ft_link_refresh(t_room *room, t_room *linkroom, t_link *link)
 	}
 }
 
+void	ft_unwas_link(t_link *link)
+{
+	while (link)
+	{
+		link->room->was = false;
+		if (link->room->in)
+		{
+			link->room->in->was = false;
+			link->room->out->was = false;
+		}
+		link = link->next;
+	}
+}
+
 t_room	*ft_room_refresh(t_room *room)
 {
 	t_link	*link;
 	t_room	*res;
 	
 	link = room->link;
-	while (link)
+	ft_unwas_link(link);
+	while (link && link->room->was == false)
 	{
-		// ft_clean_out_links(link->room);
 		ft_link_refresh(room, link->room, link);
+		link->room->was = true;
+		if (link->room->in)
+		{
+			link->room->in->was = true;
+			link->room->out->was = true;
+		}
 		link = link->next;
 	}
 	res = room->parent;
-	// ft_free_room(&res->out);
-	// ft_free_room(&res->in);
 	return (res);
 }
 
@@ -125,12 +147,12 @@ void	ft_refresh_graph(t_farm *farm)
 	int		endqueue;
 	int		iter;
 
-	if (!(queue = (t_room**)malloc(sizeof(t_room*) * (farm->room_count + farm->duplicate_count))))
+	if (!(queue = (t_room**)malloc(sizeof(t_room*) * (farm->room_count + farm->duplicate_count) * 2)))
 		exit(0);
 	iter = 0;
 	endqueue = 1;
 	queue[iter] = farm->startroom;
-	while (queue[iter])
+	while (iter < endqueue)
 	{
 		room = queue[iter];
 		if (room->induplicate)
