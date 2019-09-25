@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 14:44:48 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/25 15:40:51 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/25 16:22:04 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ void	ft_link_refresh(t_room *room, t_room *linkroom, t_link *link)
 	t_room	*inputroom;
 	
 	inputroom = room;
-	if (!ft_strcmp(room->name, "Hnf3") || !ft_strcmp(room->name, "Zmn4"))
-		ft_putstr("here");
 	if (linkroom == room->parent->out)
 		ft_change_vars(&room, &linkroom);
 	else

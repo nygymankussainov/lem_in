@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 15:10:05 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/25 15:40:23 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/25 16:41:05 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void    lem_in(t_farm *farm)
 	count = 0;
 	pathnbr = 1;
 	farm->duplicate_count = 0;
-	while (pathnbr < 3)
+	while (pathnbr < 10)
 	{
 		if (!ft_reverse_shortest_path(farm, pathnbr))
 			break ;

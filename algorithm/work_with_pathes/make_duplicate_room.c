@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 21:22:38 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/25 13:34:27 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/25 16:42:49 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ void	ft_make_rooms_duplicates(t_farm *farm)
 	tmproom = farm->endroom->prev;
 	while (tmproom != farm->startroom)
 	{
-		if (tmproom->in == NULL && tmproom->out == NULL &&
-			tmproom->induplicate == false && tmproom->outduplicate == false)
+		if (tmproom->in == NULL && tmproom->out == NULL)
 		{
 			ft_make_room_duplicate(tmproom);
 			farm->duplicate_count++;
