@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/29 17:57:30 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/23 18:59:10 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/26 20:21:39 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	dequeue(t_queue **queue)
 	head = NULL;
 }
 
-void	enqueue(t_queue **queue, t_room *room, t_queue **last, bool begin)
+void	enqueue(t_queue **queue, t_room *room, t_queue **last)
 {
 	t_queue	*new;
 
@@ -44,18 +44,10 @@ void	enqueue(t_queue **queue, t_room *room, t_queue **last, bool begin)
 		}
 		if (!(new = (t_queue *)ft_memalloc(sizeof(t_queue))))
 			exit(0);
+		new->prevroom = (*last)->room;
 		new->room = room;
-		if (!begin)
-		{
-			(*last)->next = new;
-			*last = new;
-		}
-		else
-		{
-			(*queue)->prevroom = new->room;
-			new->next = *queue;
-			*queue = new;
-		}
+		(*last)->next = new;
+		*last = new;
 	}
 }
 
@@ -71,9 +63,9 @@ int		calculate_distance(t_queue *queue, t_room *room, t_queue *last)
 		ret = link->room->status == 'e' ? 1 : ret;
 		while (link)
 		{
-			if (!link->room->visited)
+			if (!link->room->visited && link->room->status != 's')
 			{
-				enqueue(&queue, link->room, &last, 0);
+				enqueue(&queue, link->room, &last);
 				link->room->dist = room->dist + link->weight;
 				link->room->visited = 1;
 				link->room->prev = link->room->status != 's' ? room : NULL;
@@ -95,7 +87,7 @@ int		bfs(t_farm *farm, t_path **path)
 	queue = NULL;
 	last = NULL;
 	ret = ft_count_paths(farm);
-	enqueue(&queue, farm->startroom, &last, 0);
+	enqueue(&queue, farm->startroom, &last);
 	if (!calculate_distance(queue, farm->startroom, last))
 		return (-1);
 	create_paths(farm, path);

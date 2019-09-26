@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 14:52:29 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/24 20:06:49 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/26 19:52:02 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		count_paths(t_queue *queue, t_room *room, t_queue *last, t_farm *farm)
 
 	i = 0;
 	j = 0;
-	enqueue(&queue, room, &last, 0);
+	enqueue(&queue, room, &last);
 	unvisit_rooms(farm, 1);
 	while (queue)
 	{
@@ -30,12 +30,12 @@ int		count_paths(t_queue *queue, t_room *room, t_queue *last, t_farm *farm)
 			if (!link->room->visited && check_lock(room, link))
 			{
 				if (!link->room->status)
-					enqueue(&queue, link->room, &last, 0);
+					enqueue(&queue, link->room, &last);
 				link->room->visited = link->room->status != 'e' ? 1 : link->room->visited;
 				if (room->status == 's')
-					link->room->dist = j;
+					link->room->path1 = j;
 				else if (!link->room->status)
-					link->room->dist = room->dist;
+					link->room->path1 = room->path1;
 				if (link->room->status == 'e')
 					i++;
 				if (room->status != 's')
@@ -56,7 +56,7 @@ void	count_steps(t_queue *queue, t_room *room, t_queue *last, t_path *path)
 
 	queue = NULL;
 	last = NULL;
-	enqueue(&queue, room, &last, 0);
+	enqueue(&queue, room, &last);
 	while (queue)
 	{
 		link = room->link;
@@ -66,10 +66,10 @@ void	count_steps(t_queue *queue, t_room *room, t_queue *last, t_path *path)
 			{
 				if (!link->room->status)
 				{
-					enqueue(&queue, link->room, &last, 0);
-					path[link->room->dist].steps += !path[link->room->dist].steps ? 1 : 0;
-					path[link->room->dist].steps++;
-					path[link->room->dist].index = link->room->dist;
+					enqueue(&queue, link->room, &last);
+					path[link->room->path1].steps += !path[link->room->path1].steps ? 1 : 0;
+					path[link->room->path1].steps++;
+					path[link->room->path1].index = link->room->dist;
 				}
 				link->room->visited = link->room->status != 'e' ? 1 : link->room->visited;
 				if (room->status != 's')
@@ -90,7 +90,7 @@ void	reindex_paths(t_queue *queue, t_room *room, t_path *path)
 
 	queue = NULL;
 	last = NULL;
-	enqueue(&queue, room, &last, 0);
+	enqueue(&queue, room, &last);
 	i = 0;
 	while (queue)
 	{
@@ -101,8 +101,8 @@ void	reindex_paths(t_queue *queue, t_room *room, t_path *path)
 			{
 				if (!link->room->status)
 				{
-					enqueue(&queue, link->room, &last, 0);
-					if (room->status == 's' && link->room->dist == i)
+					enqueue(&queue, link->room, &last);
+					if (room->status == 's' && link->room->path1 == i)
 					{
 						link->room->path = path[i].index;
 						i++;
@@ -160,7 +160,7 @@ void	create_queue_of_paths(t_queue *queue, t_path *path, t_room *room, int size)
 		last1 = NULL;
 		last2 = NULL;
 		room = start;
-		enqueue(&queue, room, &last1, 0);
+		enqueue(&queue, room, &last1);
 		while (queue)
 		{
 			link = room->link;
@@ -172,14 +172,16 @@ void	create_queue_of_paths(t_queue *queue, t_path *path, t_room *room, int size)
 					// 	enqueue(&path[link->room->path].list, room, &last2);
 					if (!link->room->status)
 					{
-						enqueue(&queue, link->room, &last1, 0);
-						enqueue(&path[link->room->path].list, link->room, &last2, 0);
+						enqueue(&queue, link->room, &last1);
+						enqueue(&path[link->room->path].list, link->room, &last2);
+						if (!path[link->room->path].list->prevroom)
+							path[link->room->path].list->prevroom = start;
 					}
 					else
 					{
 						if (room->path < 0)
 							room->path = 0;
-						enqueue(&path[room->path].list, link->room, &last2, 0);
+						enqueue(&path[room->path].list, link->room, &last2);
 					}
 					if (link->room->status != 'e')
 					{

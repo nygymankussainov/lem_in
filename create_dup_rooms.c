@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 15:32:36 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/24 15:46:28 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/26 17:54:29 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,28 @@ void	manage_links(t_queue *list, t_room *room)
 	right->room = room->outroom;
 	right->lock = 1;
 	link = room->outroom->link;
-	while (room->outroom->link)
+	if (room->outroom->link->room == list->prevroom)
 	{
-		if (room->outroom->link->next->room == list->prevroom)
-			break ;
-		room->outroom->link = room->outroom->link->next;
+		left = room->outroom->link;
+		inroom->next = room->outroom->link->next;
+		left->next = NULL;
+		room->outroom->link = inroom;
 	}
-	left = room->outroom->link->next;
+	else
+	{
+		while (room->outroom->link)
+		{
+			if (room->outroom->link->next->room == list->prevroom)
+				break ;
+			room->outroom->link = room->outroom->link->next;
+		}
+		left = room->outroom->link->next;
+		room->outroom->link->next = inroom;
+		room->outroom->link = link;
+	}
 	left->room = left->room->outroom ? left->room->outroom : left->room;
 	right->next = left;
 	room->link = right;
-	room->outroom->link->next = inroom;
-	room->outroom->link = link;
 	change_prev_rooms(room->outroom);
 }
 

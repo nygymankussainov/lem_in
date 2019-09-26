@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 14:52:47 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/24 17:26:02 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/26 18:04:42 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		calculate_neg_dist(t_queue **queue, t_room *room, t_queue *last)
 			if (link->room)
 				ret = link->room->status == 'e' ? 1 : ret;
 			if (!link->lock && !link->room->visited && link->room->status != 'e')
-				enqueue(queue, link->room, &last, 0);
+				enqueue(queue, link->room, &last);
 			if (!link->lock && room->dist + link->weight < link->room->dist)
 			{
 				link->room->dist = room->dist + link->weight;
@@ -90,13 +90,13 @@ int		bellman_ford(t_farm *farm, t_path *path)
 	queue = NULL;
 	last = NULL;
 	create_dup_rooms(path);
-	printf("AFTER DUPLICATE\n");
-	print_graph(farm);
+	// printf("AFTER DUPLICATE\n");
+	// print_graph(farm);
 	assign_inf_dist(farm);
 	while (i++ < farm->room_count - 1)
 	{
 		unvisit_rooms(farm, 0);
-		enqueue(&queue, farm->startroom, &last, 0);
+		enqueue(&queue, farm->startroom, &last);
 		ret = calculate_neg_dist(&queue, farm->startroom, last);
 		if (ret == 1)
 		{
@@ -106,6 +106,8 @@ int		bellman_ford(t_farm *farm, t_path *path)
 		else if (!ret)
 		{
 			delete_dup_rooms(path);
+			// printf("BEFORE DUPLICATE\n");
+			// print_graph(farm);
 			return (0);
 		}
 	}

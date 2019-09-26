@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 15:53:35 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/24 17:18:22 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/26 16:06:26 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	print_graph(t_farm *farm)
 	queue = NULL;
 	last = NULL;
 	room = farm->startroom;
-	enqueue(&queue, room, &last, 0);
+	enqueue(&queue, room, &last);
 	while (queue)
 	{
 		link = room->link;
 		while (link)
 		{
 			if (!link->room->visited)
-				enqueue(&queue, link->room, &last, 0);
+				enqueue(&queue, link->room, &last);
 			// if (room->prev)
 			// 	printf("%s is prev of ", room->prev->name);
 			if (room->dup)

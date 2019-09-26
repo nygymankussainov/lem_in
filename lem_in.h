@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/24 19:18:51 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/26 19:49:24 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct				s_coords
 struct						s_room
 {
 	int						path;
+	int						path1;
 	int						antnbr;
 	int						x;
 	int						y;
@@ -142,7 +143,7 @@ void						print_links(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab);
 int							bfs(t_farm *farm, t_path **path);
 void						dequeue(t_queue **queue);
-void						enqueue(t_queue **queue, t_room *room, t_queue **last, bool begin);
+void						enqueue(t_queue **queue, t_room *room, t_queue **last);
 int							find_shortest_path(t_farm *farm, t_path **path, int ret);
 void						unvisit_rooms(t_farm *farm, int i);
 int							bellman_ford(t_farm *farm, t_path *path);
@@ -171,5 +172,6 @@ void						change_prev_rooms(t_room *room);
 void						delete_dup_rooms(t_path *path);
 void						print_graph(t_farm *farm);
 void						reverse_edges(t_farm *farm);
+int							is_enough_paths(t_path *path, int i);
 
 #endif
