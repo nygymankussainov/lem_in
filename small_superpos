@@ -1,0 +1,24 @@
+10
+##start
+Mon 1 1
+##end
+Sun 2 2
+Tue 3 3
+Wed 4 4
+Th 5 5
+Fr 6 6
+Sat 7 7
+Mon-Wed
+Mon-Th
+Mon-Fr
+Mon-Sat
+Tue-Th
+Tue-Fr
+Tue-Sat
+Tue-Sun
+Wed-Fr
+Wed-Sat
+Wed-Sun
+Th-Sun
+Th-Sat
+Fr-Sun
