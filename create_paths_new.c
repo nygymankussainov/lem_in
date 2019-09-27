@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:47:38 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/26 19:38:42 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/27 19:59:08 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,83 +63,67 @@ void	fill_struct(t_farm *farm, t_path **path, int size)
 	}
 }
 
-int		create_many_paths(t_farm *farm, t_path **path, int size)
+int		create_many_paths(t_farm *farm, t_path **path)
 {
-	t_queue	*queue;
-	t_queue	*last;
+	int		size;
+	t_path	*new;
+	int		i;
 
-	queue = NULL;
-	last = NULL;
-	unvisit_rooms(farm, 0);
-	count_steps(queue, farm->startroom, last, *path);
-	sort_paths(*path, size);
-	unvisit_rooms(farm, 0);
-	reindex_paths(queue, farm->startroom, *path);
-	sort_arr_path(*path, size);
-	unvisit_rooms(farm, 0);
-	create_queue_of_paths(queue, *path, farm->startroom, size);
-	// unvisit_rooms(farm, 2);
-	// if (size > 1 && farm->ants < is_enough_paths(*path, size - 1))
-	// {
-	// 	if (free_paths(path, size))
-	// 		farm->path_nb = size;
-	// 	return (0);
-	// }
-	farm->path_nb = size;
-	(*path)->size = size;
-	return (size);
-}
-
-void	inverse_edges(t_room *end)
-{
-	t_room	*prev;
-	t_link	*link;
-
-	while (end && end->status != 's')
+	size = count_paths(NULL, farm->startroom, NULL, farm);
+	if (!(new = (t_path *)ft_memalloc(sizeof(t_path) * size)))
+		exit(0);
+	i = 0;
+	while (i < size)
 	{
-		end = end->outroom ? end->outroom : end;
-		link = end->link;
-		while (link && link->room->name != end->prev->name)
-			link = link->next;
-		link->weight = -1;
-		prev = end->prev;
-		link = prev->link;
-		while (link && link->room->name != end->name)
-			link = link->next;
-		link->lock = 1;
-		end = end->prev;
+		unvisit_rooms(farm, 1);
+		create_list_of_paths(farm->startroom, new, i);
+		i++;
 	}
+	new->size = size;
+	new->next = *path;
+	*path = new;
+/*	sort_arr_path(*path, size);							check
+	unvisit_rooms(farm, 0);								these
+	reindex_paths(NULL, farm->startroom, *path);		funcs */
+	return (1);
 }
+
+
 
 int		create_paths(t_farm *farm, t_path **path)
 {
 	t_path	*new;
-	t_queue	*queue;
-	t_queue	*last;
-	int		size;
+	int		i;
+	int		ret;
 
-	queue = NULL;
-	last = NULL;
-	inverse_edges(farm->endroom);
 	// printf("BEFORE DUPLICATE\n");
 	// print_graph(farm);
-	size = count_paths(queue, farm->startroom, last, farm);
+	ret = 1;
+	i = 0;
 	if (!*path)
 	{
-		if (!(*path = (t_path *)ft_memalloc(sizeof(t_path) * size)))
+		if (!(*path = (t_path *)ft_memalloc(sizeof(t_path))))
 			exit(0);
-		// fill_struct(farm, path, 1);
-		// (*path)->size = 1;
-		// farm->path_nb = 1;
-		// return (1);
+		(*path)->size = 1;
+		fill_struct(farm, path, (*path)->size);
+		manage_direction(*path, 0);
 	}
 	else
 	{
-		if (!(new = (t_path *)ft_memalloc(sizeof(t_path) * size)))
+		if (!(new = (t_path *)ft_memalloc(sizeof(t_path))))
 			exit(0);
-		new->size = size;
-		new->next = *path;
-		*path = new;
+		new->size = 1;
+		fill_struct(farm, new, new->size);
+		make_path_directed(new);
+		while (i < (*path)->size)
+		{
+			manage_direction(path[i], 0);
+			i++;
+		}
+		find_disjoint_paths(path);
+		find_disjoint_paths(&new);
+		free_paths(&new, new->size);
+		ret = create_many_paths(farm, path);
 	}
-	return (create_many_paths(farm, path, size));
+	return (ret);
 }

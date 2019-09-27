@@ -12,18 +12,6 @@
 
 #include "lem_in.h"
 
-int		check_lock(t_room *room, t_link *link)
-{
-	t_link	*link2;
-
-	link2 = link->room->link;
-	while (link2 && link2->room != room)
-		link2 = link2->next;
-	if (link->lock && !link2->lock)
-		return (1);
-	return (0);
-}
-
 int		expression(t_path *path, int i)
 {
 	int		curr;

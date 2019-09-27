@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/26 19:49:24 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/27 19:16:29 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ void						count_steps(t_queue *queue, t_room *room,
 	t_queue *last, t_path *path);
 int							count_paths(t_queue *queue, t_room *room,
 	t_queue *last, t_farm *farm);
-int							check_lock(t_room *room, t_link *link);
+int							check_link(t_queue *list);
 int							push_ants_from_start(t_path *path, int i, int ant, int sp);
 int							push_ant_further(int ant, t_queue *q_path, int sp);
 int							push_ants_to_end(t_path *path, int i, int sp);
@@ -173,5 +173,8 @@ void						delete_dup_rooms(t_path *path);
 void						print_graph(t_farm *farm);
 void						reverse_edges(t_farm *farm);
 int							is_enough_paths(t_path *path, int i);
+void						manage_direction(t_path *path, int i);
+void						make_path_directed(t_path *path);
+void						find_disjoint_paths(t_path **path);
 
 #endif

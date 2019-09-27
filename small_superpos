@@ -1,24 +1,30 @@
-10
+500
 ##start
-Mon 1 1
+Mon 10 6
 ##end
-Sun 2 2
-Tue 3 3
-Wed 4 4
-Th 5 5
-Fr 6 6
-Sat 7 7
+Sun 8 2
+Tue 8 10
+Wed 4 12
+Th 0 8
+Fr 0 4
+Sat 4 0
+Mon-Tue
 Mon-Wed
 Mon-Th
 Mon-Fr
 Mon-Sat
+Mon-Sun
 Tue-Th
 Tue-Fr
 Tue-Sat
 Tue-Sun
+Tue-Wed
 Wed-Fr
 Wed-Sat
 Wed-Sun
+Wed-Th
 Th-Sun
 Th-Sat
+Th-Fr
+Fr-Sat
 Fr-Sun

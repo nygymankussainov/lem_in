@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 14:52:47 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/26 18:04:42 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/27 18:37:17 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int		calculate_neg_dist(t_queue **queue, t_room *room, t_queue *last)
 				ret = link->room->status == 'e' ? 1 : ret;
 			if (!link->lock && !link->room->visited && link->room->status != 'e')
 				enqueue(queue, link->room, &last);
-			if (!link->lock && room->dist + link->weight < link->room->dist)
+			if (!link->lock && room->dist + link->weight < link->room->dist
+				&& link->room->status != 's')
 			{
 				link->room->dist = room->dist + link->weight;
 				if (link->room->inroom)
@@ -90,9 +91,12 @@ int		bellman_ford(t_farm *farm, t_path *path)
 	queue = NULL;
 	last = NULL;
 	create_dup_rooms(path);
+	while (i < path->size)
+		manage_direction(&path[i++], 1);
 	// printf("AFTER DUPLICATE\n");
 	// print_graph(farm);
 	assign_inf_dist(farm);
+	i = 0;
 	while (i++ < farm->room_count - 1)
 	{
 		unvisit_rooms(farm, 0);

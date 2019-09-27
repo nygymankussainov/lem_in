@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 14:52:29 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/26 19:52:02 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/27 19:57:55 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		count_paths(t_queue *queue, t_room *room, t_queue *last, t_farm *farm)
 		link = room->link;
 		while (link)
 		{
-			if (!link->room->visited && check_lock(room, link))
+			if (!link->room->visited && !link->lock)
 			{
 				if (!link->room->status)
 					enqueue(&queue, link->room, &last);
@@ -50,38 +50,6 @@ int		count_paths(t_queue *queue, t_room *room, t_queue *last, t_farm *farm)
 	return (i);
 }
 
-void	count_steps(t_queue *queue, t_room *room, t_queue *last, t_path *path)
-{
-	t_link	*link;
-
-	queue = NULL;
-	last = NULL;
-	enqueue(&queue, room, &last);
-	while (queue)
-	{
-		link = room->link;
-		while (link)
-		{
-			if (!link->room->visited && check_lock(room, link))
-			{
-				if (!link->room->status)
-				{
-					enqueue(&queue, link->room, &last);
-					path[link->room->path1].steps += !path[link->room->path1].steps ? 1 : 0;
-					path[link->room->path1].steps++;
-					path[link->room->path1].index = link->room->dist;
-				}
-				link->room->visited = link->room->status != 'e' ? 1 : link->room->visited;
-				if (room->status != 's')
-					break ;
-			}
-			link = link->next;
-		}
-		dequeue(&queue);
-		room = queue ? queue->room : room;
-	}
-}
-
 void	reindex_paths(t_queue *queue, t_room *room, t_path *path)
 {
 	t_link	*link;
@@ -97,7 +65,7 @@ void	reindex_paths(t_queue *queue, t_room *room, t_path *path)
 		link = room->link;
 		while (link)
 		{
-			if (!link->room->visited && check_lock(room, link))
+			if (!link->room->visited && !link->lock)
 			{
 				if (!link->room->status)
 				{
@@ -144,59 +112,36 @@ void	sort_arr_path(t_path *path, int size)
 	}
 }
 
-void	create_queue_of_paths(t_queue *queue, t_path *path, t_room *room, int size)
+void	create_list_of_paths(t_room *room, t_path *path, int i)
 {
 	t_link	*link;
+	t_queue	*queue;
+	t_queue	*last;
 	t_queue	*last1;
-	t_queue	*last2;
-	t_room	*start;
-	int		i;
 
-	i = 0;
-	start = room;
-	while (i < size)
+	queue = NULL;
+	last = NULL;
+	last1 = NULL;
+	enqueue(&queue, room, &last);
+	while (queue)
 	{
-		queue = NULL;
-		last1 = NULL;
-		last2 = NULL;
-		room = start;
-		enqueue(&queue, room, &last1);
-		while (queue)
+		link = room->link;
+		while (link)
 		{
-			link = room->link;
-			while (link)
+			if (!link->room->visited && !link->lock && link->room->path1 < 0)
 			{
-				if ((link->room->path == i || link->room->status == 'e') && !link->room->visited && check_lock(room, link))
-				{
-					// if (room->status == 's')
-					// 	enqueue(&path[link->room->path].list, room, &last2);
-					if (!link->room->status)
-					{
-						enqueue(&queue, link->room, &last1);
-						enqueue(&path[link->room->path].list, link->room, &last2);
-						if (!path[link->room->path].list->prevroom)
-							path[link->room->path].list->prevroom = start;
-					}
-					else
-					{
-						if (room->path < 0)
-							room->path = 0;
-						enqueue(&path[room->path].list, link->room, &last2);
-					}
-					if (link->room->status != 'e')
-					{
-						last2->index = path[link->room->path].index;
-						last2->steps = path[link->room->path].steps;
-					}
-					link->room->visited = link->room->status != 'e' ? 1 : link->room->visited;
-					if (room->status != 's')
-						break ;
-				}
-				link = link->next;
+				enqueue(&path->list, link->room, &last1);
+				path->steps++;
+				path->index = i;
+				link->room->path1 = i;
+				if (!link->room->status)
+					enqueue(&queue, link->room, &last);
+				room->visited = room->status != 'e' ? 1 : room->visited;
+				break ;
 			}
-			dequeue(&queue);
-			room = queue ? queue->room : room;
+			link = link->next;
 		}
-		i++;
+		dequeue(&queue);
+		room = queue ? queue->room : room;
 	}
 }
