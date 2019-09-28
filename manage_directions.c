@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 16:59:19 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/27 18:39:33 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/28 15:50:17 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ void	make_path_directed(t_path *path)
 	t_queue	*list;
 
 	list = path->list;
-	while (list)
+	while (list && list->next)
 	{
 		link = list->room->link;
 		while (link && link->room != list->next->room)
 			link = link->next;
 		link->lock = 0;
+		link->go = 1;
 		if (!list->next)
 			break ;
 		list = list->next;
@@ -36,23 +37,28 @@ void	manage_direction(t_path *path, int i)
 	t_queue	*list;
 
 	list = path->list;
-	while (list)
+	while (list && list->next)
 	{
 		link = list->room->link;
 		while (link && link->room != list->next->room)
 			link = link->next;
 		link->lock = i;
+		link->go = 1;
 		if (!list->next)
 			break ;
 		list = list->next;
 	}
-	while (list)
+	while (list && list->room->status != 's')
 	{
 		link = list->room->link;
-		while (link && link->room != list->prevroom)
-			link = link->next;
-		link->weight = -1;
-		link->lock = link->lock != i ? i : !i;
-		list = list->next;
+		if (list->room->name != list->prev->room->name)
+		{
+			while (link && link->room != list->prev->room)
+				link = link->next;
+			link->weight = -1;
+			link->go = 1;
+			link->lock = link->lock != i ? i : !i;
+		}
+		list = list->prev;
 	}
 }

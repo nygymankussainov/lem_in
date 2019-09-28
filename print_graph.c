@@ -6,11 +6,52 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 15:53:35 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/26 16:06:26 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/28 13:56:47 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void	print_list(t_path *path)
+{
+	t_queue	*list;
+	int		i;
+
+	i = 0;
+	while (i < path->size)
+	{
+		list = path[i].list;
+		while (list)
+		{
+			printf("room: %s", list->room->name);
+			if (list->room->out)
+				printf("out");
+			else if (list->room->in)
+				printf("in");
+			printf("\n");
+			if (list->prev)
+			{
+				printf("list->prev %s", list->prev->room->name);
+				if (list->prev->room->out)
+					printf("out");
+				else if (list->prev->room->in)
+					printf("in");
+			}
+			if (list->room->prev)
+			{
+				printf("\n");
+				printf("room->prev %s", list->room->prev->name);
+				if (list->room->prev->out)
+					printf("out");
+				else if (list->room->prev->in)
+					printf("in");
+			}
+			printf("\n");
+			list = list->next;
+		}
+		i++;
+	}
+}
 
 void	print_graph(t_farm *farm)
 {

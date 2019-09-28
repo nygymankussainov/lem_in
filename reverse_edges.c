@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:02:43 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/26 16:07:11 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/28 11:45:56 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	reverse_edges(t_farm *farm)
 		{
 			if (!link->room->visited)
 			{
-				lock = check_lock(room, link);
+				lock = check_link(room, link);
 				if (lock != 0)
 					reverse_edge(room, link, lock);
 				enqueue(&queue, link->room, &last);

@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/27 19:16:29 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/28 15:48:44 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ struct						s_queue
 	int						index;
 	int						steps;
 	t_room					*room;
-	t_room					*prevroom;
 	t_queue					*next;
+	t_queue					*prev;
 };
 
 typedef struct				s_hashcodes
@@ -73,6 +73,7 @@ struct						s_link
 	t_room					*room;
 	int						weight;
 	bool					lock;
+	bool					go;
 	struct s_link			*next;
 };
 
@@ -155,12 +156,12 @@ void						sort_arr_path(t_path *path, int size);
 void						create_queue_of_paths(t_queue *queue, t_path *path,
 	t_room *room, int size);
 void						sort_arr_path(t_path *path, int size);
-void						reindex_paths(t_queue *queue, t_room *room, t_path *path);
+void						reindex_paths(t_path *path);
 void						count_steps(t_queue *queue, t_room *room,
 	t_queue *last, t_path *path);
 int							count_paths(t_queue *queue, t_room *room,
 	t_queue *last, t_farm *farm);
-int							check_link(t_queue *list);
+void						check_link(t_queue *list);
 int							push_ants_from_start(t_path *path, int i, int ant, int sp);
 int							push_ant_further(int ant, t_queue *q_path, int sp);
 int							push_ants_to_end(t_path *path, int i, int sp);
@@ -176,5 +177,8 @@ int							is_enough_paths(t_path *path, int i);
 void						manage_direction(t_path *path, int i);
 void						make_path_directed(t_path *path);
 void						find_disjoint_paths(t_path **path);
+void						create_list_of_paths(t_room *room, t_path *path, int i);
+void						enqueue_to_begin(t_queue **queue, t_room *room);
+void						print_list(t_path *path);
 
 #endif

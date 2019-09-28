@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 14:52:29 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/27 19:57:55 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/28 18:46:42 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		count_paths(t_queue *queue, t_room *room, t_queue *last, t_farm *farm)
 		link = room->link;
 		while (link)
 		{
-			if (!link->room->visited && !link->lock)
+			if (!link->room->visited && !link->lock && link->go)
 			{
 				if (!link->room->status)
 					enqueue(&queue, link->room, &last);
@@ -50,42 +50,15 @@ int		count_paths(t_queue *queue, t_room *room, t_queue *last, t_farm *farm)
 	return (i);
 }
 
-void	reindex_paths(t_queue *queue, t_room *room, t_path *path)
+void	reindex_paths(t_path *path)
 {
-	t_link	*link;
-	t_queue *last;
-	int		i;
+	t_queue	*list;
 
-	queue = NULL;
-	last = NULL;
-	enqueue(&queue, room, &last);
-	i = 0;
-	while (queue)
+	list = path->list;
+	while (list)
 	{
-		link = room->link;
-		while (link)
-		{
-			if (!link->room->visited && !link->lock)
-			{
-				if (!link->room->status)
-				{
-					enqueue(&queue, link->room, &last);
-					if (room->status == 's' && link->room->path1 == i)
-					{
-						link->room->path = path[i].index;
-						i++;
-					}
-					else
-						link->room->path = room->path;
-				}
-				link->room->visited = link->room->status != 'e' ? 1 : link->room->visited;
-				if (room->status != 's')
-					break ;
-			}
-			link = link->next;
-		}
-		dequeue(&queue);
-		room = queue ? queue->room : room;
+		list->room->path = !list->room->status ? path->index : list->room->path;
+		list = list->next;
 	}
 }
 
@@ -123,17 +96,18 @@ void	create_list_of_paths(t_room *room, t_path *path, int i)
 	last = NULL;
 	last1 = NULL;
 	enqueue(&queue, room, &last);
+	enqueue(&path->list, room, &last1);
 	while (queue)
 	{
 		link = room->link;
 		while (link)
 		{
-			if (!link->room->visited && !link->lock && link->room->path1 < 0)
+			if (!link->room->visited && !link->lock && link->go)
 			{
 				enqueue(&path->list, link->room, &last1);
 				path->steps++;
 				path->index = i;
-				link->room->path1 = i;
+				link->room->path1 = !link->room->status ? i : link->room->path1;
 				if (!link->room->status)
 					enqueue(&queue, link->room, &last);
 				room->visited = room->status != 'e' ? 1 : room->visited;

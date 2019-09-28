@@ -6,13 +6,13 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 18:57:15 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/27 19:16:22 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/28 14:23:55 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		check_link(t_queue *list)
+void	check_link(t_queue *list)
 {
 	t_link	*link;
 	int		lock1;
@@ -20,22 +20,16 @@ int		check_link(t_queue *list)
 	link = list->room->link;
 	while (link && link->room != list->next->room)
 		link = link->next;
-	if (!(lock1 = link->lock))
-		return (0);
+	lock1 = link->lock;
 	link = list->next->room->link;
 	while (link && link->room != list->room)
 		link = link->next;
-	if (!lock1 && !link->lock)
-	{
+	if ((!lock1 && !link->lock) || (lock1 && !link->lock))
 		link->lock = 1;
-		return (1);
-	}
-	return (0);
 }
 
 void	find_disjoint_paths(t_path **path)
 {
-	t_link	*link;
 	t_queue	*list;
 	int		i;
 
@@ -43,10 +37,9 @@ void	find_disjoint_paths(t_path **path)
 	while (i < (*path)->size)
 	{
 		list = path[i]->list;
-		while (list)
+		while (list && list->next)
 		{
-			if (check_link(list))
-				list->room->link->lock = 1;
+			check_link(list);
 			list = list->next;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 20:11:22 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/23 16:17:40 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/28 18:32:51 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int		create_paths(t_farm *farm, t_path **path)
 	}
 	unvisit_rooms(farm, 0);
 	count_steps(queue, farm->startroom, last, *path);
-	sort_paths(*path, i);
 	unvisit_rooms(farm, 0);
 	reindex_paths(queue, farm->startroom, *path);
 	sort_arr_path(*path, i);

@@ -6,11 +6,33 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 15:32:36 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/26 17:54:29 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/28 12:57:24 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void	add_dup_rooms_in_list(t_queue *list)
+{
+	t_queue	*new;
+
+	while (list)
+	{
+		if (list->room->dup && list->room->in)
+		{
+			if (!(new = (t_queue *)ft_memalloc(sizeof(t_queue))))
+				exit(0);
+			new->index = list->index;
+			new->steps = list->steps;
+			new->room = list->room->outroom;
+			new->next = list->next;
+			new->next->prev = new;
+			new->prev = list;
+			list->next = new;
+		}
+		list = list->next;
+	}
+}
 
 void	change_prev_rooms(t_room *room)
 {
@@ -39,9 +61,9 @@ void	manage_links(t_queue *list, t_room *room)
 		exit(0);
 	inroom->room = room;
 	right->room = room->outroom;
-	right->lock = 1;
+	// right->lock = 1;
 	link = room->outroom->link;
-	if (room->outroom->link->room == list->prevroom)
+	if (room->outroom->link->room == list->prev->room)
 	{
 		left = room->outroom->link;
 		inroom->next = room->outroom->link->next;
@@ -52,7 +74,7 @@ void	manage_links(t_queue *list, t_room *room)
 	{
 		while (room->outroom->link)
 		{
-			if (room->outroom->link->next->room == list->prevroom)
+			if (room->outroom->link->next->room == list->prev->room)
 				break ;
 			room->outroom->link = room->outroom->link->next;
 		}
@@ -108,13 +130,14 @@ void	create_dup_rooms(t_path *path)
 				link = list->room->link;
 				while (link)
 				{
-					if (link->room == list->prevroom)
+					if (link->room == list->prev->room)
 						link->room = link->room->outroom;
 					link = link->next;
 				}
 			}
 			list = list->next;
 		}
+		add_dup_rooms_in_list(path[i].list);
 		i++;
 	}
 }

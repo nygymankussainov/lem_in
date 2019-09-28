@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/26 20:14:34 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/28 19:59:52 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int		main(int argc, char **argv)
 				if (!ret)
 					break ;
 			}
-			print_valid_data(farm, argv[1]);
-			run_ants(farm, path);
+			// print_valid_data(farm, argv[1]);
+			// run_ants(farm, path);
 			// printf("%d\n", path->size);
 		}
 		else

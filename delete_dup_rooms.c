@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:28:00 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/24 17:03:58 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/28 13:43:23 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	delete_links(t_room *room)
 void	delete_dup_rooms(t_path *path)
 {
 	t_queue	*list;
+	t_queue	*tmp;
 	int		i;
 
 	i = 0;
@@ -83,6 +84,11 @@ void	delete_dup_rooms(t_path *path)
 				list->room->outroom = NULL;
 				list->room->dup = 0;
 				list->room->in = 0;
+				tmp = list->next;
+				list->next = tmp->next;
+				list->next->prev = list;
+				free(tmp);
+				tmp = NULL;
 			}
 			list = list->next;
 		}

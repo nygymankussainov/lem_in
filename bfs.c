@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/29 17:57:30 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/26 20:21:39 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/28 12:00:55 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,31 @@ void	enqueue(t_queue **queue, t_room *room, t_queue **last)
 		}
 		if (!(new = (t_queue *)ft_memalloc(sizeof(t_queue))))
 			exit(0);
-		new->prevroom = (*last)->room;
+		new->prev = *last;
 		new->room = room;
 		(*last)->next = new;
 		*last = new;
+	}
+}
+
+void	enqueue_to_begin(t_queue **queue, t_room *room)
+{
+	t_queue	*new;
+
+	if (!*queue)
+	{
+		if (!(*queue = (t_queue *)ft_memalloc(sizeof(t_queue))))
+			exit(0);
+		(*queue)->room = room;
+	}
+	else
+	{
+		if (!(new = (t_queue *)ft_memalloc(sizeof(t_queue))))
+			exit(0);
+		(*queue)->prev = new;
+		new->room = room;
+		new->next = *queue;
+		*queue = new;
 	}
 }
 
