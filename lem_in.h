@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/28 15:48:44 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/29 15:59:46 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ void						change_prev_rooms(t_room *room);
 void						delete_dup_rooms(t_path *path);
 void						print_graph(t_farm *farm);
 void						reverse_edges(t_farm *farm);
-int							is_enough_paths(t_path *path, int i);
+int							is_need_more_paths(int ants, t_path **path);
 void						manage_direction(t_path *path, int i);
 void						make_path_directed(t_path *path);
 void						find_disjoint_paths(t_path **path);

@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 18:57:15 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/28 14:23:55 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/29 14:05:43 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	find_disjoint_paths(t_path **path)
 	i = 0;
 	while (i < (*path)->size)
 	{
-		list = path[i]->list;
+		list = (*path + i)->list;
 		while (list && list->next)
 		{
 			check_link(list);

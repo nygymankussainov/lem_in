@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:47:38 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/28 18:43:10 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/29 16:53:40 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,17 +88,17 @@ int		create_many_paths(t_farm *farm, t_path **path)
 	while (i < size)
 		reindex_paths(*path + i++);
 	sort_arr_path(*path, size);
-	//check if enough paths
-	return (1);
+	printf("AFTER CREATE MANY PATHS\n");
+	print_graph(farm);
+	print_list(*path);
+	return (is_need_more_paths(farm->ants, path)); /* checks if we need more paths */
 }
 
 int		create_paths(t_farm *farm, t_path **path)
 {
 	t_path	*new;
 	int		i;
-	int		ret;
 
-	ret = 1;
 	i = 0;
 	if (!*path)
 	{
@@ -106,10 +106,11 @@ int		create_paths(t_farm *farm, t_path **path)
 			exit(0);
 		(*path)->size = 1;
 		fill_struct(farm, path, (*path)->size);
-		manage_direction(*path, 0);
+		manage_direction(*path, 0); /* make path directed from start room to end room */
 		printf("AFTER CREATE_PATH\n");
 		print_graph(farm);
 		print_list(*path);
+		return (is_need_more_paths(farm->ants, path));
 	}
 	else
 	{
@@ -117,19 +118,16 @@ int		create_paths(t_farm *farm, t_path **path)
 			exit(0);
 		new->size = 1;
 		fill_struct(farm, &new, new->size);
-		make_path_directed(new);
+		make_path_directed(new); /* make new path directed from start room to end room */
 		while (i < (*path)->size)
 		{
-			manage_direction(path[i], 0);
+			manage_direction(*path + i, 0); /* make old path(s) directed from start room to end room */
 			i++;
 		}
 		find_disjoint_paths(path);
 		find_disjoint_paths(&new);
 		free_paths(&new, new->size);
-		ret = create_many_paths(farm, path);
-		printf("AFTER CREATE MANY PATHS\n");
-		print_graph(farm);
-		print_list(*path);
+		return (create_many_paths(farm, path));
 	}
-	return (ret);
+	return (1);
 }

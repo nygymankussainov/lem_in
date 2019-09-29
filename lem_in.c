@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/28 19:59:52 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/29 16:56:29 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,15 @@ int		main(int argc, char **argv)
 	if ((farm = (t_farm *)ft_memalloc(sizeof(t_farm))) && argc == 2
 		&& (farm->size = count_room(argv[1])))
 	{
-		if (!(h_tab = (t_hash_tab *)ft_memalloc(sizeof(t_hash_tab )
+		if (!(h_tab = (t_hash_tab *)ft_memalloc(sizeof(t_hash_tab)
 			* (farm->size * 4))))
 			exit(0);
 		farm->fd = open(argv[1], O_RDONLY);
 		if (validation(h_tab, farm, &hashcodes) && ((ret = bfs(farm, &path)) >= 0))
 		{
-			while (ret > 0)
-			{
-				if (!bellman_ford(farm, path))
+			while (ret)
+				if (!bellman_ford(farm, path) || !(ret = create_paths(farm, &path)))
 					break ;
-				ret = create_paths(farm, &path);
-				if (!ret)
-					break ;
-			}
 			// print_valid_data(farm, argv[1]);
 			// run_ants(farm, path);
 			// printf("%d\n", path->size);

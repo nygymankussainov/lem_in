@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 14:52:47 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/28 13:59:58 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/29 17:16:40 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int		bellman_ford(t_farm *farm, t_path *path)
 	print_graph(farm);
 	print_list(path);
 	while (i < path->size)
-		manage_direction(&path[i++], 1);
+		manage_direction(path + i++, 1); /* reverse (make directed from end to start) edges in path(s) */
 	printf("AFTER MANAGE_DIRECTON\n");
 	print_graph(farm);
 	print_list(path);
