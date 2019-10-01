@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 21:22:38 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/25 16:42:49 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/10/01 15:30:37 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void	ft_make_room_duplicate(t_room *room)
 	nextroom = ft_find_next_room(room);
 	while (link)
 	{
-		if (ft_strcmp(link->room->name, nextroom->name) != 0)
+		if (ft_strcmp(link->room->name, nextroom->name) != 0 && link->room->induplicate == false)
 			ft_create_in_link(room->in, &linkin, link->room, nextroom);
-		if (ft_strcmp(link->room->name, room->prev->name) != 0)
+		if (ft_strcmp(link->room->name, room->prev->name) != 0 && link->room->outduplicate == false)
 			ft_create_out_link(room->out, &linkout, link->room, nextroom);
 		link = link->next;
 	}

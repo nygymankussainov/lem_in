@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 21:24:32 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/25 15:32:50 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/10/01 17:21:56 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,13 +106,9 @@ t_path	**ft_pickout_pathes(t_farm *farm, int pathcount)
 		exit(0);
 	linkstart = farm->startroom->link;
 	pathnbr = 0;
-	while (linkstart)
+	while (pathnbr < pathcount)
 	{
-		if (linkstart->lock)
-		{
-			pathes[pathnbr] = ft_get_path(farm, linkstart->room);
-			pathnbr++;
-		}
+		pathes[pathnbr] = ft_get_path(farm, linkstart->room);
 		linkstart = linkstart->next;
 	}
 	return (pathes);

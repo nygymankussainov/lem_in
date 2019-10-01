@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 14:20:12 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/24 14:03:09 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/10/01 17:08:24 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int		ft_reverse_shortest_path(t_farm *farm, int pathnbr)
 	tmproom = farm->endroom;
 	while (tmproom != farm->startroom)
 	{
+		
 		link = tmproom->link;
 		while (link && link->room != tmproom->prev)
 			link = link->next;
