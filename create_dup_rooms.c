@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 15:32:36 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/28 12:57:24 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/01 22:33:21 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,40 +51,26 @@ void	change_prev_rooms(t_room *room)
 
 void	manage_links(t_queue *list, t_room *room)
 {
-	t_link	*right;
 	t_link	*left;
+	t_link	*right;
 	t_link	*link;
-	t_link	*inroom;
 
-	if (!(right = (t_link *)ft_memalloc(sizeof(t_link))) ||
-		!(inroom = (t_link *)ft_memalloc(sizeof(t_link))))
+	if (!(left = (t_link *)ft_memalloc(sizeof(t_link))) ||
+		!(right = (t_link *)ft_memalloc(sizeof(t_link))))
 		exit(0);
-	inroom->room = room;
-	right->room = room->outroom;
-	// right->lock = 1;
 	link = room->outroom->link;
-	if (room->outroom->link->room == list->prev->room)
-	{
-		left = room->outroom->link;
-		inroom->next = room->outroom->link->next;
-		left->next = NULL;
-		room->outroom->link = inroom;
-	}
-	else
-	{
-		while (room->outroom->link)
-		{
-			if (room->outroom->link->next->room == list->prev->room)
-				break ;
-			room->outroom->link = room->outroom->link->next;
-		}
-		left = room->outroom->link->next;
-		room->outroom->link->next = inroom;
-		room->outroom->link = link;
-	}
-	left->room = left->room->outroom ? left->room->outroom : left->room;
-	right->next = left;
-	room->link = right;
+	while (link && link->room != list->prev->room)
+		link = link->next;
+	left->room = !list->prev->room->dup ? list->prev->room : list->prev->room->outroom;
+	left->weight = -1;
+	left->go = link->go;
+	left->lock = link->lock;
+	right->room = room->outroom;
+	left->next = right;
+	room->link = left;
+	link->room = room;
+	link->weight = 0;
+	link->lock = 0;
 	change_prev_rooms(room->outroom);
 }
 
@@ -131,7 +117,10 @@ void	create_dup_rooms(t_path *path)
 				while (link)
 				{
 					if (link->room == list->prev->room)
-						link->room = link->room->outroom;
+					{
+						link->room = !link->room->dup ? link->room : link->room->outroom;
+						break ;
+					}
 					link = link->next;
 				}
 			}

@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:47:38 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/29 16:53:40 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/01 22:34:03 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,61 @@ void	fill_struct(t_farm *farm, t_path **path, int size)
 	}
 }
 
+t_link	*get_start_end_link(t_queue *list)
+{
+	t_link	*link;
+	t_link	*prev;
+
+	link = list->room->link;
+	if (link && link->room == list->next->room)
+	{
+		list->room->link = list->room->link->next;
+		link->next = NULL;
+		return (link);
+	}
+	while (link)
+	{
+		prev = link;
+		if (link->room == list->next->room)
+			break ;
+		link = link->next;
+	}
+	if (link)
+	{
+		prev->next = link->next;
+		link->next = NULL;
+	}
+	return (link);
+}
+
 int		create_many_paths(t_farm *farm, t_path **path)
 {
 	int		size;
 	t_path	*new;
 	int		i;
+	t_link	*link;
 
-	size = count_paths(NULL, farm->startroom, NULL, farm);
+	size = (*path)->size + 1;
+	link = NULL;
 	if (!(new = (t_path *)ft_memalloc(sizeof(t_path) * size)))
 		exit(0);
 	i = 0;
 	unvisit_rooms(farm, 0);
 	while (i < size)
 	{
+		if (farm->onestep_path && i == 0)
+		{
+			new[i].list = farm->onestep_path;
+			link = get_start_end_link(farm->onestep_path);
+			i++;
+		}
 		create_list_of_paths(farm->startroom, &new[i], i);
 		i++;
+	}
+	if (link)
+	{
+		link->next = farm->onestep_path->room->link;
+		farm->onestep_path->room->link = link;
 	}
 	new->size = size;
 	new->next = *path;
@@ -88,10 +128,13 @@ int		create_many_paths(t_farm *farm, t_path **path)
 	while (i < size)
 		reindex_paths(*path + i++);
 	sort_arr_path(*path, size);
-	printf("AFTER CREATE MANY PATHS\n");
-	print_graph(farm);
-	print_list(*path);
-	return (is_need_more_paths(farm->ants, path)); /* checks if we need more paths */
+	// printf("AFTER CREATE MANY PATHS\n");
+	// print_graph(farm);
+	// print_list(*path);
+	(*path)->size = size;
+	if ((*path)->size >= farm->max_paths || farm->ants == 1)
+		return (0);
+	return (1);
 }
 
 int		create_paths(t_farm *farm, t_path **path)
@@ -106,11 +149,15 @@ int		create_paths(t_farm *farm, t_path **path)
 			exit(0);
 		(*path)->size = 1;
 		fill_struct(farm, path, (*path)->size);
+		if ((*path)->steps == 1)
+			farm->onestep_path = (*path)->list;
 		manage_direction(*path, 0); /* make path directed from start room to end room */
-		printf("AFTER CREATE_PATH\n");
-		print_graph(farm);
-		print_list(*path);
-		return (is_need_more_paths(farm->ants, path));
+		// printf("AFTER CREATE_PATH\n");
+		// print_graph(farm);
+		// print_list(*path);
+		if ((*path)->size >= farm->max_paths)
+			return (0);
+		return (1);
 	}
 	else
 	{

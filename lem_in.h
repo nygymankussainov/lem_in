@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/29 15:59:46 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/01 22:09:13 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ typedef struct				s_farm
 	char					*name;
 	int						size;
 	int						path_nb;
+	int						max_paths;
+	t_queue					*onestep_path;
 	t_room					*endroom;
 	t_room					*startroom;
 	t_hash_tab				*h_tab;

@@ -108,16 +108,6 @@ void	run(t_farm *farm, int size, t_path *path)
 
 void	run_ants(t_farm *farm, t_path *path)
 {
-	// if (!(path = (t_path *)ft_memalloc(sizeof(t_path) * i)))
-	// 	exit(0);
-	// unvisit_rooms(farm, 0);
-	// count_steps(queue, farm->startroom, last, path);
-	// sort_paths(path, i);
-	// unvisit_rooms(farm, 0);
-	// reindex_paths(queue, farm->startroom, path);
-	// sort_arr_path(path, i);
-	// unvisit_rooms(farm, 0);
-	// create_queue_of_paths(queue, path, farm->startroom, i);
 	unvisit_rooms(farm, 2);
 	run(farm, farm->path_nb, path);
 	while (path->list)

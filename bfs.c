@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/29 17:57:30 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/29 16:55:32 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/01 15:23:55 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,10 @@ int		bfs(t_farm *farm, t_path **path)
 {
 	t_queue	*queue;
 	t_queue	*last;
-	int		ret;
 
 	queue = NULL;
 	last = NULL;
-	ret = ft_count_paths(farm);
+	farm->max_paths = ft_count_paths(farm);
 	enqueue(&queue, farm->startroom, &last);
 	if (!calculate_distance(queue, farm->startroom, last))
 		return (-1);
