@@ -3,32 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   hash_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:40:48 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/29 15:15:00 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/02 15:56:40 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		count_room(char *argv)
+int		count_room(t_farm *farm)
 {
-	int		fd;
 	int		size;
 	char	*line;
 
-	fd = open(argv, O_RDONLY);
+	farm->fd = 0;
+	farm->newfd = open("tmpfd", O_CREAT | O_TRUNC | O_RDWR, S_IWRITE | S_IREAD);
 	size = 0;
-	if (fd <= 0)
-		return (0);
-	while (get_next_line(fd, &line) == 1)
+	if (farm->fd < 0 || farm->newfd < 0)
 	{
+		ft_putstr("heeelllooooo");
+		return (0);
+	}
+	while (get_next_line(farm->fd, &line) == 1)
+	{
+		ft_putendl_fd(line, farm->newfd);
 		if (isroom(line))
 			size++;
 		ft_strdel(&line);
 	}
-	close(fd);
+	close(farm->newfd);
 	return (size);
 }
 
