@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:47:38 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/01 22:34:03 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/02 22:13:50 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,10 +128,10 @@ int		create_many_paths(t_farm *farm, t_path **path)
 	while (i < size)
 		reindex_paths(*path + i++);
 	sort_arr_path(*path, size);
+	(*path)->size = size;
 	// printf("AFTER CREATE MANY PATHS\n");
 	// print_graph(farm);
 	// print_list(*path);
-	(*path)->size = size;
 	if ((*path)->size >= farm->max_paths || farm->ants == 1)
 		return (0);
 	return (1);
@@ -155,8 +155,8 @@ int		create_paths(t_farm *farm, t_path **path)
 		// printf("AFTER CREATE_PATH\n");
 		// print_graph(farm);
 		// print_list(*path);
-		if ((*path)->size >= farm->max_paths)
-			return (0);
+		// if ((*path)->size >= farm->max_paths)
+		// 	return (0);
 		return (1);
 	}
 	else

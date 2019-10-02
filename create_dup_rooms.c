@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 15:32:36 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/01 22:33:21 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/02 13:23:14 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,47 @@ void	manage_links(t_queue *list, t_room *room)
 	link->lock = 0;
 	change_prev_rooms(room->outroom);
 }
+
+// void	manage_links(t_queue *list, t_room *room)
+// {
+// 	t_link	*left;
+// 	t_link	*right;
+// 	t_link	*link;
+// 	t_link	*head;
+
+// 	if (!(link = (t_link *)ft_memalloc(sizeof(t_link))) ||
+// 		!(right = (t_link *)ft_memalloc(sizeof(t_link))))
+// 		exit(0);
+// 	left = room->outroom->link;
+// 	while (left && left->room != list->prev->room)
+// 		left = left->next;
+// 	head = room->outroom->link;
+// 	while (room->outroom->link)
+// 	{
+// 		if (room->outroom->link == left)
+// 		{
+// 			room->outroom->link = room->outroom->link->next;
+// 			break ;
+// 		}
+// 		else if (room->outroom->link->next == left)
+// 		{
+// 			room->outroom->link->next = left->next;
+// 			break ;
+// 		}
+// 		room->outroom->link = room->outroom->link->next;
+// 	}
+// 	room->outroom->link = head;
+// 	right->room = room->outroom;
+// 	// right->lock = 1;
+// 	left->next = right;
+// 	left->weight = -1;
+// 	left->room = !list->prev->room->dup ? left->room : left->room->outroom;
+// 	room->link = left;
+// 	link->room = room;
+// 	link->next = room->outroom->link;
+// 	room->outroom->link = link;
+// 	change_prev_rooms(room->outroom);
+// }
 
 void	duplicate_room(t_queue *list)
 {
