@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/23 11:48:14 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/10 20:44:32 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/02 14:50:16 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		validation(t_hash_tab *h_tab, t_farm *farm, t_hashcodes **hashcodes)
 		ft_strdel(&farm->line);
 		return (0);
 	}
+	close(farm->newfd);
 	farm->h_tab = h_tab;
 	farm->hashcodes = *hashcodes;
 	free_coords(&coords);

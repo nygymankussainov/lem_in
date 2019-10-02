@@ -6,26 +6,26 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/24 16:29:58 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/10/02 14:47:43 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
  #include "lem_in.h"
 
-int		main(int argc, char **argv)
+int		main()
 {
 	t_farm		*farm;
 	t_hash_tab	*h_tab;
 	t_hashcodes	*hashcodes;
 
 	hashcodes = NULL;
-	if ((farm = (t_farm *)ft_memalloc(sizeof(t_farm))) && argc == 2
-		&& (farm->size = count_room(argv[1])))
+	if ((farm = (t_farm *)ft_memalloc(sizeof(t_farm)))
+		&& (farm->size = count_room(farm)))
 	{
 		if (!(h_tab = (t_hash_tab *)ft_memalloc(sizeof(t_hash_tab )
 			* (farm->size * 4))))
 			exit(0);
-		farm->fd = open(argv[1], O_RDONLY);
+		farm->newfd = open("tmpfd", O_RDONLY);
 		if (validation(h_tab, farm, &hashcodes) && bfs(farm))
 			lem_in(farm);
 		else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   work_with_data.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 15:03:04 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/09 14:47:20 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/02 14:44:07 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,13 @@ void	free_all_structs(t_hashcodes *hashcodes,
 	free(farm);
 }
 
-void	print_valid_data(t_farm *farm, char *argv)
+void	print_valid_data(t_farm *farm)
 {
 	int			link;
 
 	link = 0;
-	farm->fd = open(argv, O_RDONLY);
-	while (get_next_line(farm->fd, &farm->line) == 1)
+	farm->newfd = open("tmpfd", O_RDONLY);
+	while (get_next_line(farm->newfd, &farm->line) == 1)
 	{
 		if (ft_strcmp("##start", farm->line) && ft_strcmp("##end", farm->line)
 			&& farm->line[0] == '#' && farm->line[1] == '#')
@@ -116,4 +116,5 @@ void	print_valid_data(t_farm *farm, char *argv)
 		ft_strdel(&farm->line);
 	}
 	ft_printf("\n");
+	close(farm->newfd);
 }

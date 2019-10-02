@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_links.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 11:31:58 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/29 16:03:11 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/02 14:54:33 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		count_dash(char *line)
 int		validate_links(t_hash_tab *h_tab, t_farm *farm)
 {
 	ft_strdel(&farm->line);
-	while (get_next_line(farm->fd, &farm->line) == 1)
+	while (get_next_line(farm->newfd, &farm->line) == 1)
 	{
 		if (count_dash(farm->line) && islink(farm->line))
 		{

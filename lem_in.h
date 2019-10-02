@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/22 13:57:48 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/10/02 14:07:21 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct				s_farm
 	int						end;
 	int						recur;
 	int						fd;
+	int						newfd;
 	int						i;
 	char					*line;
 	char					*name;
@@ -112,7 +113,7 @@ struct						s_path
 void						free_all_structs(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab, t_farm *farm);
 int							isroom(char *line);
-void						print_valid_data(t_farm *farm, char *argv);
+void						print_valid_data(t_farm *farm);
 int							isint(char *str, char c);
 void						hash_table(t_farm *farm, t_hash_tab *h_tab);
 int							hash_func(char *name, int size);
@@ -135,7 +136,7 @@ int							islink(char *line);
 int							isduplicate(t_coords *coords);
 int							count_space(char *line);
 t_link						*create_slink(t_room *room, char *linkname);
-int							count_room(char *argv);
+int							count_room(t_farm *farm);
 int							isroom(char *line);
 void						print_links(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab);

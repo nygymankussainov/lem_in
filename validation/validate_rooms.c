@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_rooms.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/23 17:24:00 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/10 20:46:39 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/02 14:54:37 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,9 @@ int		validate_rooms_part2(t_hashcodes **hashcodes, t_hash_tab *h_tab,
 int		validate_rooms(t_hashcodes **hashcodes, t_hash_tab *h_tab,
 	t_farm *farm, t_coords **coords)
 {
-	while (get_next_line(farm->fd, &farm->line) == 1)
+	while (get_next_line(farm->newfd, &farm->line) == 1)
 	{
+		write(farm->newfd, farm->line, ft_strlen(farm->line));
 		if ((!ft_strcmp("##start", farm->line) ||
 			!ft_strcmp("##end", farm->line)) && !farm->recur)
 		{

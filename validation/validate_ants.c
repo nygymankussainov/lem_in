@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_ants.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 12:43:45 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/29 16:45:28 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/02 14:54:40 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		validate_ants(t_farm *farm)
 {
-	while (farm->ants == 0 && get_next_line(farm->fd, &farm->line) == 1)
+	while (farm->ants == 0 && get_next_line(farm->newfd, &farm->line) == 1)
 	{
 		if (isint(farm->line, 'a'))
 			farm->ants = ft_atoi(farm->line);
