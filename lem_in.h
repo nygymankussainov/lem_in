@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/01 22:09:13 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/03 20:11:58 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef struct				s_coords
 struct						s_room
 {
 	int						path;
-	int						path1;
 	int						antnbr;
 	int						x;
 	int						y;
@@ -182,5 +181,6 @@ void						find_disjoint_paths(t_path **path);
 void						create_list_of_paths(t_room *room, t_path *path, int i);
 void						enqueue_to_begin(t_queue **queue, t_room *room);
 void						print_list(t_path *path);
+int							free_paths(t_path **path, int size);
 
 #endif

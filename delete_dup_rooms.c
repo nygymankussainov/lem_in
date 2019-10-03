@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:28:00 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/02 20:21:58 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/03 20:11:15 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,39 +31,6 @@ void	relink_to_inroom(t_room *room)
 		link = link->next;
 	}
 }
-
-// void	delete_links(t_room *room)
-// {
-// 	t_link	*link;
-// 	t_link	*tmp;
-
-// 	link = room->link;
-// 	while (link && link->next)
-// 		link = link->next;
-// 	link->next = room->outroom->link;
-// 	link = room->link;
-// 	if (link->room->name == room->name)
-// 	{
-// 		tmp = link->next;
-// 		free(link);
-// 		link = NULL;
-// 		link = tmp;
-// 		room->link = link;
-// 	}
-// 	while (link)
-// 	{
-// 		if (link && link->next && link->next->room->name == room->name)
-// 		{
-// 			tmp = link->next;
-// 			link->next = tmp->next;
-// 			free(tmp);
-// 			tmp = NULL;
-// 		}
-// 		link = link->next;
-// 	}
-// 	relink_to_inroom(room);
-// 	change_prev_rooms(room);
-// }
 
 void	delete_link(t_room *room)
 {
@@ -108,6 +75,8 @@ void	delete_links(t_room *room)
 	link->next = room->outroom->link;
 	relink_to_inroom(room);
 	change_prev_rooms(room);
+	if (room->prev->name == room->name)
+		room->prev = room->outroom->prev;
 }
 
 void	delete_dup_rooms(t_path *path)
@@ -131,7 +100,8 @@ void	delete_dup_rooms(t_path *path)
 				list->room->in = 0;
 				tmp = list->next;
 				list->next = tmp->next;
-				list->next->prev = list;
+				if (list->next)
+					list->next->prev = list;
 				free(tmp);
 				tmp = NULL;
 			}

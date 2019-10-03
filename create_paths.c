@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_paths.c                                     :+:      :+:    :+:   */
+/*   create_paths_new.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/19 20:11:22 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/28 18:32:51 by vhazelnu         ###   ########.fr       */
+/*   Created: 2019/09/23 14:47:38 by vhazelnu          #+#    #+#             */
+/*   Updated: 2019/10/03 20:24:09 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int		free_paths(t_path **path, int size)
 	t_path	*save;
 	int		i;
 
-	if (!(*path)->next)
-		return (1);
 	save = (*path)->next;
 	i = 0;
 	while (*path)
@@ -44,52 +42,140 @@ int		free_paths(t_path **path, int size)
 	return (0);
 }
 
-int		is_enough_paths(t_path *path, int ants, int i)
+void	fill_struct(t_farm *farm, t_path **path, int size)
 {
-	while (--i)
-		path++;
-	if (ants < (*path).steps)
+	t_room	*end;
+	t_queue	*last;
+
+	while (size--)
+	{
+		end = farm->endroom;
+		last = NULL;
+		path[size]->steps--;
+		while (end)
+		{
+			enqueue_to_begin(&path[size]->list, end);
+			end = end->prev;
+			path[size]->steps++;
+		}
+	}
+}
+
+t_link	*get_start_end_link(t_queue *list)
+{
+	t_link	*link;
+	t_link	*prev;
+	t_link	*tmp;
+
+	link = list->room->link;
+	tmp = NULL;
+	if (link && link->room == list->next->room)
+	{
+		tmp = link;
+		list->room->link = list->room->link->next;
+	}
+	else
+	{
+		while (link)
+		{
+			prev = link;
+			if (link->next && link->next->room == list->next->room)
+			{
+				tmp = link->next;
+				prev->next = tmp->next;
+				break ;
+			}
+			link = link->next;
+		}
+	}
+	return (tmp);
+}
+
+int		create_many_paths(t_farm *farm, t_path **path)
+{
+	int		size;
+	t_path	*new;
+	int		i;
+	t_link	*link;
+
+	size = (*path)->size + 1;
+	link = NULL;
+	if (!(new = (t_path *)ft_memalloc(sizeof(t_path) * size)))
+		exit(0);
+	i = 0;
+	unvisit_rooms(farm, 0);
+	while (i < size)
+	{
+		if (farm->onestep_path && i == 0)
+		{
+			new[i].list = farm->onestep_path;
+			link = get_start_end_link(farm->onestep_path);
+			i++;
+		}
+		create_list_of_paths(farm->startroom, &new[i], i);
+		i++;
+	}
+	if (link)
+	{
+		link->next = farm->onestep_path->room->link;
+		farm->onestep_path->room->link = link;
+	}
+	new->size = size;
+	new->next = *path;
+	*path = new;
+	sort_paths(*path, i);
+	unvisit_rooms(farm, 0);
+	i = 0;
+	while (i < size)
+		reindex_paths(*path + i++);
+	sort_arr_path(*path, size);
+	(*path)->size = size;
+	// printf("AFTER CREATE MANY PATHS\n");
+	// print_graph(farm);
+	// print_list(*path);
+	if ((*path)->size >= farm->max_paths || farm->ants == 1)
 		return (0);
 	return (1);
 }
 
 int		create_paths(t_farm *farm, t_path **path)
 {
-	t_queue	*queue;
-	t_queue	*last;
 	t_path	*new;
 	int		i;
 
-	queue = NULL;
-	last = NULL;
-	i = 1;
+	i = 0;
 	if (!*path)
 	{
-		if (!(*path = (t_path *)ft_memalloc(sizeof(t_path) * i)))
+		if (!(*path = (t_path *)ft_memalloc(sizeof(t_path))))
 			exit(0);
+		(*path)->size = 1;
+		fill_struct(farm, path, (*path)->size);
+		if ((*path)->steps == 1)
+			farm->onestep_path = (*path)->list;
+		manage_direction(*path, 0); /* make path directed from start room to end room */
+		// printf("AFTER CREATE_PATH\n");
+		// print_graph(farm);
+		// print_list(*path);
+		if ((*path)->size >= farm->max_paths)
+			return (0);
+		return (1);
 	}
 	else
 	{
-		i = count_paths(queue, farm->startroom, last, farm);
-		if (!(new = (t_path *)ft_memalloc(sizeof(t_path) * i)))
+		if (!(new = (t_path *)ft_memalloc(sizeof(t_path))))
 			exit(0);
-		new->next = *path;
-		*path = new;
+		new->size = 1;
+		fill_struct(farm, &new, new->size);
+		make_path_directed(new); /* make new path directed from start room to end room */
+		while (i < (*path)->size)
+		{
+			manage_direction(*path + i, 0); /* make old path(s) directed from start room to end room */
+			i++;
+		}
+		find_disjoint_paths(path);
+		find_disjoint_paths(&new);
+		free_paths(&new, new->size);
+		return (create_many_paths(farm, path));
 	}
-	unvisit_rooms(farm, 0);
-	count_steps(queue, farm->startroom, last, *path);
-	unvisit_rooms(farm, 0);
-	reindex_paths(queue, farm->startroom, *path);
-	sort_arr_path(*path, i);
-	unvisit_rooms(farm, 0);
-	create_queue_of_paths(queue, *path, farm->startroom, i);
-	unvisit_rooms(farm, 2);
-	if (!is_enough_paths(*path, farm->ants, i))
-	{
-		if (free_paths(path, i))
-			farm->path_nb = i;
-		return (0);
-	}
-	farm->path_nb = i;
 	return (1);
 }

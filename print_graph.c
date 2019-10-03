@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 15:53:35 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/28 13:56:47 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/03 16:16:08 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,32 @@ void	print_list(t_path *path)
 		list = path[i].list;
 		while (list)
 		{
-			printf("room: %s", list->room->name);
-			if (list->room->out)
-				printf("out");
-			else if (list->room->in)
-				printf("in");
-			printf("\n");
-			if (list->prev)
-			{
-				printf("list->prev %s", list->prev->room->name);
-				if (list->prev->room->out)
-					printf("out");
-				else if (list->prev->room->in)
-					printf("in");
-			}
-			if (list->room->prev)
-			{
-				printf("\n");
-				printf("room->prev %s", list->room->prev->name);
-				if (list->room->prev->out)
-					printf("out");
-				else if (list->room->prev->in)
-					printf("in");
-			}
-			printf("\n");
+			printf("%s", list->room->name);
+			// if (list->room->out)
+			// 	printf("out");
+			// else if (list->room->in)
+			// 	printf("in");
+			printf("-");
+			// if (list->prev)
+			// {
+			// 	printf("list->prev %s", list->prev->room->name);
+			// 	if (list->prev->room->out)
+			// 		printf("out");
+			// 	else if (list->prev->room->in)
+			// 		printf("in");
+			// }
+			// if (list->room->prev)
+			// {
+			// 	printf("\n");
+			// 	printf("room->prev %s", list->room->prev->name);
+			// 	if (list->room->prev->out)
+			// 		printf("out");
+			// 	else if (list->room->prev->in)
+			// 		printf("in");
+			// }
 			list = list->next;
 		}
+			printf("\n");
 		i++;
 	}
 }

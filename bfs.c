@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/29 17:57:30 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/01 15:23:55 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/03 19:16:03 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ int		calculate_distance(t_queue *queue, t_room *room, t_queue *last)
 	while (queue)
 	{
 		link = room->link;
-		ret = link->room->status == 'e' ? 1 : ret;
 		while (link)
 		{
+			ret = link->room->status == 'e' ? 1 : ret;
 			if (!link->room->visited && link->room->status != 's')
 			{
 				enqueue(&queue, link->room, &last);
