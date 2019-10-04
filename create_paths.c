@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_paths_new.c                                 :+:      :+:    :+:   */
+/*   create_paths.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:47:38 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/03 20:24:09 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/04 20:05:35 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		free_paths(t_path **path, int size)
+int		free_paths(t_path **path)
 {
 	t_path	*tmp;
 	t_path	*save;
 	int		i;
 
 	save = (*path)->next;
-	i = 0;
 	while (*path)
 	{
+		i = 0;
 		if (*path == save)
 		{
 			*path = (*path)->next;
@@ -29,7 +29,7 @@ int		free_paths(t_path **path, int size)
 				break ;
 		}
 		tmp = (*path)->next;
-		while (i < size)
+		while (i < (*path)->size)
 		{
 			while ((*path)[i].list)
 				dequeue(&(*path)[i].list);
@@ -133,7 +133,9 @@ int		create_many_paths(t_farm *farm, t_path **path)
 	// printf("AFTER CREATE MANY PATHS\n");
 	// print_graph(farm);
 	// print_list(*path);
-	if ((*path)->size >= farm->max_paths || farm->ants == 1)
+	if (!is_need_more_paths(farm->ants, path))
+		return (0);
+	if ((*path)->size >= farm->max_paths)
 		return (0);
 	return (1);
 }
@@ -156,7 +158,8 @@ int		create_paths(t_farm *farm, t_path **path)
 		// printf("AFTER CREATE_PATH\n");
 		// print_graph(farm);
 		// print_list(*path);
-		if ((*path)->size >= farm->max_paths)
+		(*path)->lines = farm->ants + (*path)->steps - 1;
+		if (farm->max_paths == 1 || farm->ants == 1)
 			return (0);
 		return (1);
 	}
@@ -174,7 +177,7 @@ int		create_paths(t_farm *farm, t_path **path)
 		}
 		find_disjoint_paths(path);
 		find_disjoint_paths(&new);
-		free_paths(&new, new->size);
+		free_paths(&new);
 		return (create_many_paths(farm, path));
 	}
 	return (1);

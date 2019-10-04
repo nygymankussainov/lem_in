@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/03 20:11:58 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/04 20:05:57 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ struct						s_path
 {
 	int						index;
 	int						steps;
+	int						lines;
 	bool					checked;
 	int						size;
 	t_queue					*list;
@@ -181,6 +182,6 @@ void						find_disjoint_paths(t_path **path);
 void						create_list_of_paths(t_room *room, t_path *path, int i);
 void						enqueue_to_begin(t_queue **queue, t_room *room);
 void						print_list(t_path *path);
-int							free_paths(t_path **path, int size);
+int							free_paths(t_path **path);
 
 #endif

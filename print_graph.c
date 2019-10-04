@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 15:53:35 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/03 16:16:08 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/04 21:24:56 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,24 @@ void	print_list(t_path *path)
 {
 	t_queue	*list;
 	int		i;
+	int		end;
+	int		j;
 
 	i = 0;
+	end = 0;
 	while (i < path->size)
 	{
 		list = path[i].list;
 		while (list)
 		{
-			printf("%s", list->room->name);
+			if (list->room->status == 'e')
+				end++;
+			// printf("%s", list->room->name);
 			// if (list->room->out)
 			// 	printf("out");
 			// else if (list->room->in)
 			// 	printf("in");
-			printf("-");
+			// printf("-");
 			// if (list->prev)
 			// {
 			// 	printf("list->prev %s", list->prev->room->name);
@@ -48,9 +53,26 @@ void	print_list(t_path *path)
 			// }
 			list = list->next;
 		}
-			printf("\n");
+		// printf("\n");
 		i++;
+		// if (i >= path->size)
+		// {
+		// 	if (path->next)
+		// 	{
+		// 		end = 0;
+		// 		path = path->next;
+		// 		i = 0;
+		// 	}
+		// }
 	}
+	j = 0;
+	while (j < path->size)
+	{
+		printf("steps: %d\n", path[j].steps);
+		j++;
+	}
+	printf("size: %d\n", path->size);
+	printf("end: %d\n", end);
 }
 
 void	print_graph(t_farm *farm)

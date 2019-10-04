@@ -6,36 +6,43 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:43:53 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/01 20:16:59 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/04 20:05:39 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
+int		count_lines(int ants, int sum, t_path *path)
+{
+	int		a;
+	int		b;
+
+	a = ants - sum;
+	b = a / path->size;
+	if (a % path->size)
+		b++;
+	return (path[path->size - 1].steps + b - 1);
+}
+
 int		is_need_more_paths(int ants, t_path **path)
 {
 	int		i;
 	int		j;
-	int		res;
+	int		sum;
 
 	i = (*path)->size;
-	res = 0;
+	sum = 0;
 	j = 0;
-	if ((*path)->size < 3)
+	while (--i > 0 && j < (*path)->size)
 	{
-		res = (*path + 1)->steps - (*path + 0)->steps;
-		if (ants - 1 > res)
-			return (1);
-		return (0);
-	}
-	ants -= 2;
-	while (i-- > 0 && j < (*path)->size)
-	{
-		res = res + (*path + i)->steps - (*path + j)->steps;
-		ants--;
+		sum = sum + (*path + i)->steps - (*path + j)->steps;
 		j++;
 	}
-	if (ants > res)
-		return (1);
-	return (0);
+	(*path)->lines = count_lines(ants, sum, *path);
+	if ((*path)->lines >= (*path)->next->lines)
+	{
+		free_paths(path);
+		return (0);
+	}
+	return (1);
 }
