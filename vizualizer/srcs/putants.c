@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 00:54:20 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/19 14:00:06 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/09/14 16:13:50 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,14 @@ void		ft_draw_line(t_sdl *sdl, t_ant *ant, t_point way, int step)
 			step--;
 	ant->x = cur.x;
 	ant->y = cur.y;
-	filledCircleColor(sdl->ren, ant->x, ant->y, ant->radius, ant->color);
+	filledCircleColor(sdl->ren, ant->x, ant->y, ant->radius, 0xFF0058A6);
 	SDL_SetRenderDrawColor(sdl->ren, 0x00, 0x00, 0x00, 0x00);
 	free(error);
 }
 
 void		ft_move_ant(t_sdl *sdl, t_ant *ant, int step)
 {
+	t_line	line;
 	t_point	way;
 
 	way.x0 = ant->x;

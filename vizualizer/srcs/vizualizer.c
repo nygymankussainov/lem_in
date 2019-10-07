@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vizualizer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:16:39 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/19 14:29:40 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/09/22 14:57:58 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/visual.h"
-
-//0xFF0058A6
 
 void		ft_send_ants1(t_sdl *sdl, int *i, int *step)
 {
@@ -20,12 +18,12 @@ void		ft_send_ants1(t_sdl *sdl, int *i, int *step)
 
 	if (SDL_PollEvent(sdl->e) != 0)
 		ft_events(sdl, &pause);
-	if (pause == 0 && abs(sdl->ants[*i].x - sdl->ants[*i].dstroom->x) < 7
-	&& abs(sdl->ants[*i].y - sdl->ants[*i].dstroom->y) < 7)
+	if (pause == 0 && sdl->ants[*i].x == sdl->ants[*i].dstroom->x
+	&& sdl->ants[*i].y == sdl->ants[*i].dstroom->y)
 	{
 		Mix_ResumeMusic();
-		filledCircleColor(sdl->ren, sdl->ants[*i].dstroom->x,
-		sdl->ants[*i].dstroom->y, sdl->ants[*i].radius, sdl->ants[*i].color);
+		filledCircleColor(sdl->ren, sdl->ants[*i].x,
+		sdl->ants[*i].y, sdl->ants[*i].radius, 0xFF0058A6);
 		SDL_SetRenderDrawColor(sdl->ren, 0x00, 0x00, 0x00, 0x00);
 	}
 	else if (pause == 0)
@@ -61,7 +59,7 @@ void		ft_send_ants(t_sdl *sdl, int *length)
 			ft_send_ants1(sdl, &i, step);
 		temp++;
 		SDL_RenderPresent(sdl->ren);
-		SDL_Delay(20);
+		SDL_Delay(10);
 	}
 	free(step);
 }
@@ -126,23 +124,19 @@ void		vizualizer(t_farm *farm)
 		exit(0);
 	sdl->fd = 0;
 	sdl->farm = farm;
-	sdl->stepsize = 100;
-	ft_play_muzlo(sdl);
+	sdl->stepsize = 200;
+	// ft_play_muzlo(sdl);
 	ft_change_coords(sdl);
 	SDL_RenderClear(sdl->ren);
 	ft_draw_graph(sdl);
 	SDL_RenderPresent(sdl->ren);
-	ft_go_ant(sdl);
+	// ft_go_ant(sdl);
 	while (!quit)
 	{
 		while (SDL_PollEvent(sdl->e) != 0)
-		{
 			if (sdl->e->type == SDL_QUIT ||
 		(sdl->e->type == SDL_KEYDOWN && sdl->e->key.keysym.sym == SDLK_ESCAPE))
 				quit = 1;
-			if (sdl->e->type == SDL_KEYDOWN && sdl->e->key.keysym.sym == SDLK_SPACE)
-				Mix_PauseMusic();
-		}
 	}
 	ft_close_sdl(sdl);
 }

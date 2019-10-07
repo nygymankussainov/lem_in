@@ -133,7 +133,7 @@ void	delete_path(t_path *path, int noend)
 		ft_swap(&path[noend].index, &path[i].index);
 		tmp = path[noend];
 		path[noend] = path[i];
-		path[i] = path[noend];
+		path[i] = tmp;
 		noend++;
 		i = noend + 1;
 	}
@@ -167,8 +167,6 @@ void	check_paths(t_path *path)
 void	run_ants(t_farm *farm, t_path *path)
 {
 	check_paths(path);
-	// print_list(path);
 	farm->startroom->antnbr = farm->ants;
 	run(farm, path);
-	// free_paths(&path);
 }

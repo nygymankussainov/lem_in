@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   visual.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 15:44:57 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/19 13:56:49 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/10/07 17:29:33 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VISUAL_H
 # define VISUAL_H
 
-# include "../../lem_in.h"
+# include "../../src/lem_in.h"
 # include <stdbool.h>
 # include <stdio.h>
 # include <string.h>
@@ -37,14 +37,14 @@ typedef struct s_room		t_room;
 typedef struct s_link		t_link;
 typedef struct s_farm		t_farm;
 
-struct		s_map
+struct						s_map
 {
 	int				maxdif;
 	int				xcenter;
 	int				ycenter;
 };
 
-struct		s_sdl
+struct						s_sdl
 {
 	SDL_Window		*win;
 	SDL_Surface		*sfc;
@@ -61,7 +61,7 @@ struct		s_sdl
 	struct s_map	map;
 };
 
-struct		s_point
+struct						s_point
 {
 	float			x;
 	float			y;
@@ -70,7 +70,7 @@ struct		s_point
 	int				color;
 };
 
-struct		s_line
+struct						s_line
 {
 	t_point			p0;
 	t_point			p1;
@@ -80,7 +80,7 @@ struct		s_line
 	float			k;
 };
 
-struct		s_ant
+struct						s_ant
 {
 	int				x;
 	int				y;
@@ -88,35 +88,34 @@ struct		s_ant
 	t_room			*srcroom;
 	t_room			*dstroom;
 	int				radius;
-	int				color;
 };
 
-void		ft_bresenham(t_sdl *sdl, int *coord);
-void		ft_line_init(t_line *line, t_point *delta);
-void		ft_swap_floats(float *a, float *b);
-int			ft_find_max_infarm(t_farm *farm, char c);
-int			ft_find_min_infarm(t_farm *farm, char c);
-int			*ft_find_maxcoords(t_farm *farm);
-t_map		ft_initmap(t_farm *farm, int *maxcoords);
-void		ft_change_coords(t_sdl *sdl);
-void		ft_draw_vertex(t_sdl *sdl, const t_room *room, int room_count);
-void		ft_draw_link(t_sdl *sdl, const t_room *room);
-void		ft_draw_graph(t_sdl *sdl);
-void		ft_draw_circle(SDL_Renderer *ren, int x, int y, int r);
-void		ft_draw_rooms(t_sdl *sdl);
-void		ft_move_ant(t_sdl *sdl, t_ant *ant, int step);
-void		ft_get_ants(t_sdl *sdl);
-void		ft_send_ants(t_sdl *sdl, int *length);
-int			ft_do_move(t_sdl *sdl);
-int			ft_go_ant(t_sdl *sdl);
-void		vizualizer(t_farm *farm);
-int			ft_get_link_length(const t_room *src, const t_room *dst);
-t_room		*ft_find_ant_room(t_farm *farm, char *str);
-int			ft_init_sdl(t_sdl *sdl);
-void		ft_close_sdl(t_sdl *sdl);
-int			ft_array_size(char **arr);
-void		free_arr(char **str);
-void		ft_play_muzlo(t_sdl *sdl);
-void		ft_events(t_sdl *sdl, bool *pause);
+void				ft_bresenham(t_sdl *sdl, int *coord);
+void				ft_line_init(t_line *line, t_point *delta);
+void				ft_swap_floats(float *a, float *b);
+int					ft_find_max_infarm(t_farm *farm, char c);
+int					ft_find_min_infarm(t_farm *farm, char c);
+int					*ft_find_maxcoords(t_farm *farm);
+t_map				ft_initmap(t_farm *farm, int *maxcoords);
+void				ft_change_coords(t_sdl *sdl);
+void				ft_draw_vertex(t_sdl *sdl, const t_room *room, int room_count);
+void				ft_draw_link(t_sdl *sdl, const t_room *room);
+void				ft_draw_graph(t_sdl *sdl);
+void				ft_draw_circle(SDL_Renderer *ren, int x, int y, int r);
+void				ft_draw_rooms(t_sdl *sdl);
+void				ft_move_ant(t_sdl *sdl, t_ant *ant, int step);
+void				ft_get_ants(t_sdl *sdl);
+void				ft_send_ants(t_sdl *sdl, int *length);
+int					ft_do_move(t_sdl *sdl);
+int					ft_go_ant(t_sdl *sdl);
+void				vizualizer(t_farm *farm);
+int					ft_get_link_length(const t_room *src, const t_room *dst);
+t_room				*ft_find_ant_room(t_farm *farm, char *str);
+int					ft_init_sdl(t_sdl *sdl);
+void				ft_close_sdl(t_sdl *sdl);
+int					ft_array_size(char **arr);
+void				free_arr(char **str);
+void				ft_play_muzlo(t_sdl *sdl);
+void				ft_events(t_sdl *sdl, bool *pause);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 15:03:04 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/10/07 13:02:22 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/07 18:44:07 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ void	free_all_structs(t_hashcodes *hashcodes,
 				free(h_tab[hashcodes->hash_code].room->link);
 				h_tab[hashcodes->hash_code].room->link = tmp;
 			}
-			if (h_tab[hashcodes->hash_code].room->outroom)
-				delete_dup_room(h_tab[hashcodes->hash_code].room->outroom);
 			ft_strdel(&h_tab[hashcodes->hash_code].room->name);
 			free(h_tab[hashcodes->hash_code].room);
 			h_tab[hashcodes->hash_code].room = tmp2;

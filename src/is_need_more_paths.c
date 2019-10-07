@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:43:53 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/07 15:55:33 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/07 18:36:17 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,8 @@ int		is_need_more_paths(int ants, t_path **path, int rooms)
 		j++;
 	}
 	(*path)->lines = count_lines(ants, sum, *path);
-	if (rooms > 3500 && (*path)->lines >= (*path)->next->lines)
-	{
-		free_paths(path);
-		return (0);
-	}
-	if (ants <= sum)
+	if ((rooms > 3500 && (*path)->lines >= (*path)->next->lines) ||
+		(ants <= sum && rooms <= 3500))
 	{
 		free_paths(path);
 		return (0);
