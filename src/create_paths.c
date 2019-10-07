@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:47:38 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/07 11:48:05 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/07 15:52:55 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,9 +132,8 @@ int		create_many_paths(t_farm *farm, t_path **path)
 		reindex_paths(*path + i++);
 	sort_arr_path(*path, size);
 	(*path)->size = size;
-	if (!is_need_more_paths(farm->ants, path))
-		return (0);
-	if ((*path)->size >= farm->max_paths)
+	if (!is_need_more_paths(farm->ants, path, farm->size) ||
+		(*path)->size >= farm->max_paths)
 		return (0);
 	return (1);
 }

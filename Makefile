@@ -6,11 +6,11 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/10/07 11:33:43 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/10/07 17:07:40 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-ARCHIVE = lem-in.a
+ARCHIVE = libftlemin.a
 
 NAME = lem-in
 
@@ -18,14 +18,16 @@ LIB = libft/ft_printf
 LIB_A = libft/libft.a $(LIB)/libftprintf.a 
 VISUAL = ./vizualizer
 
-INCLUDES = -I ./libft -I ./libft/ft_printf/ -I ./includes
+INCLUDES = -I ./libft -I ./libft/ft_printf/
 
-SRC = lem_in.c hash_func.c validation/validate_coords.c validation/find_and_connect_rooms.c bfs.c bellman_ford.c run_ants.c unvisit_rooms.c delete_dup_rooms.c print_graph.c \
+SOURCES = lem_in.c hash_func.c validation/validate_coords.c validation/find_and_connect_rooms.c bfs.c bellman_ford.c run_ants.c unvisit_rooms.c delete_dup_rooms.c print_graph.c \
 		validation/isint.c validation/validation.c validation/validate_rooms.c validation/write_data_in_sroom.c validation/validate_links.c validation/validate_ants.c \
 		validation/work_with_data.c qsort.c work_with_path.c create_paths.c create_dup_rooms.c \
 		find_disjoint_paths.c manage_directions.c is_need_more_paths.c \
 
-OBJ = $(SRC:.c=.o)
+SRC = $(addprefix src/, $(SOURCES))
+
+OBJ = $(patsubst %.c, %.o, $(SRC))
 
 CCFL = -Wall -Wextra -Werror
 
@@ -40,10 +42,10 @@ $(ARCHIVE): $(OBJ)
 	@ranlib $(ARCHIVE)
 
 %.o: %.c $(INCLUDES)
-	@gcc -Wall -Wextra -Werror -c $<
+	@gcc $(CCFL) -c $<
 
 $(NAME): $(OBJ)
-	@gcc -Wall -Wextra -Werror -o $(NAME) $(ARCHIVE) $(LIB_A) -g
+	@gcc $(CCFL) -o $(NAME) $(ARCHIVE) $(LIB_A)
 
 clean:
 	@make clean -C $(LIB)

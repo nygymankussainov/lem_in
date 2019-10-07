@@ -6,29 +6,27 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:40:48 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/18 17:51:51 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/07 13:01:24 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		count_room(char *argv)
+int		count_room(void)
 {
-	int		fd;
 	int		size;
 	char	*line;
+	int		fd;
 
-	fd = open(argv, O_RDONLY);
+	fd = open("input_data", O_CREAT | O_TRUNC | O_RDWR, S_IWRITE | S_IREAD);
 	size = 0;
-	if (fd <= 0)
-		return (0);
-	while (get_next_line(fd, &line) == 1)
+	while (get_next_line(0, &line) == 1)
 	{
+		ft_putendl_fd(line, fd);
 		if (isroom(line))
 			size++;
 		ft_strdel(&line);
 	}
-	close(fd);
 	return (size);
 }
 

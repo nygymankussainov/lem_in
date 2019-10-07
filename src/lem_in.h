@@ -6,15 +6,15 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/07 11:47:06 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/07 17:00:50 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
-# include "vizualizer/includes/visual.h"
-# include "./libft/ft_printf/ft_printf.h"
+# include "../vizualizer/includes/visual.h"
+# include "../libft/ft_printf/ft_printf.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdbool.h>
@@ -118,7 +118,7 @@ struct						s_path
 void						free_all_structs(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab, t_farm *farm);
 int							isroom(char *line);
-void						print_valid_data(t_farm *farm, char *argv);
+void						print_valid_data(t_farm *farm);
 int							isint(char *str, char c);
 void						hash_table(t_farm *farm, t_hash_tab *h_tab);
 int							hash_func(char *name, int size);
@@ -141,7 +141,7 @@ int							islink(char *line);
 int							isduplicate(t_coords *coords);
 int							count_space(char *line);
 t_link						*create_slink(t_room *room, char *linkname);
-int							count_room(char *argv);
+int							count_room(void);
 int							isroom(char *line);
 void						print_links(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab);
@@ -174,7 +174,7 @@ void						change_prev_rooms(t_room *room);
 void						delete_dup_rooms(t_path *path);
 void						print_graph(t_farm *farm);
 void						reverse_edges(t_farm *farm);
-int							is_need_more_paths(int ants, t_path **path);
+int							is_need_more_paths(int ants, t_path **path, int rooms);
 void						manage_direction(t_path *path, int i);
 void						make_path_directed(t_path *path);
 void						find_disjoint_paths(t_path **path);

@@ -6,49 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 14:52:29 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/07 12:32:04 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/07 16:33:50 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-int		count_paths(t_queue *queue, t_room *room, t_queue *last, t_farm *farm)
-{
-	t_link	*link;
-	int		i;
-	// int		j;
-
-	i = 0;
-	// j = 0;
-	enqueue(&queue, room, &last);
-	unvisit_rooms(farm, 1);
-	while (queue)
-	{
-		link = room->link;
-		while (link)
-		{
-			if (!link->room->visited && !link->lock && link->go)
-			{
-				if (!link->room->status)
-					enqueue(&queue, link->room, &last);
-				link->room->visited = link->room->status != 'e' ? 1 : link->room->visited;
-				// if (room->status == 's')
-				// 	link->room->path1 = j;
-				// else if (!link->room->status)
-				// 	link->room->path1 = room->path1;
-				if (link->room->status == 'e')
-					i++;
-				if (room->status != 's')
-					break ;
-				// j++;
-			}
-			link = link->next;
-		}
-		dequeue(&queue);
-		room = queue ? queue->room : room;
-	}
-	return (i);
-}
 
 void	reindex_paths(t_path *path)
 {

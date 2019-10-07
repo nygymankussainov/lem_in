@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 15:03:04 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/13 15:11:59 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/07 13:02:22 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,12 @@ void	free_all_structs(t_hashcodes *hashcodes,
 	free(farm);
 }
 
-void	print_valid_data(t_farm *farm, char *argv)
+void	print_valid_data(t_farm *farm)
 {
 	int			link;
 
 	link = 0;
-	farm->fd = open(argv, O_RDONLY);
+	farm->fd = open("input_data", O_RDONLY);
 	while (get_next_line(farm->fd, &farm->line) == 1)
 	{
 		if (ft_strcmp("##start", farm->line) && ft_strcmp("##end", farm->line)
