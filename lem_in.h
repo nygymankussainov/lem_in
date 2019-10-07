@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/04 20:05:57 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/07 11:47:06 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ struct						s_path
 	bool					checked;
 	int						size;
 	t_queue					*list;
+	t_queue					*endlist;
 	t_path					*next;
 };
 
@@ -164,9 +165,7 @@ void						count_steps(t_queue *queue, t_room *room,
 int							count_paths(t_queue *queue, t_room *room,
 	t_queue *last, t_farm *farm);
 void						check_link(t_queue *list);
-int							push_ants_from_start(t_path *path, int i, int ant, int sp);
-int							push_ant_further(int ant, t_queue *q_path, int sp);
-int							push_ants_to_end(t_path *path, int i, int sp);
+void						push_ant_further(t_queue *list);
 int							create_paths(t_farm *farm, t_path **path);
 int							count_short_paths(t_path *path);
 void						create_dup_rooms(t_path *path);

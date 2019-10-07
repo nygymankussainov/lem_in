@@ -6,7 +6,7 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/10/03 20:28:33 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/10/07 11:33:43 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ INCLUDES = -I ./libft -I ./libft/ft_printf/ -I ./includes
 
 SRC = lem_in.c hash_func.c validation/validate_coords.c validation/find_and_connect_rooms.c bfs.c bellman_ford.c run_ants.c unvisit_rooms.c delete_dup_rooms.c print_graph.c \
 		validation/isint.c validation/validation.c validation/validate_rooms.c validation/write_data_in_sroom.c validation/validate_links.c validation/validate_ants.c \
-		validation/work_with_data.c qsort.c work_with_path.c push_ants_from_start.c push_ants_to_end.c create_paths.c create_dup_rooms.c \
+		validation/work_with_data.c qsort.c work_with_path.c create_paths.c create_dup_rooms.c \
 		find_disjoint_paths.c manage_directions.c is_need_more_paths.c \
 
 OBJ = $(SRC:.c=.o)

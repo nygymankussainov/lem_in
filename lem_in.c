@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/04 21:19:43 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/07 12:18:54 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int		main(int argc, char **argv)
 			while (ret)
 				if (!bellman_ford(farm, path) || !(ret = create_paths(farm, &path)))
 					break ;
-			print_list(path);
-			// print_valid_data(farm, argv[1]);
+			// print_list(path);
+			print_valid_data(farm, argv[1]);
 			run_ants(farm, path);
 		}
 		else

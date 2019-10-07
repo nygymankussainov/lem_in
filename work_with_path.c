@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 14:52:29 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/04 14:51:38 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/07 12:32:04 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ void	create_list_of_paths(t_room *room, t_path *path, int i)
 			if (!link->room->visited && !link->lock && link->go)
 			{
 				enqueue(&path->list, link->room, &last1);
+				if (link->room->status == 'e')
+					path->endlist = last1;
 				path->steps++;
 				path->index = i;
 				if (!link->room->status)

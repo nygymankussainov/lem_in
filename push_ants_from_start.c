@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 16:51:34 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/23 16:22:32 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/07 11:32:42 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,23 +49,23 @@ int		print_ant_move(t_queue *q_path, int ant, int sp)
 	return (save);
 }
 
-int		push_ant_further(int ant, t_queue *q_path, int sp)
-{
-	int		save;
+// int		push_ant_further(int ant, t_queue *q_path, int sp)
+// {
+// 	int		save;
 
-	save = -1;
-	if (q_path && q_path->next)
-	{
-		save = print_ant_move(q_path, ant, sp);
-		if (q_path->next->room->antnbr < 0)
-			sp = push_ant_further(save, q_path->next, sp);
-		else
-			sp = 1;
-		return (sp);
-	}
-	else
-		return (sp);
-}
+// 	save = -1;
+// 	if (q_path && q_path->next)
+// 	{
+// 		save = print_ant_move(q_path, ant, sp);
+// 		if (q_path->next->room->antnbr < 0)
+// 			sp = push_ant_further(save, q_path->next, sp);
+// 		else
+// 			sp = 1;
+// 		return (sp);
+// 	}
+// 	else
+// 		return (sp);
+// }
 
 int		push_ants_from_start(t_path *path, int i, int ant, int sp)
 {

@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:47:38 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/04 20:05:35 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/07 11:48:05 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	fill_struct(t_farm *farm, t_path **path, int size)
 		while (end)
 		{
 			enqueue_to_begin(&path[size]->list, end);
+			if (end->status == 'e')
+				(*path)->endlist = (*path)->list;
 			end = end->prev;
 			path[size]->steps++;
 		}
@@ -130,9 +132,6 @@ int		create_many_paths(t_farm *farm, t_path **path)
 		reindex_paths(*path + i++);
 	sort_arr_path(*path, size);
 	(*path)->size = size;
-	// printf("AFTER CREATE MANY PATHS\n");
-	// print_graph(farm);
-	// print_list(*path);
 	if (!is_need_more_paths(farm->ants, path))
 		return (0);
 	if ((*path)->size >= farm->max_paths)
@@ -155,9 +154,6 @@ int		create_paths(t_farm *farm, t_path **path)
 		if ((*path)->steps == 1)
 			farm->onestep_path = (*path)->list;
 		manage_direction(*path, 0); /* make path directed from start room to end room */
-		// printf("AFTER CREATE_PATH\n");
-		// print_graph(farm);
-		// print_list(*path);
 		(*path)->lines = farm->ants + (*path)->steps - 1;
 		if (farm->max_paths == 1 || farm->ants == 1)
 			return (0);
