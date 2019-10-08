@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/07 17:00:50 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/08 20:21:45 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,14 @@ typedef struct				s_farm
 	int						end;
 	int						recur;
 	int						fd;
+	int						ret;
 	int						i;
 	char					*line;
 	char					*name;
 	int						size;
 	int						path_nb;
 	int						max_paths;
+	t_path					*path;
 	t_queue					*onestep_path;
 	t_room					*endroom;
 	t_room					*startroom;
@@ -147,8 +149,10 @@ void						print_links(t_hashcodes *hashcodes,
 	t_hash_tab *h_tab);
 int							bfs(t_farm *farm, t_path **path);
 void						dequeue(t_queue **queue);
-void						enqueue(t_queue **queue, t_room *room, t_queue **last);
-int							find_shortest_path(t_farm *farm, t_path **path, int ret);
+void						enqueue(t_queue **queue,
+	t_room *room, t_queue **last);
+int							find_shortest_path(t_farm *farm,
+	t_path **path, int ret);
 void						unvisit_rooms(t_farm *farm, int i);
 int							bellman_ford(t_farm *farm, t_path *path);
 int							ft_count_paths(t_farm *farm);
@@ -171,14 +175,16 @@ int							count_short_paths(t_path *path);
 void						create_dup_rooms(t_path *path);
 int							expression(t_path *path, int i);
 void						change_prev_rooms(t_room *room);
-void						delete_dup_rooms(t_path *path);
+int							delete_dup_rooms(t_path *path);
 void						print_graph(t_farm *farm);
 void						reverse_edges(t_farm *farm);
-int							is_need_more_paths(int ants, t_path **path, int rooms);
+int							is_need_more_paths(int ants,
+	t_path **path, int rooms);
 void						manage_direction(t_path *path, int i);
 void						make_path_directed(t_path *path);
 void						find_disjoint_paths(t_path **path);
-void						create_list_of_paths(t_room *room, t_path *path, int i);
+void						create_list_of_paths(t_room *room,
+	t_path *path, int i);
 void						enqueue_to_begin(t_queue **queue, t_room *room);
 void						print_list(t_path *path);
 int							free_paths(t_path **path);

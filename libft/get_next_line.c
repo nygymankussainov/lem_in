@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 11:50:12 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/07 18:15:00 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/08 19:48:21 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int		get_next_line(const int fd, char **line)
 	static t_gnl	v;
 
 	v.b = 0;
-	if (fd < 0 || (!v.c && !(v.c = ft_strnew(1))) || !line)
+	if (fd < 0 || read(fd, v.buff, 0) < 0 ||
+		(!v.c && !(v.c = ft_strnew(1))) || !line)
 		return (-1);
 	while (!ft_strchr(v.c, '\n') && (v.b = read(fd, v.buff, BUFF_SIZE)) > 0)
 	{

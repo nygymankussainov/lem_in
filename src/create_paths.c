@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:47:38 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/07 15:52:55 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/08 20:17:55 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,8 @@ int		create_paths(t_farm *farm, t_path **path)
 	int		i;
 
 	i = 0;
+	if (*path)
+		delete_dup_rooms(*path);
 	if (!*path)
 	{
 		if (!(*path = (t_path *)ft_memalloc(sizeof(t_path))))

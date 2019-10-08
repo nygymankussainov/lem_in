@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 14:52:47 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/07 13:36:05 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/08 20:40:06 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,21 @@ void	assign_inf_dist(t_farm *farm)
 	}
 }
 
+bool	change_dist(t_link *link, t_room *room, t_queue **queue, t_queue **last)
+{
+	if (!link->lock && !link->room->visited
+		&& link->room->status != 'e')
+		enqueue(queue, link->room, last);
+	if (!link->lock && room->dist + link->weight < link->room->dist
+		&& link->room->status != 's')
+	{
+		link->room->dist = room->dist + link->weight;
+		link->room->prev = room;
+		return (1);
+	}
+	return (0);
+}
+
 int		calculate_neg_dist(t_queue **queue, t_room *room, t_queue *last)
 {
 	t_link	*link;
@@ -46,15 +61,7 @@ int		calculate_neg_dist(t_queue **queue, t_room *room, t_queue *last)
 		while (link && room->status != 'e')
 		{
 			ret = link->room->status == 'e' ? 1 : ret;
-			if (!link->lock && !link->room->visited && link->room->status != 'e')
-				enqueue(queue, link->room, &last);
-			if (!link->lock && room->dist + link->weight < link->room->dist
-				&& link->room->status != 's')
-			{
-				link->room->dist = room->dist + link->weight;
-				link->room->prev = room;
-				change = 1;
-			}
+			change = change_dist(link, room, queue, &last);
 			link = link->next;
 		}
 		dequeue(queue);
@@ -65,9 +72,13 @@ int		calculate_neg_dist(t_queue **queue, t_room *room, t_queue *last)
 			room->outroom->visited = 1;
 		room = *queue ? (*queue)->room : room;
 	}
-	ret = ret && change ? 2 : ret;
-	return (ret);
+	return (ret && change ? 2 : ret);
 }
+
+/*
+** Here in manage_direction() function on line 95 we
+** reverse (make directed from end to start) edges in path(s)
+*/
 
 int		bellman_ford(t_farm *farm, t_path *path)
 {
@@ -81,25 +92,17 @@ int		bellman_ford(t_farm *farm, t_path *path)
 	last = NULL;
 	create_dup_rooms(path);
 	while (i < path->size)
-		manage_direction(path + i++, 1); /* reverse (make directed from end to start) edges in path(s) */
+		manage_direction(path + i++, 1);
 	assign_inf_dist(farm);
 	i = 0;
 	while (i++ < farm->room_count - 1)
 	{
 		unvisit_rooms(farm, 0);
 		enqueue(&queue, farm->startroom, &last);
-		ret = calculate_neg_dist(&queue, farm->startroom, last);
-		if (ret == 1)
-		{
-			delete_dup_rooms(path);
+		if ((ret = calculate_neg_dist(&queue, farm->startroom, last)) == 1)
 			return (1);
-		}
 		else if (!ret)
-		{
-			delete_dup_rooms(path);
-			return (0);
-		}
+			return (delete_dup_rooms(path));
 	}
-	delete_dup_rooms(path);
 	return (1);
 }

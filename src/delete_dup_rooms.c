@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:28:00 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/07 13:34:54 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/08 20:21:14 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	delete_links(t_room *room)
 		room->prev = room->outroom->prev;
 }
 
-void	delete_dup_rooms(t_path *path)
+int		delete_dup_rooms(t_path *path)
 {
 	t_queue	*list;
 	t_queue	*tmp;
@@ -109,4 +109,5 @@ void	delete_dup_rooms(t_path *path)
 		}
 		i++;
 	}
+	return (0);
 }

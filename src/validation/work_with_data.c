@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 15:03:04 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/10/07 18:44:07 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/08 19:30:46 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	print_valid_data(t_farm *farm)
 
 	link = 0;
 	farm->fd = open("input_data", O_RDONLY);
-	while (get_next_line(farm->fd, &farm->line) == 1)
+	while (get_next_line(farm->fd, &farm->line) > 0)
 	{
 		if (ft_strcmp("##start", farm->line) && ft_strcmp("##end", farm->line)
 			&& farm->line[0] == '#' && farm->line[1] == '#')

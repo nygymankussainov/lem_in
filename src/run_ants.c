@@ -166,6 +166,7 @@ void	check_paths(t_path *path)
 
 void	run_ants(t_farm *farm, t_path *path)
 {
+	print_valid_data(farm);
 	check_paths(path);
 	farm->startroom->antnbr = farm->ants;
 	run(farm, path);
