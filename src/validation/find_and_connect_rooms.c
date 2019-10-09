@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:30:36 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/07 18:43:19 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:13:27 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "../../lem_in.h"
 
 t_link	*create_slink(t_room *room, char *linkname)
 {

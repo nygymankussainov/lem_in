@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 13:33:05 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/09 13:33:17 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:15:17 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "../lem_in.h"
 
 void	delete_path(t_path *path, int noend)
 {

@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 14:52:47 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/09 11:21:19 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:09:40 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "../lem_in.h"
 
 void	assign_inf_dist(t_farm *farm)
 {

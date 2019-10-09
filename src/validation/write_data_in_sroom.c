@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/23 18:03:57 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/14 12:14:59 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:13:22 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "../../lem_in.h"
 
 void	free_coords(t_coords **coords)
 {

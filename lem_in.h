@@ -6,15 +6,15 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/09 13:38:21 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:12:14 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
-# include "../vizualizer/includes/visual.h"
-# include "../libft/ft_printf/ft_printf.h"
+# include "vizualizer/includes/visual.h"
+# include "libft/ft_printf/ft_printf.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdbool.h>

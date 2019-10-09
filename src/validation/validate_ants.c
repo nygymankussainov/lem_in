@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 12:43:45 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/29 16:45:28 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:13:49 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "../../lem_in.h"
 
 int		validate_ants(t_farm *farm)
 {

@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:42:16 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/10/09 13:27:14 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:14:33 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "../lem_in.h"
 
 void	sort_arr_path(t_path *path, int size)
 {

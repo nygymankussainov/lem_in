@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 16:59:19 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/09 11:51:51 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:14:44 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "../lem_in.h"
 
 void	make_path_directed(t_path *path)
 {

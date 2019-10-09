@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 11:31:58 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/08 19:32:05 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:13:45 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "../../lem_in.h"
 
 int		count_dash(char *line)
 {

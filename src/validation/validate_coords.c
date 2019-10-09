@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:14:26 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/08 19:30:39 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:13:39 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "../../lem_in.h"
 
 int		isduplicate(t_coords *coords)
 {

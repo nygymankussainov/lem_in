@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:33:43 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/30 12:50:44 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:13:53 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "../../lem_in.h"
 
 int		isint_limit(char *str)
 {

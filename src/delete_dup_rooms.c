@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:28:00 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/09 11:59:15 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:10:18 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "../lem_in.h"
 
 void	relink_to_inroom(t_room *room)
 {

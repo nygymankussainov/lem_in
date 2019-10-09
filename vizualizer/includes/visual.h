@@ -6,14 +6,14 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 15:44:57 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/10/07 17:29:33 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:11:55 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VISUAL_H
 # define VISUAL_H
 
-# include "../../src/lem_in.h"
+# include "../../lem_in.h"
 # include <stdbool.h>
 # include <stdio.h>
 # include <string.h>

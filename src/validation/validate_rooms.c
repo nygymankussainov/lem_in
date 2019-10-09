@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/23 17:24:00 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/09/13 19:54:01 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:13:34 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "../../lem_in.h"
 
 int		islink(char *line)
 {

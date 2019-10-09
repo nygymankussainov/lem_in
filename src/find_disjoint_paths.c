@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 18:57:15 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/04 14:58:59 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:15:00 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "../lem_in.h"
 
 void	check_link(t_queue *list)
 {

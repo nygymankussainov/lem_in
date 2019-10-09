@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 15:03:04 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/10/08 19:30:46 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:13:15 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "../../lem_in.h"
 
 int		isroom(char *line)
 {
