@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:40:48 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/09 18:14:56 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 21:03:54 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,25 @@ int		count_room(void)
 			size++;
 		ft_strdel(&line);
 	}
+	close(fd);
+	return (size);
+}
+
+int		count_room_viz(char *file_name)
+{
+	int		size;
+	char	*line;
+	int		fd;
+
+	fd = open(file_name, O_RDONLY);
+	size = 0;
+	while (get_next_line(fd, &line) == 1)
+	{
+		if (isroom(line))
+			size++;
+		ft_strdel(&line);
+	}
+	close(fd);
 	return (size);
 }
 

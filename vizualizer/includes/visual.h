@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visual.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 15:44:57 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/10/09 18:11:55 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 21:47:42 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ struct						s_ant
 	t_room			*srcroom;
 	t_room			*dstroom;
 	int				radius;
+	int				color;
 };
 
 void				ft_bresenham(t_sdl *sdl, int *coord);
@@ -117,5 +118,6 @@ int					ft_array_size(char **arr);
 void				free_arr(char **str);
 void				ft_play_muzlo(t_sdl *sdl);
 void				ft_events(t_sdl *sdl, bool *pause);
+int					count_room_viz(char *str);
 
 #endif

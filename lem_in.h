@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/09 18:12:14 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 20:50:13 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,5 +198,6 @@ void						push_ant(t_queue *list, int ant);
 void						push_ant_further(t_queue *list);
 int							count_optimal_paths(t_path *path, int ants);
 int							expression(t_path *path, int i);
+int							create_paths(t_farm *farm, t_path **path);
 
 #endif

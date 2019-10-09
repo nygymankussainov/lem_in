@@ -6,7 +6,7 @@
 /*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:16:39 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/22 14:57:58 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/10/09 22:58:00 by hfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void		ft_send_ants1(t_sdl *sdl, int *i, int *step)
 
 	if (SDL_PollEvent(sdl->e) != 0)
 		ft_events(sdl, &pause);
-	if (pause == 0 && sdl->ants[*i].x == sdl->ants[*i].dstroom->x
-	&& sdl->ants[*i].y == sdl->ants[*i].dstroom->y)
+	if (pause == 0 && abs(sdl->ants[*i].x - sdl->ants[*i].dstroom->x) < 7
+	&& abs(sdl->ants[*i].y - sdl->ants[*i].dstroom->y) < 7)
 	{
 		Mix_ResumeMusic();
-		filledCircleColor(sdl->ren, sdl->ants[*i].x,
-		sdl->ants[*i].y, sdl->ants[*i].radius, 0xFF0058A6);
+		filledCircleColor(sdl->ren, sdl->ants[*i].dstroom->x,
+		sdl->ants[*i].dstroom->y, sdl->ants[*i].radius, sdl->ants[*i].color);
 		SDL_SetRenderDrawColor(sdl->ren, 0x00, 0x00, 0x00, 0x00);
 	}
 	else if (pause == 0)
@@ -59,7 +59,7 @@ void		ft_send_ants(t_sdl *sdl, int *length)
 			ft_send_ants1(sdl, &i, step);
 		temp++;
 		SDL_RenderPresent(sdl->ren);
-		SDL_Delay(10);
+		SDL_Delay(20);
 	}
 	free(step);
 }
@@ -99,11 +99,18 @@ int			ft_go_ant(t_sdl *sdl)
 
 	while (get_next_line(sdl->fd, &str))
 	{
+		ft_printf("%s\n", str);
+		if (str == NULL)
+			break ;
+	}
+	while (get_next_line(sdl->fd, &str))
+	{
 		if (str[0] != 'L')
 		{
 			free(str);
 			continue ;
 		}
+		ft_putendl(str);
 		sdl->cmdline = ft_strsplit(str, ' ');
 		ft_do_move(sdl);
 		SDL_Delay(150);
@@ -124,13 +131,13 @@ void		vizualizer(t_farm *farm)
 		exit(0);
 	sdl->fd = 0;
 	sdl->farm = farm;
-	sdl->stepsize = 200;
-	// ft_play_muzlo(sdl);
+	sdl->stepsize = 100;
+	ft_play_muzlo(sdl);
 	ft_change_coords(sdl);
 	SDL_RenderClear(sdl->ren);
 	ft_draw_graph(sdl);
 	SDL_RenderPresent(sdl->ren);
-	// ft_go_ant(sdl);
+	ft_go_ant(sdl);
 	while (!quit)
 	{
 		while (SDL_PollEvent(sdl->e) != 0)
