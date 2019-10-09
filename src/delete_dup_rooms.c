@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:28:00 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/08 20:21:14 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 11:59:15 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	delete_link(t_room *room)
 		room->link = room->link->next;
 	}
 	else
-	{
 		while (link)
 		{
 			prev = link;
@@ -58,7 +57,6 @@ void	delete_link(t_room *room)
 			}
 			link = link->next;
 		}
-	}
 	free(tmp);
 	tmp = NULL;
 }
@@ -67,8 +65,8 @@ void	delete_links(t_room *room)
 {
 	t_link	*link;
 
-	delete_link(room); /* delete inroom link */
-	delete_link(room->outroom); /* delete outroom link */
+	delete_link(room);
+	delete_link(room->outroom);
 	link = room->link;
 	while (link && link->next)
 		link = link->next;
@@ -77,6 +75,8 @@ void	delete_links(t_room *room)
 	change_prev_rooms(room);
 	if (room->prev->name == room->name)
 		room->prev = room->outroom->prev;
+	free(room->outroom);
+	room->outroom = NULL;
 }
 
 int		delete_dup_rooms(t_path *path)
@@ -88,26 +88,22 @@ int		delete_dup_rooms(t_path *path)
 	i = 0;
 	while (i < path->size)
 	{
-		list = path[i].list;
+		list = path[i++].list;
 		while (list)
 		{
 			if (list->room->dup)
 			{
 				delete_links(list->room);
-				free(list->room->outroom);
-				list->room->outroom = NULL;
 				list->room->dup = 0;
 				list->room->in = 0;
 				tmp = list->next;
 				list->next = tmp->next;
-				if (list->next)
-					list->next->prev = list;
+				list->next->prev = list->next ? list : list->next->prev;
 				free(tmp);
 				tmp = NULL;
 			}
 			list = list->next;
 		}
-		i++;
 	}
 	return (0);
 }

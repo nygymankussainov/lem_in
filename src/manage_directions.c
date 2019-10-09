@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 16:59:19 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/08 20:12:04 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 11:51:51 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,10 @@ void	make_path_directed(t_path *path)
 	}
 }
 
-void	manage_direction(t_path *path, int i)
+t_queue	*from_start_to_end(t_queue *list, int i)
 {
 	t_link	*link;
-	t_queue	*list;
 
-	list = path->list;
 	while (list && list->next)
 	{
 		link = list->room->link;
@@ -44,10 +42,15 @@ void	manage_direction(t_path *path, int i)
 			link = link->next;
 		link->lock = i;
 		link->go = 1;
-		if (!list->next)
-			break ;
 		list = list->next;
 	}
+	return (list);
+}
+
+void	from_end_to_start(t_queue *list, int i)
+{
+	t_link	*link;
+
 	while (list && list->room->status != 's')
 	{
 		link = list->room->link;
@@ -61,4 +64,12 @@ void	manage_direction(t_path *path, int i)
 		}
 		list = list->prev;
 	}
+}
+
+void	manage_direction(t_path *path, int i)
+{
+	t_queue	*list;
+
+	list = from_start_to_end(path->list, i);
+	from_end_to_start(list, i);
 }

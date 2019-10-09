@@ -6,13 +6,13 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:47:38 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/08 20:17:55 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 12:48:21 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		free_paths(t_path **path)
+void	free_paths(t_path **path)
 {
 	t_path	*tmp;
 	t_path	*save;
@@ -39,7 +39,6 @@ int		free_paths(t_path **path)
 		*path = tmp;
 	}
 	*path = save;
-	return (0);
 }
 
 void	fill_struct(t_farm *farm, t_path **path, int size)
@@ -63,6 +62,11 @@ void	fill_struct(t_farm *farm, t_path **path, int size)
 	}
 }
 
+/*
+** Function get_start_end_link() returns a link between
+** start and end rooms if such path exists
+*/
+
 t_link	*get_start_end_link(t_queue *list)
 {
 	t_link	*link;
@@ -77,7 +81,6 @@ t_link	*get_start_end_link(t_queue *list)
 		list->room->link = list->room->link->next;
 	}
 	else
-	{
 		while (link)
 		{
 			prev = link;
@@ -89,61 +92,45 @@ t_link	*get_start_end_link(t_queue *list)
 			}
 			link = link->next;
 		}
-	}
 	return (tmp);
 }
 
+/*
+** Here in create_paths() and create_many_paths() functions
+** on lines 115, 118 and 144
+** we make edges in paths directed from start to end
+*/
+
 int		create_many_paths(t_farm *farm, t_path **path)
 {
-	int		size;
 	t_path	*new;
+	int		size;
 	int		i;
-	t_link	*link;
 
-	size = (*path)->size + 1;
-	link = NULL;
-	if (!(new = (t_path *)ft_memalloc(sizeof(t_path) * size)))
-		exit(0);
 	i = 0;
-	unvisit_rooms(farm, 0);
-	while (i < size)
+	if (!(new = (t_path *)ft_memalloc(sizeof(t_path))))
+		exit(0);
+	new->size = 1;
+	fill_struct(farm, &new, new->size);
+	make_path_directed(new);
+	while (i < (*path)->size)
 	{
-		if (farm->onestep_path && i == 0)
-		{
-			new[i].list = farm->onestep_path;
-			link = get_start_end_link(farm->onestep_path);
-			i++;
-		}
-		create_list_of_paths(farm->startroom, &new[i], i);
+		manage_direction(*path + i, 0);
 		i++;
 	}
-	if (link)
-	{
-		link->next = farm->onestep_path->room->link;
-		farm->onestep_path->room->link = link;
-	}
+	find_disjoint_paths(path);
+	find_disjoint_paths(&new);
+	free_paths(&new);
+	size = (*path)->size + 1;
+	new = create_new_arr_path(farm, size);
 	new->size = size;
 	new->next = *path;
 	*path = new;
-	sort_paths(*path, i);
-	unvisit_rooms(farm, 0);
-	i = 0;
-	while (i < size)
-		reindex_paths(*path + i++);
-	sort_arr_path(*path, size);
-	(*path)->size = size;
-	if (!is_need_more_paths(farm->ants, path, farm->size) ||
-		(*path)->size >= farm->max_paths)
-		return (0);
-	return (1);
+	return (sort_paths(farm, path, size));
 }
 
 int		create_paths(t_farm *farm, t_path **path)
 {
-	t_path	*new;
-	int		i;
-
-	i = 0;
 	if (*path)
 		delete_dup_rooms(*path);
 	if (!*path)
@@ -154,28 +141,13 @@ int		create_paths(t_farm *farm, t_path **path)
 		fill_struct(farm, path, (*path)->size);
 		if ((*path)->steps == 1)
 			farm->onestep_path = (*path)->list;
-		manage_direction(*path, 0); /* make path directed from start room to end room */
+		manage_direction(*path, 0);
 		(*path)->lines = farm->ants + (*path)->steps - 1;
 		if (farm->max_paths == 1 || farm->ants == 1)
 			return (0);
 		return (1);
 	}
 	else
-	{
-		if (!(new = (t_path *)ft_memalloc(sizeof(t_path))))
-			exit(0);
-		new->size = 1;
-		fill_struct(farm, &new, new->size);
-		make_path_directed(new); /* make new path directed from start room to end room */
-		while (i < (*path)->size)
-		{
-			manage_direction(*path + i, 0); /* make old path(s) directed from start room to end room */
-			i++;
-		}
-		find_disjoint_paths(path);
-		find_disjoint_paths(&new);
-		free_paths(&new);
 		return (create_many_paths(farm, path));
-	}
 	return (1);
 }

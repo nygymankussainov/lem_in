@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/08 20:21:45 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 13:38:21 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ int							bellman_ford(t_farm *farm, t_path *path);
 int							ft_count_paths(t_farm *farm);
 void						run_ants(t_farm *farm, t_path *path);
 void						ft_show_array(int *arr, int size);
-int							sort_paths(t_path *path, int size);
+int							sort_paths(t_farm *farm, t_path **path, int size);
 void						sort_arr_path(t_path *path, int size);
 void						create_queue_of_paths(t_queue *queue, t_path *path,
 	t_room *room, int size);
@@ -187,6 +187,16 @@ void						create_list_of_paths(t_room *room,
 	t_path *path, int i);
 void						enqueue_to_begin(t_queue **queue, t_room *room);
 void						print_list(t_path *path);
-int							free_paths(t_path **path);
+void						free_paths(t_path **path);
+void						change_link_room(t_queue *list);
+void						change_prev_rooms(t_room *room);
+t_path						*create_new_arr_path(t_farm *farm, int size);
+t_link						*get_start_end_link(t_queue *list);
+void						delete_path(t_path *path, int noend);
+void						check_paths(t_path *path);
+void						push_ant(t_queue *list, int ant);
+void						push_ant_further(t_queue *list);
+int							count_optimal_paths(t_path *path, int ants);
+int							expression(t_path *path, int i);
 
 #endif

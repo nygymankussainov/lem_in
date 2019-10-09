@@ -6,24 +6,35 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:42:16 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/09/15 20:32:04 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/09 13:27:14 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		ft_if_sort(t_path *path, int size)
+void	sort_arr_path(t_path *path, int size)
 {
 	int		i;
+	int		j;
+	t_path	tmp;
 
 	i = 0;
-	while (i < size - 1)
+	while (i < size)
 	{
-		if (path[i].steps > path[i + 1].steps)
-			return (0);
+		j = 0;
+		while (j < size)
+		{
+			if (path[j].index == i)
+				break ;
+			j++;
+		}
+		tmp = path[i];
+		if (i == 0)
+			path[j].next = path[i].next;
+		path[i] = path[j];
+		path[j] = tmp;
 		i++;
 	}
-	return (1);
 }
 
 void	ft_qsort(int *s_arr, int size)
@@ -78,14 +89,24 @@ void	ft_array_to_path(int *array, t_path *path, int size)
 	}
 }
 
-int		sort_paths(t_path *path, int size)
+int		sort_paths(t_farm *farm, t_path **path, int size)
 {
 	int		*array;
+	int		i;
 
-	array = ft_path_into_array(path, size);
+	array = ft_path_into_array(*path, size);
 	ft_qsort(array, size);
-	ft_array_to_path(array, path, size);
+	ft_array_to_path(array, *path, size);
 	free(array);
 	array = NULL;
-	return (0);
+	unvisit_rooms(farm, 0);
+	i = 0;
+	while (i < size)
+		reindex_paths(*path + i++);
+	sort_arr_path(*path, size);
+	(*path)->size = size;
+	if (!is_need_more_paths(farm->ants, path, farm->size) ||
+		(*path)->size >= farm->max_paths)
+		return (0);
+	return (1);
 }
