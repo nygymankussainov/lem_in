@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/09 20:51:50 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/10/10 14:08:32 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		main(void)
 	t_farm		*farm;
 
 	if ((farm = (t_farm *)ft_memalloc(sizeof(t_farm)))
-		&& (farm->size = count_room()))
+		&& (farm->size = count_room('a')))
 	{
 		if (!(farm->h_tab = (t_hash_tab *)ft_memalloc(sizeof(t_hash_tab)
 			* (farm->size * 4))))

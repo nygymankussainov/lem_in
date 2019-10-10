@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 15:45:43 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/10/09 21:47:35 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/10/10 14:08:49 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int		ft_array_size(char **arr)
 	return (count);
 }
 
-int		main(int argc, char **argv)
+int		main(void)
 {
 	t_farm		*farm;
 
 	farm = NULL;
-	if (argc == 2 && (farm = (t_farm *)ft_memalloc(sizeof(t_farm)))
-		&& (farm->size = count_room_viz(argv[1])))
+	if ((farm = (t_farm *)ft_memalloc(sizeof(t_farm)))
+		&& (farm->size = count_room('v')))
 	{
 		if (!(farm->h_tab = (t_hash_tab *)ft_memalloc(sizeof(t_hash_tab)
 			* (farm->size * 4))))

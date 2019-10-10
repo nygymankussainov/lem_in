@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sdl.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 23:15:44 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/10/09 23:00:07 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/10/10 13:49:26 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_close_sdl(t_sdl *sdl)
 
 void	ft_play_muzlo(t_sdl *sdl)
 {
-	sdl->music = Mix_LoadMUS("vizualizer/cover_st.wav");
+	sdl->music = Mix_LoadMUS("vizualizer/muzlo.wav");
 	if (sdl->music == NULL)
 		exit(0);
 	Mix_PlayMusic(sdl->music, -1);

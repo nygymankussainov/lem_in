@@ -6,7 +6,7 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/10/09 18:15:54 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/10/10 13:36:46 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ all: $(ARCHIVE) $(NAME)
 
 $(ARCHIVE): $(OBJ)
 	@make -C $(LIB)
+	@make -C $(VISUAL)
 	@ar rc $(ARCHIVE) $(OBJ)
 	@ranlib $(ARCHIVE)
 

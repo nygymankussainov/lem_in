@@ -3,49 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   hash_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:40:48 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/09 21:03:54 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/10/10 14:11:54 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
 
-int		count_room(void)
+int		count_room(char c)
 {
 	int		size;
 	char	*line;
-	int		fd;
+	int		fd1;
+	int		fd2;
 
-	fd = open("input_data", O_CREAT | O_TRUNC | O_RDWR, S_IWRITE | S_IREAD);
+	fd1 = 0;
+	fd2 = 0;
+	if (c == 'v')
+		fd1 = open("input_data", O_RDONLY);
+	else
+		fd2 = open("input_data", O_CREAT | O_TRUNC
+			| O_RDWR, S_IWRITE | S_IREAD);
 	size = 0;
-	while (get_next_line(0, &line) == 1)
+	while (get_next_line(fd1, &line) == 1)
 	{
-		ft_putendl_fd(line, fd);
+		if (fd2)
+			ft_putendl_fd(line, fd2);
 		if (isroom(line))
 			size++;
 		ft_strdel(&line);
 	}
-	close(fd);
-	return (size);
-}
-
-int		count_room_viz(char *file_name)
-{
-	int		size;
-	char	*line;
-	int		fd;
-
-	fd = open(file_name, O_RDONLY);
-	size = 0;
-	while (get_next_line(fd, &line) == 1)
-	{
-		if (isroom(line))
-			size++;
-		ft_strdel(&line);
-	}
-	close(fd);
+	close(fd1);
 	return (size);
 }
 
