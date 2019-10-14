@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/23 11:48:14 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/09 18:13:05 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/14 13:52:11 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int		validation(t_hash_tab *h_tab, t_farm *farm, t_hashcodes **hashcodes)
 	{
 		free_coords(&coords);
 		ft_strdel(&farm->line);
+		while (get_next_line(farm->fd, &farm->line))
+			ft_strdel(&farm->line);
 		return (-1);
 	}
 	free_coords(&coords);

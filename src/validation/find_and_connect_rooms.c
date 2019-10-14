@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:30:36 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/09 18:13:27 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/14 11:53:25 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		connect_collided_rooms(char *name1, char *name2,
 			room2 = room2->next;
 		ft_strdel(&name1);
 		ft_strdel(&name2);
-		if (!room1 || !room2)
+		if (!room1 || !room2 || room1 == room2)
 			return (-1);
 		connect_rooms(room1, room2);
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/23 18:03:57 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/09 18:13:22 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/14 12:10:16 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ int		write_data_in_sroom(t_farm *farm, t_hash_tab *h_tab,
 		return (0);
 	}
 	farm->name = ft_strndup(farm->line, farm->i);
-	if (!is_collision_and_duplicate(h_tab, *coords, farm, hashcodes))
+	if (*farm->name == 'L' ||
+		!is_collision_and_duplicate(h_tab, *coords, farm, hashcodes))
 	{
 		free_coords(coords);
 		ft_strdel(&farm->name);

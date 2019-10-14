@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/23 17:24:00 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/09 18:13:34 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/14 12:18:01 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,22 +90,22 @@ int		validate_rooms(t_hashcodes **hashcodes, t_hash_tab *h_tab,
 {
 	while (get_next_line(farm->fd, &farm->line) == 1)
 	{
-		if ((!ft_strcmp("##start", farm->line) ||
+		if (farm->line && (!ft_strcmp("##start", farm->line) ||
 			!ft_strcmp("##end", farm->line)) && !farm->recur)
 		{
 			if (!ifstartend(farm, hashcodes, h_tab, coords))
 				return (0);
 		}
-		else if (farm->line[0] == '#' && !farm->recur)
+		else if (farm->line && farm->line[0] == '#' && !farm->recur)
 			farm->i = farm->i;
-		else if (islink(farm->line))
+		else if (farm->line && islink(farm->line))
 		{
 			if (farm->start < 0 || farm->end < 0 ||
 				!farm->room_count || isduplicate(*coords))
 				return (0);
 			return (1);
 		}
-		else if (!validate_rooms_part2(hashcodes, h_tab, farm, coords))
+		else if (!farm->line || !validate_rooms_part2(hashcodes, h_tab, farm, coords))
 			return (0);
 		if (farm->recur == 1)
 			return (1);

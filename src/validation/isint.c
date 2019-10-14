@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:33:43 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/09 18:13:53 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/14 12:06:57 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,21 @@
 int		isint_limit(char *str)
 {
 	size_t		i;
+	int			sign;
 	long long	result;
 
 	i = 0;
 	result = 0;
+	sign = 0;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		sign = -1;
+		i++;
+	}
 	while ((str[i] != '\0') && (str[i] >= '0' && str[i] <= '9'))
 	{
 		result = result * 10 + str[i] - '0';
-		if (result > 2147483647)
+		if ((result > 2147483647 && !sign) || (result > 2147483648 && sign))
 			return (0);
 		i++;
 	}
@@ -69,7 +76,7 @@ int		isint(char *str, char c)
 	len = ft_strlen(str);
 	if (len > 10 && !sign)
 		return (0);
-	else if (len == 10 || (len == 11 && sign))
+	else if (len >= 10 || (len >= 11 && sign))
 	{
 		if (!isint_limit(str))
 			return (0);

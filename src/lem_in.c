@@ -6,23 +6,23 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/10 14:08:32 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/14 12:39:11 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
 
-int		main(void)
+int		main(int argc, char **argv)
 {
 	t_farm		*farm;
 
-	if ((farm = (t_farm *)ft_memalloc(sizeof(t_farm)))
-		&& (farm->size = count_room('a')))
+	if ((farm = (t_farm *)ft_memalloc(sizeof(t_farm))) && argc == 2
+		&& (farm->size = count_room(argv[1])))
 	{
 		if (!(farm->h_tab = (t_hash_tab *)ft_memalloc(sizeof(t_hash_tab)
 			* (farm->size * 4))))
 			exit(0);
-		farm->fd = open("input_data", O_RDONLY);
+		farm->fd = open(argv[1], O_RDONLY);
 		if ((farm->ret = validation(farm->h_tab, farm, &farm->hashcodes)) >= 0)
 		{
 			while (farm->ret)
@@ -33,7 +33,7 @@ int		main(void)
 		}
 		else
 			write(2, "ERROR\n", 6);
-		exit(1);
+		exit(0);
 	}
 	if (!farm->size)
 		free(farm);

@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/10 14:08:08 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/14 11:09:54 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int							islink(char *line);
 int							isduplicate(t_coords *coords);
 int							count_space(char *line);
 t_link						*create_slink(t_room *room, char *linkname);
-int							count_room(char c);
+int							count_room(char *argv);
 int							bfs(t_farm *farm, t_path **path);
 void						dequeue(t_queue **queue);
 void						enqueue(t_queue **queue,
