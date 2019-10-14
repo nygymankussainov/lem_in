@@ -6,25 +6,13 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:43:53 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/09 18:14:50 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/14 15:35:19 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
 
-int		count_lines(int ants, int sum, t_path *path)
-{
-	int		a;
-	int		b;
-
-	a = ants - sum;
-	b = a / path->size;
-	if (a % path->size)
-		b++;
-	return (path[path->size - 1].steps + b - 1);
-}
-
-int		is_need_more_paths(int ants, t_path **path, int rooms)
+int		is_need_more_paths(int ants, t_path **path)
 {
 	int		i;
 	int		j;
@@ -38,9 +26,7 @@ int		is_need_more_paths(int ants, t_path **path, int rooms)
 		sum = sum + (*path + i)->steps - (*path + j)->steps;
 		j++;
 	}
-	(*path)->lines = count_lines(ants, sum, *path);
-	if ((rooms > 3500 && (*path)->lines >= (*path)->next->lines) ||
-		(ants <= sum && rooms <= 3500))
+	if (ants <= sum)
 	{
 		free_paths(path);
 		return (0);

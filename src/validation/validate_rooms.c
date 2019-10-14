@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/23 17:24:00 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/14 12:18:01 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/14 14:55:58 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ int		validate_rooms(t_hashcodes **hashcodes, t_hash_tab *h_tab,
 				return (0);
 			return (1);
 		}
-		else if (!farm->line || !validate_rooms_part2(hashcodes, h_tab, farm, coords))
+		else if (!farm->line ||
+			!validate_rooms_part2(hashcodes, h_tab, farm, coords))
 			return (0);
 		if (farm->recur == 1)
 			return (1);

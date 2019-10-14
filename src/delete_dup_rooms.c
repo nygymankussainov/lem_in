@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:28:00 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/09 18:10:18 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/14 14:57:13 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,9 @@ int		delete_dup_rooms(t_path *path)
 				list->room->in = 0;
 				tmp = list->next;
 				list->next = tmp->next;
-				list->next->prev = list->next ? list : list->next->prev;
+				if (list->next)
+					list->next->prev = list;
 				free(tmp);
-				tmp = NULL;
 			}
 			list = list->next;
 		}
