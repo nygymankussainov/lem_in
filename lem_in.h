@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/14 19:51:14 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/16 20:04:27 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct				s_farm
 	t_room					*startroom;
 	t_hash_tab				*h_tab;
 	t_hashcodes				*hashcodes;
+	t_path					*best;
 }							t_farm;
 
 struct						s_path
@@ -148,8 +149,6 @@ int							bfs(t_farm *farm, t_path **path);
 void						dequeue(t_queue **queue);
 void						enqueue(t_queue **queue,
 	t_room *room, t_queue **last);
-int							find_shortest_path(t_farm *farm,
-	t_path **path, int ret);
 void						unvisit_rooms(t_farm *farm, int i);
 int							bellman_ford(t_farm *farm, t_path *path);
 int							ft_count_paths(t_farm *farm);
@@ -161,31 +160,27 @@ void						create_queue_of_paths(t_queue *queue, t_path *path,
 	t_room *room, int size);
 void						sort_arr_path(t_path *path, int size);
 void						reindex_paths(t_path *path);
-int							count_paths(t_queue *queue, t_room *room,
-	t_queue *last, t_farm *farm);
-void						check_link(t_queue *list);
 int							create_paths(t_farm *farm, t_path **path);
 int							count_short_paths(t_path *path);
 void						create_dup_rooms(t_path *path);
 int							delete_dup_rooms(t_path *path);
 int							is_need_more_paths(int ants, t_path **path);
 void						manage_direction(t_path *path, int i);
-void						make_path_directed(t_path *path);
-void						find_disjoint_paths(t_path **path);
 void						create_list_of_paths(t_room *room,
 	t_path *path, int i);
-void						enqueue_to_begin(t_queue **queue, t_room *room);
+int							enqueue_to_begin(t_queue **queue, t_room *room);
 void						free_paths(t_path **path);
 void						change_link_room(t_queue *list);
-void						change_prev_rooms(t_room *room);
 t_path						*create_new_arr_path(t_farm *farm, int size);
 t_link						*get_start_end_link(t_queue *list);
-void						delete_path(t_path *path, int noend);
-void						check_paths(t_path *path);
 void						push_ant(t_queue *list, int ant);
 void						push_ant_further(t_queue *list);
 int							count_optimal_paths(t_path *path, int ants);
 int							expression(t_path *path, int i);
 int							create_paths(t_farm *farm, t_path **path);
+void						lock_collided_links(t_path *new);
+int							count_lines(int ants, int sum, t_path *path);
+void	print_list(t_path *path);
+void	todot(t_path *path, char *name);
 
 #endif

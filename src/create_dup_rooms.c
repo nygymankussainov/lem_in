@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 15:32:36 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/09 18:15:10 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/16 19:24:26 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	manage_links(t_queue *list, t_room *room)
 	link->room = room;
 	link->weight = 0;
 	link->lock = 0;
-	change_prev_rooms(room->outroom);
 }
 
 void	duplicate_room(t_queue *list)
@@ -74,10 +73,10 @@ void	duplicate_room(t_queue *list)
 	new->name = room->name;
 	new->dist = room->dist;
 	new->inroom = room;
-	new->prev = room;
 	new->next = room->next;
 	new->link = room->link;
 	room->link = NULL;
+	room->prev = NULL;
 	room->outroom = new;
 	room->dup = 1;
 	room->in = 1;

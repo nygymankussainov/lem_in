@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:40:48 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/14 19:51:04 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/16 19:59:19 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,26 @@ int		count_room(char c)
 	close(fd1);
 	return (size);
 }
+
+// int		count_room(char *argv)
+// {
+// 	int		fd;
+// 	int		size;
+// 	char	*line;
+
+// 	fd = open(argv, O_RDONLY);
+// 	size = 0;
+// 	if (fd <= 0)
+// 		return (0);
+// 	while (get_next_line(fd, &line) == 1)
+// 	{
+// 		if (line && isroom(line))
+// 			size++;
+// 		ft_strdel(&line);
+// 	}
+// 	close(fd);
+// 	return (size);
+// }
 
 void	write_hashcode_in_struct(int hash, t_hashcodes **hashcodes)
 {

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   qsort.c                                            :+:      :+:    :+:   */
+/*   sort_paths.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:42:16 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/10/14 19:46:36 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/16 20:08:23 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,9 @@ int		sort_paths(t_farm *farm, t_path **path, int size)
 		reindex_paths(*path + i++);
 	sort_arr_path(*path, size);
 	(*path)->size = size;
+	// print_list(*path);
+	// printf("\n\n\n");
+	// is_need_more_paths(farm->ants, path);
 	if (!is_need_more_paths(farm->ants, path) ||
 		(*path)->size >= farm->max_paths)
 		return (0);

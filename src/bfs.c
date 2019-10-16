@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/29 17:57:30 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/09 18:12:31 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/16 19:25:59 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	enqueue(t_queue **queue, t_room *room, t_queue **last)
 	}
 }
 
-void	enqueue_to_begin(t_queue **queue, t_room *room)
+int		enqueue_to_begin(t_queue **queue, t_room *room)
 {
 	t_queue	*new;
 
@@ -63,6 +63,13 @@ void	enqueue_to_begin(t_queue **queue, t_room *room)
 	}
 	else
 	{
+		new = *queue;
+		while (new)
+		{
+			if (new->room->name == room->name)
+				return (1);
+			new = new->next;
+		}
 		if (!(new = (t_queue *)ft_memalloc(sizeof(t_queue))))
 			exit(0);
 		(*queue)->prev = new;
@@ -70,6 +77,7 @@ void	enqueue_to_begin(t_queue **queue, t_room *room)
 		new->next = *queue;
 		*queue = new;
 	}
+	return (0);
 }
 
 int		calculate_distance(t_queue *queue, t_room *room, t_queue *last)

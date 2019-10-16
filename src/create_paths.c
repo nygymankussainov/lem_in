@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_paths.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfrankly <hfrankly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:47:38 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/09 20:23:33 by hfrankly         ###   ########.fr       */
+/*   Updated: 2019/10/16 20:09:34 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ void	fill_struct(t_farm *farm, t_path **path, int size)
 		path[size]->steps--;
 		while (end)
 		{
-			enqueue_to_begin(&path[size]->list, end);
+			if (end && end->dup && end->out)
+				path[size]->steps -= enqueue_to_begin(&path[size]->list, end->inroom);
+			else
+				path[size]->steps -= enqueue_to_begin(&path[size]->list, end);
 			if (end->status == 'e')
 				(*path)->endlist = (*path)->list;
 			end = end->prev;
@@ -104,44 +107,41 @@ t_link	*get_start_end_link(t_queue *list)
 int		create_many_paths(t_farm *farm, t_path **path)
 {
 	t_path	*new;
-	int		size;
 	int		i;
 
 	i = 0;
 	if (!(new = (t_path *)ft_memalloc(sizeof(t_path))))
 		exit(0);
-	new->size = 1;
-	fill_struct(farm, &new, new->size);
-	make_path_directed(new);
+	fill_struct(farm, &new, 1);
+	delete_dup_rooms(*path);
 	while (i < (*path)->size)
 	{
 		manage_direction(*path + i, 0);
 		i++;
 	}
-	find_disjoint_paths(path);
-	find_disjoint_paths(&new);
+	lock_collided_links(new);
 	free_paths(&new);
-	size = (*path)->size + 1;
-	new = create_new_arr_path(farm, size);
-	new->size = size;
+	new = create_new_arr_path(farm, (*path)->size + 1);
+	new->size = (*path)->size + 1;
 	new->next = *path;
 	*path = new;
-	return (sort_paths(farm, path, size));
+	return (sort_paths(farm, path, (*path)->size));
 }
 
 int		create_paths(t_farm *farm, t_path **path)
 {
-	if (*path)
-		delete_dup_rooms(*path);
 	if (!*path)
 	{
 		if (!(*path = (t_path *)ft_memalloc(sizeof(t_path))))
 			exit(0);
 		(*path)->size = 1;
 		fill_struct(farm, path, (*path)->size);
+		delete_dup_rooms(*path);
 		if ((*path)->steps == 1)
 			farm->onestep_path = (*path)->list;
 		manage_direction(*path, 0);
+		// print_list(*path);
+		// printf("\n\n\n");
 		(*path)->lines = farm->ants + (*path)->steps - 1;
 		if (farm->max_paths == 1 || farm->ants == 1)
 			return (0);

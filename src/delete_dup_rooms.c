@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:28:00 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/14 14:57:13 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/16 14:28:25 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,6 @@ void	delete_links(t_room *room)
 		link = link->next;
 	link->next = room->outroom->link;
 	relink_to_inroom(room);
-	change_prev_rooms(room);
-	if (room->prev->name == room->name)
-		room->prev = room->outroom->prev;
 	free(room->outroom);
 	room->outroom = NULL;
 }

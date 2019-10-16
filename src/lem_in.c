@@ -6,11 +6,32 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/14 19:53:07 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/16 21:29:56 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
+
+t_path	*find_best_path(t_path *path)
+{
+	int		lines;
+	t_path	*best;
+
+	lines = path->lines;
+	best = path;
+	path = path->next;
+	while (path)
+	{
+		if (path->lines < lines)
+		{
+			lines = path->lines;
+			best = path;
+		}
+		path = path->next;
+	}
+	// todot(best, "map1");
+	return (best);
+}
 
 int		main(void)
 {
@@ -29,7 +50,9 @@ int		main(void)
 				if (!bellman_ford(farm, farm->path)
 					|| !(farm->ret = create_paths(farm, &farm->path)))
 					break ;
-			run_ants(farm, farm->path);
+			// find_best_path(farm->path);
+			// run_ants(farm, farm->path);
+			run_ants(farm, find_best_path(farm->path));
 		}
 		else
 			write(2, "ERROR\n", 6);

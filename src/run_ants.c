@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 17:57:58 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/09 18:14:29 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/16 18:59:14 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	run(t_farm *farm, t_path *path)
 void	run_ants(t_farm *farm, t_path *path)
 {
 	print_valid_data(farm);
-	check_paths(path);
 	farm->startroom->antnbr = farm->ants;
 	run(farm, path);
 }
