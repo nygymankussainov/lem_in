@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/15 19:04:16 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/17 14:01:46 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/17 20:15:37 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_path	*find_best_path(t_path *path)
 		}
 		path = path->next;
 	}
-	// todot(best, "map1");
 	return (best);
 }
 
@@ -50,8 +49,6 @@ int		main(void)
 				if (!bellman_ford(farm, farm->path)
 					|| !(farm->ret = create_paths(farm, &farm->path)))
 					break ;
-			// find_best_path(farm->path);
-			// run_ants(farm, farm->path);
 			run_ants(farm, find_best_path(farm->path));
 		}
 		else

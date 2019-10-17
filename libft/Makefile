@@ -6,9 +6,12 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/04 12:58:50 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/10/17 14:21:22 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/10/17 17:39:03 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+LOG_NOCOLOR = \033[0m
+LOG_GREEN = \033[32m
 
 NAME = libft.a
 
@@ -34,7 +37,7 @@ all: $(NAME)
 
 $(NAME): $(OBJECTS)
 	@ar rc $(NAME) $(OBJECTS)
-	@echo libft is compiled!
+	@echo "$(LOG_GREEN)Libft is compiled!$(LOG_NOCOLOR)"
 	@ranlib $(NAME)
 
 %.o: %.c

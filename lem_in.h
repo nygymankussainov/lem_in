@@ -6,15 +6,14 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/16 20:04:27 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/17 20:15:47 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
-# include "vizualizer/includes/visual.h"
-# include "libft/ft_printf/ft_printf.h"
+# include "ft_printf.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdbool.h>
@@ -57,10 +56,10 @@ struct						s_room
 	char					*name;
 	char					status;
 	bool					visited;
-	t_link					*link;
 	bool					dup;
 	bool					in;
 	bool					out;
+	t_link					*link;
 	struct s_room			*outroom;
 	struct s_room			*inroom;
 	struct s_room			*prev;
@@ -164,12 +163,12 @@ int							create_paths(t_farm *farm, t_path **path);
 int							count_short_paths(t_path *path);
 void						create_dup_rooms(t_path *path);
 int							delete_dup_rooms(t_path *path);
-int							is_need_more_paths(int ants, t_path **path);
+void						is_need_more_paths(int ants, t_path **path);
 void						manage_direction(t_path *path, int i);
 void						create_list_of_paths(t_room *room,
 	t_path *path, int i);
 int							enqueue_to_begin(t_queue **queue, t_room *room);
-void						free_paths(t_path **path);
+void						free_path(t_path *path);
 void						change_link_room(t_queue *list);
 t_path						*create_new_arr_path(t_farm *farm, int size);
 t_link						*get_start_end_link(t_queue *list);

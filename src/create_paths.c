@@ -6,39 +6,18 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:47:38 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/17 14:05:49 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/17 19:08:04 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	free_paths(t_path **path)
+void	free_path(t_path *path)
 {
-	t_path	*tmp;
-	t_path	*save;
-	int		i;
-
-	save = (*path)->next;
-	while (*path)
-	{
-		i = 0;
-		if (*path == save)
-		{
-			*path = (*path)->next;
-			if (!*path)
-				break ;
-		}
-		tmp = (*path)->next;
-		while (i < (*path)->size)
-		{
-			while ((*path)[i].list)
-				dequeue(&(*path)[i].list);
-			i++;
-		}
-		free(*path);
-		*path = tmp;
-	}
-	*path = save;
+	while (path->list)
+		dequeue(&path->list);
+	free(path);
+	path = NULL;
 }
 
 void	fill_struct(t_farm *farm, t_path **path, int size)
@@ -54,9 +33,11 @@ void	fill_struct(t_farm *farm, t_path **path, int size)
 		while (end)
 		{
 			if (end && end->dup && end->out)
-				path[size]->steps -= enqueue_to_begin(&path[size]->list, end->inroom);
+				path[size]->steps -=
+					enqueue_to_begin(&path[size]->list, end->inroom);
 			else
-				path[size]->steps -= enqueue_to_begin(&path[size]->list, end);
+				path[size]->steps -=
+					enqueue_to_begin(&path[size]->list, end);
 			if (end->status == 'e')
 				(*path)->endlist = (*path)->list;
 			end = end->prev;
@@ -120,7 +101,7 @@ int		create_many_paths(t_farm *farm, t_path **path)
 		i++;
 	}
 	lock_collided_links(new);
-	free_paths(&new);
+	free_path(new);
 	new = create_new_arr_path(farm, (*path)->size + 1);
 	new->size = (*path)->size + 1;
 	new->next = *path;
@@ -140,8 +121,6 @@ int		create_paths(t_farm *farm, t_path **path)
 		if ((*path)->steps == 1)
 			farm->onestep_path = (*path)->list;
 		manage_direction(*path, 0);
-		// print_list(*path);
-		// printf("\n\n\n");
 		(*path)->lines = farm->ants + (*path)->steps - 1;
 		if (farm->max_paths == 1 || farm->ants == 1)
 			return (0);

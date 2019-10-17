@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 14:52:47 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/17 14:05:02 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/17 18:14:18 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ bool	change_dist(t_link *link, t_room *room, t_queue **queue, t_queue **last)
 	return (0);
 }
 
+/*
+** In calculate_neg_dist() function we are finding
+** the closest path from start-room to end-room.
+*/
+
 int		calculate_neg_dist(t_queue **queue, t_room *room, t_queue *last)
 {
 	t_link	*link;
@@ -75,9 +80,22 @@ int		calculate_neg_dist(t_queue **queue, t_room *room, t_queue *last)
 }
 
 /*
-** Here in manage_direction() function on line 95 we
-** reverse (make directed from end to start) edges in path(s)
+** In preparation() function we duplicate
+** intermediate rooms of found paths
+** and reverse (make directed from end to start) edges of these paths in
+** manage_direction() function.
 */
+
+void	preparation(t_path *path, t_farm *farm)
+{
+	int		i;
+
+	i = 0;
+	create_dup_rooms(path);
+	while (i < path->size)
+		manage_direction(path + i++, 1);
+	assign_inf_dist(farm);
+}
 
 int		bellman_ford(t_farm *farm, t_path *path)
 {
@@ -87,15 +105,11 @@ int		bellman_ford(t_farm *farm, t_path *path)
 	int		ret;
 	int		isend;
 
-	i = 0;
 	queue = NULL;
 	last = NULL;
-	create_dup_rooms(path);
-	while (i < path->size)
-		manage_direction(path + i++, 1);
-	assign_inf_dist(farm);
 	i = 0;
 	isend = 0;
+	preparation(path, farm);
 	while (i++ < farm->room_count - 1)
 	{
 		unvisit_rooms(farm, 0);
@@ -104,12 +118,8 @@ int		bellman_ford(t_farm *farm, t_path *path)
 			return (1);
 		else if (ret == 2)
 			isend = 1;
-		else if (!ret)
-		{
-			if (!isend)
-				return (delete_dup_rooms(path));
-			return (1);
-		}
+		else
+			return (!isend ? delete_dup_rooms(path) : 1);
 	}
 	return (1);
 }

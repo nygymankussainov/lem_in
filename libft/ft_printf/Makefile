@@ -6,9 +6,12 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/10/17 15:06:26 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/10/17 17:39:20 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+LOG_NOCOLOR = \033[0m
+LOG_GREEN = \033[32m
 
 NAME = libftprintf.a
 
@@ -34,7 +37,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@make -sC $(LIBFT)
 	@ar rc $(NAME) $(OBJS) $(OBJS_LIB)
-	@echo ft_printf is compiled!
+	@echo "$(LOG_GREEN)Ft_printf is compiled!$(LOG_NOCOLOR)"
 	@ranlib $(NAME)
 
 %.o: %.c
