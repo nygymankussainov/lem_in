@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:43:53 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/16 20:39:19 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/17 14:05:59 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "lem_in.h"
 
 int		count_lines(int ants, int sum, t_path *path)
 {

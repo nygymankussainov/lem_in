@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:40:48 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/16 19:59:19 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/17 14:05:56 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "lem_in.h"
 
 int		count_room(char c)
 {

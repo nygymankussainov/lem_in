@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 14:52:29 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/15 14:32:54 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/17 14:05:45 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "lem_in.h"
 
 void	reindex_paths(t_path *path)
 {

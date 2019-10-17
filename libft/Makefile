@@ -6,7 +6,7 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/04 12:58:50 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/08/11 12:56:19 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/10/17 14:21:22 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,14 +28,17 @@ SRC = ft_memmove.c ft_strcmp.c ft_strncpy.c ft_itoa.c ft_memset.c ft_strcpy.c ft
 
 OBJECTS = $(SRC:.c=.o)
 
+CCFL = -Wall -Wextra -Werror
+
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
 	@ar rc $(NAME) $(OBJECTS)
+	@echo libft is compiled!
 	@ranlib $(NAME)
 
-%.o: %.c $(INCLUDES)
-	@gcc -Wall -Wextra -Werror -c $<
+%.o: %.c
+	@gcc $(CCFL) -c $<
 
 .PHONY: clean fclean re
 

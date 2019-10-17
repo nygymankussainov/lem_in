@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 12:03:09 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/16 18:57:36 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/17 14:06:03 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "lem_in.h"
 
 void	lock_reverse_link(t_room *room1, t_room *room2)
 {

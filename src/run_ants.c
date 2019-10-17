@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 17:57:58 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/16 18:59:14 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/17 14:06:35 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "lem_in.h"
 
 int		ants_left_in_path(t_path path)
 {

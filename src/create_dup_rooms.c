@@ -6,11 +6,11 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 15:32:36 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/16 19:24:26 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/17 14:05:40 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "lem_in.h"
 
 void	add_dup_rooms_in_list(t_queue *list)
 {
