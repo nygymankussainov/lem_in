@@ -6,7 +6,7 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/10/18 12:52:40 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/10/18 12:57:42 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,11 +61,12 @@ viz:
 
 clean:
 	@make clean -sC $(LIB)
-	@rm -f $(ARCHIVE)
-	@rm -f $(NAME)
+	@make clean -sC $(VISUAL)
 	@rm -r $(OBJ)
 
 fclean: clean
+	@rm -f $(ARCHIVE)
+	@rm -f $(NAME)
 	@make fclean -sC $(LIB)
 	@make fclean -sC $(VISUAL)
 

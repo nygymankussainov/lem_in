@@ -6,10 +6,9 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/10/18 12:45:43 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/10/18 12:58:55 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 NAME = visual
 
@@ -27,7 +26,7 @@ SRC = get_ants.c main.c coords.c draw.c putants.c vizualizer.c sdl.c coords1.c
 
 SRCS = $(addprefix $(SRCDIR)/, $(SRC))
 
-OBJ = $(SRC:.c=.o)
+OBJ = $(patsubst %.c, %.o, $(SRC))
 
 CCFL = -Wall -Wextra -Werror
 
@@ -42,10 +41,9 @@ $(NAME): $(OBJ)
 clean:
 	@make clean -C $(LIB)
 	@rm -f $(ARCHIVE)
-	@rm -f ../$(NAME)
-	@rm -f $(OBJ)
+	@rm -rf $(OBJ)
 
 fclean: clean
-	@make fclean -C $(LIB)
+	@rm -f ../$(NAME)
 
 re: fclean all
