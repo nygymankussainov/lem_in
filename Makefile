@@ -6,7 +6,7 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/10/17 18:30:23 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/10/18 12:52:40 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ CCFL = -Wall -Wextra -Werror
 
 .PHONY: all clean fclean re liba viz
 
-all: liba $(ARCHIVE) $(NAME)
+all: liba $(ARCHIVE) $(NAME) viz
 
 liba:
 	@make -sC $(LIB)
