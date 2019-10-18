@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:47:38 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/17 19:08:04 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/18 13:28:26 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ void	free_path(t_path *path)
 	free(path);
 	path = NULL;
 }
+
+/*
+** In fill_struct() function we creating a linked list
+** of a new found path
+*/
 
 void	fill_struct(t_farm *farm, t_path **path, int size)
 {
@@ -48,7 +53,7 @@ void	fill_struct(t_farm *farm, t_path **path, int size)
 
 /*
 ** Function get_start_end_link() returns a link between
-** start and end rooms if such path exists
+** start and end rooms if such path exists.
 */
 
 t_link	*get_start_end_link(t_queue *list)
@@ -81,7 +86,6 @@ t_link	*get_start_end_link(t_queue *list)
 
 /*
 ** Here in create_paths() and create_many_paths() functions
-** on lines 115, 118 and 144
 ** we make edges in paths directed from start to end
 */
 
@@ -100,7 +104,7 @@ int		create_many_paths(t_farm *farm, t_path **path)
 		manage_direction(*path + i, 0);
 		i++;
 	}
-	lock_collided_links(new);
+	lock_intersecting_links(new);
 	free_path(new);
 	new = create_new_arr_path(farm, (*path)->size + 1);
 	new->size = (*path)->size + 1;

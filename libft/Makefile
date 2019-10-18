@@ -6,7 +6,7 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/04 12:58:50 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/10/17 17:39:03 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/10/18 14:28:59 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,24 +29,29 @@ SRC = ft_memmove.c ft_strcmp.c ft_strncpy.c ft_itoa.c ft_memset.c ft_strcpy.c ft
 	  ft_swap_str.c ft_power_db.c ft_putstr.c ft_realloc.c ft_bzero_null.c ft_skip_whitesp.c ft_revstr.c ft_itoa_ll.c iswhitesp.c \
 	  ft_istabspace_in_str.c ft_free_two_dim_arr.c
 
-OBJECTS = $(SRC:.c=.o)
+OBJDIR = obj
+
+OBJECTS = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
 CCFL = -Wall -Wextra -Werror
 
-all: $(NAME)
+all: obj_dir $(NAME)
+
+obj_dir:
+	@mkdir $(OBJDIR)
 
 $(NAME): $(OBJECTS)
 	@ar rc $(NAME) $(OBJECTS)
-	@echo "$(LOG_GREEN)Libft is compiled!$(LOG_NOCOLOR)"
+	@echo "$(LOG_GREEN)Libft has compiled successfully!$(LOG_NOCOLOR)"
 	@ranlib $(NAME)
 
-%.o: %.c
-	@gcc $(CCFL) -c $<
+$(OBJDIR)/%.o: %.c
+	@gcc $(CCFL) -o $@ -c $<
 
-.PHONY: clean fclean re
+.PHONY: clean fclean re obj_dir
 
 clean:
-	@/bin/rm -f $(OBJECTS)
+	@/bin/rm -rf $(OBJDIR)
 
 fclean:	clean
 	@/bin/rm -f $(NAME)

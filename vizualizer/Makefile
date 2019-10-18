@@ -6,7 +6,7 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/10/18 12:58:55 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/10/18 14:26:32 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,29 +21,35 @@ LIB_A = ../libft/libft.a $(LIB)/libftprintf.a ../libftlemin.a
 INCLUDES = -I../libft/ft_printf -I./includes -I./includes/SDL2 -I./includes/SDL2_GFX -I./includes/SDL2_MIX `sdl2-config --cflags`
 
 SRCDIR = srcs
+OBJDIR = obj
 
 SRC = get_ants.c main.c coords.c draw.c putants.c vizualizer.c sdl.c coords1.c
 
 SRCS = $(addprefix $(SRCDIR)/, $(SRC))
 
-OBJ = $(patsubst %.c, %.o, $(SRC))
+OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
 CCFL = -Wall -Wextra -Werror
 
-all: $(NAME)
+.PHONY: all clean fclean re library viz obj_dir
 
-%.o: $(SRCDIR)/%.c
-	@gcc -Wall -Wextra -Werror $(INCLUDES) -c $<
+all: obj_dir $(NAME)
+
+obj_dir:
+	@mkdir -p $(OBJDIR)
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@gcc $(CCFL) -o $@ -c $< $(INCLUDES)
 
 $(NAME): $(OBJ)
 	@gcc $(CCFL) -o ../$(NAME) $(INCLUDES) $(SDL) $(SRCS) $(LIB_A)
 
 clean:
 	@make clean -C $(LIB)
-	@rm -f $(ARCHIVE)
-	@rm -rf $(OBJ)
+	@/bin/rm -f $(ARCHIVE)
+	@/bin/rm -rf $(OBJDIR)
 
 fclean: clean
-	@rm -f ../$(NAME)
+	@/bin/rm -f ../$(NAME)
 
 re: fclean all

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lock_collided_links.c                              :+:      :+:    :+:   */
+/*   lock_intersecting_links.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 12:03:09 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/17 14:06:03 by vhazelnu         ###   ########.fr       */
+/*   Created: 2019/10/18 14:43:28 by vhazelnu          #+#    #+#             */
+/*   Updated: 2019/10/18 14:43:33 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	lock_reverse_link(t_room *room1, t_room *room2)
 	link->go = 0;
 }
 
-void	lock_collided_links(t_path *new)
+void	lock_intersecting_links(t_path *new)
 {
 	t_link	*link;
 	t_queue	*list;

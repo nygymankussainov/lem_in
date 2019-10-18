@@ -6,11 +6,18 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 11:14:47 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/17 14:05:19 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/18 13:21:22 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+/*
+** This function is made for end-vertex,
+** after some room that links with end-vertex has duplicated
+** it changes the link end-room(in) to duplicated
+** room end-room(out).
+*/
 
 void	change_link_room(t_queue *list)
 {

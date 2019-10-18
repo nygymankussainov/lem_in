@@ -6,11 +6,16 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:42:16 by hfrankly          #+#    #+#             */
-/*   Updated: 2019/10/17 18:15:50 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/18 14:08:21 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+/*
+** Here we are sorting new found paths by
+** the length of these paths.
+*/
 
 void	sort_arr_path(t_path *path, int size)
 {
@@ -105,8 +110,8 @@ int		sort_paths(t_farm *farm, t_path **path, int size)
 		reindex_paths(*path + i++);
 	sort_arr_path(*path, size);
 	(*path)->size = size;
-	is_need_more_paths(farm->ants, path);
-	if ((*path)->size >= farm->max_paths)
+	if (count_optimal_paths(*path, farm->ants) < (*path)->size
+		|| (*path)->size >= farm->max_paths)
 		return (0);
 	return (1);
 }

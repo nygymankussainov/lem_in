@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/17 20:15:47 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/18 14:42:10 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ typedef struct				s_farm
 	t_room					*startroom;
 	t_hash_tab				*h_tab;
 	t_hashcodes				*hashcodes;
-	t_path					*best;
 }							t_farm;
 
 struct						s_path
@@ -163,7 +162,6 @@ int							create_paths(t_farm *farm, t_path **path);
 int							count_short_paths(t_path *path);
 void						create_dup_rooms(t_path *path);
 int							delete_dup_rooms(t_path *path);
-void						is_need_more_paths(int ants, t_path **path);
 void						manage_direction(t_path *path, int i);
 void						create_list_of_paths(t_room *room,
 	t_path *path, int i);
@@ -177,9 +175,9 @@ void						push_ant_further(t_queue *list);
 int							count_optimal_paths(t_path *path, int ants);
 int							expression(t_path *path, int i);
 int							create_paths(t_farm *farm, t_path **path);
-void						lock_collided_links(t_path *new);
+void						lock_intersecting_links(t_path *new);
 int							count_lines(int ants, int sum, t_path *path);
-void	print_list(t_path *path);
-void	todot(t_path *path, char *name);
+void						print_path(t_path *path);
+void						todot(t_path *path, char *name);
 
 #endif
