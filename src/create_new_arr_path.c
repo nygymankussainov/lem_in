@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/16 14:52:29 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/17 14:05:45 by vhazelnu         ###   ########.fr       */
+/*   Created: 2019/10/21 12:35:14 by vhazelnu          #+#    #+#             */
+/*   Updated: 2019/10/21 22:28:08 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,83 +24,53 @@ void	reindex_paths(t_path *path)
 	}
 }
 
-void	add_path_list(t_path *path, t_link *link, t_queue **last, int i)
+void	add_path_list(t_path *path, t_room *room, t_queue **last, int i)
 {
-	if (!link->room->visited && !link->lock && link->go)
-	{
-		enqueue(&path->list, link->room, last);
-		if (link->room->status == 'e')
-			path->endlist = *last;
-		path->steps++;
-		path->index = i;
-	}
-}
-
-int		add_list_in_queue(t_queue **queue, t_link *link,
-	t_queue **last, t_room *room)
-{
-	if (!link->room->visited && !link->lock && link->go)
-	{
-		if (!link->room->status)
-			enqueue(queue, link->room, last);
-		room->visited = room->status != 'e' ? 1 : room->visited;
-		return (1);
-	}
-	return (0);
-}
-
-void	create_list_of_paths(t_room *room, t_path *path, int i)
-{
-	t_link	*link;
-	t_queue	*queue;
-	t_queue	*last1;
-	t_queue	*last2;
-
-	queue = NULL;
-	last1 = NULL;
-	last2 = NULL;
-	enqueue(&queue, room, &last1);
-	enqueue(&path->list, room, &last2);
-	while (queue)
-	{
-		link = room->link;
-		while (link)
-		{
-			add_path_list(path, link, &last2, i);
-			if (add_list_in_queue(&queue, link, &last1, room))
-				break ;
-			link = link->next;
-		}
-		dequeue(&queue);
-		room = queue ? queue->room : room;
-	}
+	enqueue(&path->list, room, last);
+	if (room->status == 'e')
+		path->endlist = *last;
+	path->steps += room->status == 's' ? 0 : 1;
+	path->index = i;
 }
 
 t_path	*create_new_arr_path(t_farm *farm, int size)
 {
 	t_path	*new;
-	t_link	*link;
+	t_room	*room;
+	t_queue	*list;
+	t_queue	*last;
 	int		i;
 
-	link = NULL;
 	if (!(new = (t_path *)ft_memalloc(sizeof(t_path) * size)))
 		exit(0);
-	i = 0;
 	unvisit_rooms(farm, 0);
-	while (i < size)
+	room = farm->startroom;
+	list = room->linkwith;
+	i = 0;
+	while (list)
 	{
-		if (farm->onestep_path && i == 0)
+		last = NULL;
+		add_path_list(&new[i], room, &last, i);
+		while (list && room->status != 'e')
 		{
-			new[i++].list = farm->onestep_path;
-			link = get_start_end_link(farm->onestep_path);
+			add_path_list(&new[i], list->room, &last, i);
+			room = list->room;
+			room->visited = !room->status ? 1 : room->visited;
+			list = room->linkwith;
 		}
-		create_list_of_paths(farm->startroom, &new[i], i);
+		room = farm->startroom;
+		list = room->linkwith;
+		while (list)
+		{
+			if (!list->room->visited)
+			{
+				if (list->room->status == 'e')
+					list->room->visited = 1;
+				break ;
+			}
+			list = list->next;
+		}
 		i++;
-	}
-	if (link)
-	{
-		link->next = farm->onestep_path->room->link;
-		farm->onestep_path->room->link = link;
 	}
 	return (new);
 }

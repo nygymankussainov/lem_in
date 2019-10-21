@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:51:24 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/18 14:42:10 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/21 22:12:00 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ struct						s_room
 	bool					in;
 	bool					out;
 	t_link					*link;
+	t_queue					*linkwith;
 	struct s_room			*outroom;
 	struct s_room			*inroom;
 	struct s_room			*prev;
@@ -71,7 +72,6 @@ struct						s_link
 	t_room					*room;
 	int						weight;
 	bool					lock;
-	bool					go;
 	struct s_link			*next;
 };
 
@@ -97,7 +97,6 @@ typedef struct				s_farm
 	int						path_nb;
 	int						max_paths;
 	t_path					*path;
-	t_queue					*onestep_path;
 	t_room					*endroom;
 	t_room					*startroom;
 	t_hash_tab				*h_tab;
@@ -108,7 +107,6 @@ struct						s_path
 {
 	int						index;
 	int						steps;
-	int						lines;
 	bool					checked;
 	int						size;
 	t_queue					*list;
@@ -169,6 +167,7 @@ int							enqueue_to_begin(t_queue **queue, t_room *room);
 void						free_path(t_path *path);
 void						change_link_room(t_queue *list);
 t_path						*create_new_arr_path(t_farm *farm, int size);
+void						fill_room_linkwith(t_path *path);
 t_link						*get_start_end_link(t_queue *list);
 void						push_ant(t_queue *list, int ant);
 void						push_ant_further(t_queue *list);

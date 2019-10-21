@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:47:38 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/18 13:28:26 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/21 22:32:43 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,67 +21,36 @@ void	free_path(t_path *path)
 }
 
 /*
-** In fill_struct() function we creating a linked list
-** of a new found path
+** In get_new_path() function we creating a linked list
+** of a new found path.
 */
 
-void	fill_struct(t_farm *farm, t_path **path, int size)
+int		get_new_path(t_farm *farm, t_path **path, t_path *old)
 {
 	t_room	*end;
 	t_queue	*last;
 
-	while (size--)
+	end = farm->endroom;
+	last = NULL;
+	(*path)->steps--;
+	while (end)
 	{
-		end = farm->endroom;
-		last = NULL;
-		path[size]->steps--;
-		while (end)
+		if ((*path)->steps > 1000)
 		{
-			if (end && end->dup && end->out)
-				path[size]->steps -=
-					enqueue_to_begin(&path[size]->list, end->inroom);
-			else
-				path[size]->steps -=
-					enqueue_to_begin(&path[size]->list, end);
-			if (end->status == 'e')
-				(*path)->endlist = (*path)->list;
-			end = end->prev;
-			path[size]->steps++;
+			delete_dup_rooms(old);
+			free_path(*path);
+			return (0);
 		}
+		if (end && end->dup && end->out)
+			enqueue_to_begin(&(*path)->list, end->inroom);
+		else
+			enqueue_to_begin(&(*path)->list, end);
+		if (end->status == 'e')
+			(*path)->endlist = (*path)->list;
+		end = end->prev;
+		(*path)->steps++;
 	}
-}
-
-/*
-** Function get_start_end_link() returns a link between
-** start and end rooms if such path exists.
-*/
-
-t_link	*get_start_end_link(t_queue *list)
-{
-	t_link	*link;
-	t_link	*prev;
-	t_link	*tmp;
-
-	link = list->room->link;
-	tmp = NULL;
-	if (link && link->room == list->next->room)
-	{
-		tmp = link;
-		list->room->link = list->room->link->next;
-	}
-	else
-		while (link)
-		{
-			prev = link;
-			if (link->next && link->next->room == list->next->room)
-			{
-				tmp = link->next;
-				prev->next = tmp->next;
-				break ;
-			}
-			link = link->next;
-		}
-	return (tmp);
+	return (1);
 }
 
 /*
@@ -97,14 +66,15 @@ int		create_many_paths(t_farm *farm, t_path **path)
 	i = 0;
 	if (!(new = (t_path *)ft_memalloc(sizeof(t_path))))
 		exit(0);
-	fill_struct(farm, &new, 1);
+	if (!get_new_path(farm, &new, *path))
+		return (0);
 	delete_dup_rooms(*path);
 	while (i < (*path)->size)
 	{
-		manage_direction(*path + i, 0);
+		manage_direction(*path + i, -1);
 		i++;
 	}
-	lock_intersecting_links(new);
+	fill_room_linkwith(new);
 	free_path(new);
 	new = create_new_arr_path(farm, (*path)->size + 1);
 	new->size = (*path)->size + 1;
@@ -119,13 +89,11 @@ int		create_paths(t_farm *farm, t_path **path)
 	{
 		if (!(*path = (t_path *)ft_memalloc(sizeof(t_path))))
 			exit(0);
+		get_new_path(farm, path, *path);
 		(*path)->size = 1;
-		fill_struct(farm, path, (*path)->size);
+		fill_room_linkwith(*path);
 		delete_dup_rooms(*path);
-		if ((*path)->steps == 1)
-			farm->onestep_path = (*path)->list;
 		manage_direction(*path, 0);
-		(*path)->lines = farm->ants + (*path)->steps - 1;
 		if (farm->max_paths == 1 || farm->ants == 1)
 			return (0);
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 13:34:28 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/17 14:06:28 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/21 17:30:09 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ void	push_ant_further(t_queue *list)
 
 void	push_ant(t_queue *list, int ant)
 {
-	list->next->room->antnbr = ant;
-	ft_printf("L%d-%s ", ant, list->next->room->name);
+	if (list->next->room->status == 'e')
+		list->next->room->antnbr++;
+	else
+		list->next->room->antnbr = ant;
+	ft_printf("L%d-%s ", ant,
+		list->next->room->name);
 }

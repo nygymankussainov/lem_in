@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/29 17:57:30 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/17 18:40:13 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/18 22:15:45 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,6 @@ int		enqueue_to_begin(t_queue **queue, t_room *room)
 	}
 	else
 	{
-		new = *queue;
-		while (new)
-		{
-			if (new->room->name == room->name)
-				return (1);
-			new = new->next;
-		}
 		if (!(new = (t_queue *)ft_memalloc(sizeof(t_queue))))
 			exit(0);
 		(*queue)->prev = new;

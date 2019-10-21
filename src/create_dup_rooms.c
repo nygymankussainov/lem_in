@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 15:32:36 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/17 14:05:40 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/21 13:34:52 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	manage_links(t_queue *list, t_room *room)
 	left->room = !list->prev->room->dup ?
 		list->prev->room : list->prev->room->outroom;
 	left->weight = -1;
-	left->go = link->go;
 	left->lock = link->lock;
 	right->room = room->outroom;
 	left->next = right;
