@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:47:38 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/21 22:32:43 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/22 15:00:12 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_path(t_path *path)
 ** of a new found path.
 */
 
-int		get_new_path(t_farm *farm, t_path **path, t_path *old)
+int		get_new_path(t_farm *farm, t_path **path)
 {
 	t_room	*end;
 	t_queue	*last;
@@ -35,12 +35,6 @@ int		get_new_path(t_farm *farm, t_path **path, t_path *old)
 	(*path)->steps--;
 	while (end)
 	{
-		if ((*path)->steps > 1000)
-		{
-			delete_dup_rooms(old);
-			free_path(*path);
-			return (0);
-		}
 		if (end && end->dup && end->out)
 			enqueue_to_begin(&(*path)->list, end->inroom);
 		else
@@ -66,7 +60,7 @@ int		create_many_paths(t_farm *farm, t_path **path)
 	i = 0;
 	if (!(new = (t_path *)ft_memalloc(sizeof(t_path))))
 		exit(0);
-	if (!get_new_path(farm, &new, *path))
+	if (!get_new_path(farm, &new))
 		return (0);
 	delete_dup_rooms(*path);
 	while (i < (*path)->size)
@@ -89,7 +83,7 @@ int		create_paths(t_farm *farm, t_path **path)
 	{
 		if (!(*path = (t_path *)ft_memalloc(sizeof(t_path))))
 			exit(0);
-		get_new_path(farm, path, *path);
+		get_new_path(farm, path);
 		(*path)->size = 1;
 		fill_room_linkwith(*path);
 		delete_dup_rooms(*path);

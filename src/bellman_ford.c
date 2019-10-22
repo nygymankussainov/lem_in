@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 14:52:47 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/21 22:16:35 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/22 15:04:10 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,8 @@ bool	change_dist(t_link *link, t_room *room, t_queue **queue, t_queue **last)
 int		calculate_neg_dist(t_queue **queue, t_room *room, t_queue *last)
 {
 	t_link	*link;
-	bool	change;
 	int		ret;
 
-	change = 0;
 	ret = 0;
 	while (*queue)
 	{
@@ -66,17 +64,14 @@ int		calculate_neg_dist(t_queue **queue, t_room *room, t_queue *last)
 		while (link && room->status != 'e')
 		{
 			if (change_dist(link, room, queue, &last))
-			{
 				ret = link->room->status == 'e' ? 1 : ret;
-				change = 1;
-			}
 			link = link->next;
 		}
 		dequeue(queue);
 		room->visited = 1;
 		room = *queue ? (*queue)->room : room;
 	}
-	return (ret && change ? 2 : ret);
+	return (ret);
 }
 
 /*
@@ -97,29 +92,25 @@ void	preparation(t_path *path, t_farm *farm)
 	assign_inf_dist(farm);
 }
 
+/*
+** The bellman_ford() function calculates distance
+** from start vertex to every other vertex
+** only once instead of N-1 times,
+** because in this project we have graphs with
+** unweighted edges.
+*/
+
 int		bellman_ford(t_farm *farm, t_path *path)
 {
 	t_queue	*queue;
 	t_queue	*last;
-	int		i;
-	int		ret;
-	int		isend;
 
 	queue = NULL;
 	last = NULL;
-	i = 0;
-	isend = 0;
 	preparation(path, farm);
-	while (i++ < farm->room_count - 1)
-	{
-		unvisit_rooms(farm, 0);
-		enqueue(&queue, farm->startroom, &last);
-		if ((ret = calculate_neg_dist(&queue, farm->startroom, last)) == 1)
-			return (1);
-		else if (ret == 2)
-			isend = 1;
-		else
-			return (!isend ? delete_dup_rooms(path) : 1);
-	}
-	return (1);
+	unvisit_rooms(farm, 0);
+	enqueue(&queue, farm->startroom, &last);
+	if (calculate_neg_dist(&queue, farm->startroom, last))
+		return (1);
+	return (delete_dup_rooms(path));
 }

@@ -1,9 +1,21 @@
-3
+20
 ##start
-start 0 1
-middle 3 4
+A 0 2
 ##end
-end 3 0
-start-middle
-
-end-middle
+H 11 2
+B 2 0
+C 5 0
+D 7 2
+E 2 2
+F 5 4
+G 9 4
+A-B
+A-E
+B-C
+E-D
+E-F
+C-D
+F-D
+F-G
+D-H
+G-H
