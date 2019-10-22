@@ -6,7 +6,7 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/04 12:58:50 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/10/18 15:47:38 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/10/22 13:49:20 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ CCFL = -Wall -Wextra -Werror
 all: obj_dir $(NAME)
 
 obj_dir:
-	@mkdir $(OBJDIR)
+	@mkdir -p $(OBJDIR)
 
 $(NAME): $(OBJECTS)
 	@ar rc $(NAME) $(OBJECTS)

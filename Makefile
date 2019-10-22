@@ -6,7 +6,7 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/10/21 13:32:29 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/10/22 14:30:42 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ VISUAL = ./vizualizer
 INCLUDES = -I ./ -I libft/ft_printf
 
 SOURCES = lem_in.c hash_func.c bfs.c bellman_ford.c run_ants.c unvisit_rooms.c delete_dup_rooms.c \
-		sort_paths.c create_new_arr_path.c create_paths.c create_dup_rooms.c push_ant.c print_path.c lock_intersecting_links.c \
+		sort_paths.c create_new_arr_path.c create_paths.c create_dup_rooms.c push_ant.c print_path.c \
 		manage_directions.c change_link_room.c count_optimal_paths.c create_linkwith_list.c \
 		isint.c validation.c validate_rooms.c write_data_in_sroom.c validate_links.c validate_ants.c \
 		work_with_data.c validate_coords.c find_and_connect_rooms.c \
@@ -60,8 +60,8 @@ $(NAME): $(OBJ)
 	@echo "$(LOG_GREEN)Lem_in has compiled successfully!$(LOG_NOCOLOR)"
 
 viz:
-	# @make -sC $(VISUAL)
-	# @echo "$(LOG_GREEN)Visual has compiled successfully!$(LOG_NOCOLOR)"
+	@make -sC $(VISUAL)
+	@echo "$(LOG_GREEN)Visual has compiled successfully!$(LOG_NOCOLOR)"
 
 clean:
 	@make clean -sC $(LIB)

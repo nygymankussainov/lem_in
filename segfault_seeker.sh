@@ -2,7 +2,7 @@
 i=0
 while (true)
 do
-	./generator --big-superposition > map
+	./generator --big > map
 	./lem-in < map
 	if [[ $? -eq 139 ]]; then break ; fi
 	((i++))
