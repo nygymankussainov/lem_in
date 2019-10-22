@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 21:57:00 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/10/22 14:29:01 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/10/22 16:38:01 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	delete_linkwith_rooms(t_queue *list)
 }
 
 /*
-** In create_linkwith_list() function we 
+** In create_linkwith_list() function we
 ** for every room that belong to new found path
 ** create a list of rooms that the link with.
 ** For expample: if the path is A-E-D-H,
