@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 12:14:28 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/07/31 16:52:07 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/11/11 14:28:38 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,26 @@
 int		get_length(char *mant, int exp_i)
 {
 	int		i;
-	int		j;
+	int		len;
 
 	i = -exp_i;
-	j = 0;
+	len = 0;
 	while (*mant)
 	{
 		if (*mant == '1')
 		{
-			j = i;
+			len = i;
 			if (*(mant + 1) == '\0')
-				j++;
+				len++;
 		}
 		i++;
 		mant++;
 	}
-	if (j == -exp_i)
-		return (j);
-	else if (j == 0)
+	if (len == -exp_i)
+		return (len);
+	else if (len == 0)
 		return (-exp_i);
-	return (j + 1);
+	return (len + 1);
 }
 
 void	prepare_number(char *n1, char **res, int exp_i)
@@ -79,31 +79,31 @@ void	get_to_first_one(char **mant, int bigl, int *exp_i)
 		(*mant)++;
 }
 
-int		decimal_part(char **integer, t_f f, t_flags *s)
+int		decimal_part(char **integer, t_float value, t_flags *fl)
 {
 	int		len;
 	char	*res;
 	char	*n1;
 	char	*tmp_mant;
 
-	if (f.isint && *f.mant && s->bigl)
-		get_to_first_one(&f.mant, s->bigl, &f.exp_i);
-	if ((!*f.mant || is_all_zeroes(f.mant)) && f.exp_i != -1022)
+	if (value.isint && *value.mant && fl->bigl)
+		get_to_first_one(&value.mant, fl->bigl, &value.exp_i);
+	if ((!*value.mant || is_all_zeroes(value.mant)) && value.exp_i != -1022)
 	{
 		res = ft_strnew(0);
-		return (print(&res, integer, s, f.sign));
+		return (print(&res, integer, fl, value.sign));
 	}
-	if (f.isint && *f.mant && !s->bigl)
-		get_to_first_one(&f.mant, s->bigl, &f.exp_i);
-	f.mant += s->bigl ? 1 : 0;
-	if (s->bigl && f.exp_i != -16382)
-		tmp_mant = ft_strjoin(f.mant, "1", 0, 0);
+	if (value.isint && *value.mant && !fl->bigl)
+		get_to_first_one(&value.mant, fl->bigl, &value.exp_i);
+	value.mant += fl->bigl ? 1 : 0;
+	if (fl->bigl && value.exp_i != -16382)
+		tmp_mant = ft_strjoin(value.mant, "1", 0, 0);
 	else
-		tmp_mant = ft_strdup(f.mant);
-	len = get_length(tmp_mant, f.exp_i);
-	res = get_initial_number(len, f.exp_i, &n1);
-	f.exp_i--;
-	calculate_decimal(tmp_mant, &res, f.exp_i, &n1);
+		tmp_mant = ft_strdup(value.mant);
+	len = get_length(tmp_mant, value.exp_i);
+	res = get_initial_number(len, value.exp_i, &n1);
+	value.exp_i--;
+	calculate_decimal(tmp_mant, &res, value.exp_i, &n1);
 	free(tmp_mant);
-	return (print(&res, integer, s, f.sign));
+	return (print(&res, integer, fl, value.sign));
 }

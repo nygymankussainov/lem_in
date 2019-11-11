@@ -6,7 +6,7 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/10/18 14:26:32 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/11/11 15:42:03 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SDL = -L ~/.brew/Cellar/sdl2/2.0.10/lib -l SDL2-2.0.0 \
 LIB = ../libft/ft_printf
 LIB_A = ../libft/libft.a $(LIB)/libftprintf.a ../libftlemin.a
 
-INCLUDES = -I../libft/ft_printf -I./includes -I./includes/SDL2 -I./includes/SDL2_GFX -I./includes/SDL2_MIX `sdl2-config --cflags`
+INCLUDES = -I../libft/ft_printf -I ../libft/ -I./includes -I./includes/SDL2 -I./includes/SDL2_GFX -I./includes/SDL2_MIX `sdl2-config --cflags`
 
 SRCDIR = srcs
 OBJDIR = obj

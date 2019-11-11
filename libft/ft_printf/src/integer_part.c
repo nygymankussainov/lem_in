@@ -6,7 +6,7 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 12:28:59 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/06 13:28:48 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/11/11 14:32:22 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	get_big_number(char **res, int exp_i)
 	i = 64;
 	s1 = ft_itoa_ll(ft_power(2, i - 1));
 	longmulti(s1, "2", res);
-	free(s1);
+	ft_strdel(&s1);
 	while (i++ < exp_i)
 	{
 		len = ft_strlen(*res);
@@ -30,7 +30,7 @@ void	get_big_number(char **res, int exp_i)
 		s1 = ft_strncpy(s1, *res, len);
 		s1[len] = '\0';
 		longmulti(s1, "2", res);
-		free(s1);
+		ft_strdel(&s1);
 	}
 }
 
@@ -52,7 +52,7 @@ void	big_int(char **mant, int *exp_i, char **res)
 		(*mant)++;
 		(*exp_i)--;
 	}
-	free(tmp);
+	ft_strdel(&tmp);
 }
 
 void	small_int(char **mant, int *exp_i, char **res)
@@ -73,31 +73,31 @@ void	small_int(char **mant, int *exp_i, char **res)
 			nb1[len] = '\0';
 			nb2 = ft_itoa_ll(ft_power(2, *exp_i));
 			longadd(nb1, nb2, res);
-			free(nb1);
-			free(nb2);
+			ft_strdel(&nb1);
+			ft_strdel(&nb2);
 		}
 		(*mant)++;
 		(*exp_i)--;
 	}
 }
 
-int		integer_part(t_f f, t_flags *s)
+int		integer_part(t_float value, t_flags *fl)
 {
 	int		ret;
 	char	*res;
 
-	if (f.exp_i < 0)
+	if (value.exp_i < 0)
 	{
 		res = ft_strnew(1);
 		res[0] = '0';
-		ret = decimal_part(&res, f, s);
+		ret = decimal_part(&res, value, fl);
 	}
 	else
 	{
-		f.mant += s->bigl && f.exp_i != 16383 ? 1 : 0;
-		f.exp_i >= 64 ? big_int(&f.mant, &f.exp_i, &res) :
-			small_int(&f.mant, &f.exp_i, &res);
-		ret = decimal_part(&res, f, s);
+		value.mant += fl->bigl && value.exp_i != 16383 ? 1 : 0;
+		value.exp_i >= 64 ? big_int(&value.mant, &value.exp_i, &res) :
+			small_int(&value.mant, &value.exp_i, &res);
+		ret = decimal_part(&res, value, fl);
 	}
 	return (ret);
 }

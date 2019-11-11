@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_conv_b.c                                        :+:      :+:    :+:   */
+/*   parse_b.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 16:38:26 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/04 17:39:51 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/11/11 14:36:25 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,29 @@ void	print_sign(int bigl, char *binary)
 		ft_putchar(binary[0]);
 }
 
-int		ft_conv_b(t_flags *s, t_f f)
+int		parse_b(t_flags *fl, t_float value)
 {
 	int		ret;
 
-	if (s->m == 1)
-		ft_putstr(f.exp);
-	else if (s->m == 2)
-		ft_putstr(f.mant);
-	else if (s->z)
-		print_sign(s->bigl, f.binary);
+	if (fl->m == 1)
+		ft_putstr(value.exp);
+	else if (fl->m == 2)
+		ft_putstr(value.mant);
+	else if (fl->z)
+		print_sign(fl->bigl, value.binary);
 	else
 	{
-		print_sign(s->bigl, f.binary);
+		print_sign(fl->bigl, value.binary);
 		ft_putchar('.');
-		ft_putstr(f.exp);
+		ft_putstr(value.exp);
 		ft_putchar('.');
-		ft_putstr(f.mant);
+		ft_putstr(value.mant);
 	}
-	ret = ft_strlen(f.binary) + 2;
-	ret -= s->bigl ? 48 : 0;
-	ret = s->m == 1 ? ft_strlen(f.exp) : ret;
-	ret = s->m == 2 && !s->bigl ? ft_strlen(f.mant) : ret;
-	ret = s->m == 2 && s->bigl ? ft_strlen(f.mant) + 1 : ret;
-	ret = s->z ? 1 : ret;
+	ret = ft_strlen(value.binary) + 2;
+	ret -= fl->bigl ? 48 : 0;
+	ret = fl->m == 1 ? ft_strlen(value.exp) : ret;
+	ret = fl->m == 2 && !fl->bigl ? ft_strlen(value.mant) : ret;
+	ret = fl->m == 2 && fl->bigl ? ft_strlen(value.mant) + 1 : ret;
+	ret = fl->z ? 1 : ret;
 	return (ret);
 }

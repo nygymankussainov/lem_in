@@ -6,13 +6,13 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 10:27:31 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/06 13:28:13 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/11/11 14:35:05 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		print_string(va_list valist, t_flags *s)
+int		print_string(va_list valist, t_flags *fl)
 {
 	char	*str;
 	int		ret;
@@ -20,51 +20,51 @@ int		print_string(va_list valist, t_flags *s)
 
 	str = va_arg(valist, char *);
 	if (!str)
-		str = s->dot && !s->zero_padd ? ft_strdup("(null).") :
+		str = fl->dot && !fl->zero_padd ? ft_strdup("(null).") :
 			ft_strdup("(null)");
 	else
 		str = ft_strndup(str, ft_strlen(str));
-	*str = s->dot && !s->zero_padd ? '\0' : *str;
+	*str = fl->dot && !fl->zero_padd ? '\0' : *str;
 	ret = ft_strlen(str);
-	if (s->zero_padd && s->zero_padd <= ret)
+	if (fl->zero_padd && fl->zero_padd <= ret)
 	{
-		str[s->zero_padd] = '\0';
+		str[fl->zero_padd] = '\0';
 		tmp = ret;
 		ret = ret - tmp + ft_strlen(str);
 	}
 	else
-		s->zero_padd = 0;
-	if (ret >= s->width)
+		fl->zero_padd = 0;
+	if (ret >= fl->width)
 		ft_putstr(str);
-	ret += ret < s->width ? width(str, s, ret) : 0;
-	free(str);
+	ret += ret < fl->width ? width(str, fl, ret) : 0;
+	ft_strdel(&str);
 	return (ret);
 }
 
-int		ft_symbol(const char **format, va_list valist, t_flags *s)
+int		parse_char(const char **format, va_list valist, t_flags *fl)
 {
 	char	*str;
 	char	sym;
 	int		ret;
 
 	ret = 1;
-	s->conv = **F;
-	s->zero = 0;
-	if (s->conv == 's')
-		ret = print_string(valist, s);
+	fl->conv = **FRMT;
+	fl->zero = 0;
+	if (fl->conv == 's')
+		ret = print_string(valist, fl);
 	else
 	{
 		sym = (char)va_arg(valist, int);
 		str = ft_strnew(1);
 		str[0] = sym;
-		if (ret >= s->width || ((s->neg || ret >= s->width)
-			&& !sym && s->width))
+		if (ret >= fl->width || ((fl->neg || ret >= fl->width)
+			&& !sym && fl->width))
 			ft_putchar(sym);
-		ret += ret < s->width ? width(str, s, ret) : 0;
-		if (!sym && s->width && (ret <= s->width || !s->neg))
+		ret += ret < fl->width ? width(str, fl, ret) : 0;
+		if (!sym && fl->width && (ret <= fl->width || !fl->neg))
 			write(1, &sym, 1);
-		free(str);
+		ft_strdel(&str);
 	}
-	*F += 1;
+	*FRMT += 1;
 	return (ret);
 }

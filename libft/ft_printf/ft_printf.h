@@ -6,21 +6,20 @@
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/01 11:02:01 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/05 13:33:11 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/11/11 15:40:23 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# define F format
+# define FRMT format
 
+# include "libft.h"
 # include <stdio.h>
 # include <stdarg.h>
-# include <stdlib.h>
-# include "../libft.h"
 
-typedef struct		s_f
+typedef struct		s_float
 {
 	char			*binary;
 	short			sign;
@@ -30,7 +29,7 @@ typedef struct		s_f
 	int				exp_i;
 	int				mant_i;
 	short			isint;
-}					t_f;
+}					t_float;
 
 typedef struct		s_flags
 {
@@ -54,34 +53,34 @@ typedef struct		s_flags
 
 int					ft_printf(const char *format, ...);
 int					find_conv(const char *s);
-void				find_whitesp(const char **format, t_flags *s);
-int					ft_conv_s(const char **format, va_list valist, t_flags *s);
-int					ft_conv_c(const char **format, va_list valist, t_flags *s);
-int					ft_conv_o(const char **format, va_list valist, t_flags *s);
-int					ft_conv_p(const char **format, va_list valist, t_flags *s);
-int					ft_conv_x(const char **format, va_list valist, t_flags *s);
-int					ft_conv_d(const char **format, va_list valist, t_flags *s);
-int					ft_conv_u(const char **format, va_list valist, t_flags *s);
-int					ft_conv_f(const char **format, va_list valist, t_flags *s);
-int					ft_number(const char **format, va_list valist, t_flags *s);
-int					ft_symbol(const char **format, va_list valist, t_flags *is);
+void				find_whitesp(const char **format, t_flags *fl);
+int					parse_s(const char **format, va_list valist, t_flags *fl);
+int					parse_c(const char **format, va_list valist, t_flags *fl);
+int					parse_o(const char **format, va_list valist, t_flags *fl);
+int					parse_p(const char **format, va_list valist, t_flags *fl);
+int					parse_x(const char **format, va_list valist, t_flags *fl);
+int					parse_d(const char **format, va_list valist, t_flags *fl);
+int					parse_u(const char **format, va_list valist, t_flags *fl);
+int					parse_f(const char **format, va_list valist, t_flags *fl);
+int					parse_b(t_flags *fl, t_float value);
+int					ft_number(const char **format, va_list valist, t_flags *fl);
+int					parse_char(const char **format, va_list valist, t_flags *fl);
 int					get_width(char *str);
-int					width_for_f(char *str, t_flags *s, int ret);
-int					width(char *str, t_flags *s, int len);
-int					manage_width(char *str, t_flags *s);
+int					width_for_float(char *str, t_flags *fl, int ret);
+int					width(char *str, t_flags *fl, int len);
+int					manage_width(char *str, t_flags *fl);
 int					print_zero_or_space(int width, int zero, int ret);
-int					integer_part(t_f f, t_flags *s);
-int					decimal_part(char **integer, t_f f, t_flags *s);
+int					integer_part(t_float value, t_flags *fl);
+int					decimal_part(char **integer, t_float value, t_flags *fl);
 void				prepare_number(char *n1, char **res, int exp_i);
 void				calculate_decimal(char *mant, char **res, int exp_i,
 	char **n1);
 char				*get_initial_number(int len, int exp_i, char **n1);
-int					print(char **decimal, char **integer, t_flags *s,
+int					print(char **decimal, char **integer, t_flags *fl,
 	int sign);
 int					get_width(char *str);
 void				longadd(char *s1, char *s2, char **res2);
 void				longmulti(char *a, const char *b, char **c);
 void				longdiv(char *number, int divisor, char **res);
-int					ft_conv_b(t_flags *s, t_f f);
 
 #endif

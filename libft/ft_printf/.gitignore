@@ -1,0 +1,16 @@
+**.swp
+**.o
+**.a
+**.DS_Store
+**.idea
+**.dSYM
+.vscode
+pft/
+main.c
+**.gch
+a.out
+ft_printf
+pft/
+pft/
+pft/
+pft/

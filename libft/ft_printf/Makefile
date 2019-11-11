@@ -6,7 +6,7 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/10/18 15:47:36 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/11/11 15:38:47 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,17 @@ LOG_GREEN = \033[32m
 
 NAME = libftprintf.a
 
+INCLUDES = -I ./ -I ../
+
 LIBFT = ../
 
-SRCS = ft_symbol.c ft_printf.c ft_number.c ft_conv_f.c ft_conv_x.c ft_conv_d.c ft_conv_p.c ft_conv_o.c ft_conv_u.c width_for_f.c ft_conv_b.c \
+SRC = parse_char.c ft_printf.c ft_number.c parse_f.c parse_x.c parse_d.c parse_p.c parse_o.c parse_u.c width_for_float.c parse_b.c \
 		longadd.c longmulti.c decimal_part.c longdiv.c integer_part.c rounding_and_print.c calculate_decimal.c width.c find_conv_or_whitesp.c \
 
-OBJ = $(addprefix $(OBJDIR)/,$(SRCS:.c=.o))
+SRCDIR = src
+SRCS = $(addprefix $(SRCDIR)/, $(SRC))
+
+OBJ = $(addprefix $(OBJDIR)/,$(SRC:.c=.o))
 OBJDIR = obj
 
 CCFL = -Wall -Wextra -Werror
@@ -40,9 +45,8 @@ $(NAME): $(OBJ)
 	@echo "$(LOG_GREEN)Ft_printf has compiled successfully!$(LOG_NOCOLOR)"
 	@ranlib $(NAME)
 
-$(OBJDIR)/%.o: %.c
-	@gcc $(CCFL) -o $@ -c $<
-
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@gcc $(CCFL) -o $@ -c $< $(INCLUDES)
 clean:
 	@make clean -C $(LIBFT)
 	@/bin/rm -rf $(OBJDIR)

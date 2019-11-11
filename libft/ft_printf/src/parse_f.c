@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_conv_f.c                                        :+:      :+:    :+:   */
+/*   parse_f.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 15:12:15 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/04 17:48:48 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/11/11 14:35:58 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		get_binary_bigl(long double db, char **str, char **exp, char **mant)
 
 	j = 127;
 	if (!(*str = (char *)ft_memalloc(sizeof(char) + 129)))
-		return (0);
+		exit(12);
 	(*str)[128] = '\0';
 	i = 0;
 	ft_memcpy(&nb, &db, 16);
@@ -45,7 +45,7 @@ int		get_binary(double db, char **str, char **exp, char **mant)
 
 	j = 63;
 	if (!(*str = (char *)ft_memalloc(sizeof(char) + 65)))
-		return (0);
+		exit(12);
 	(*str)[64] = '\0';
 	i = 0;
 	ft_memcpy(&nb, &db, 8);
@@ -67,21 +67,21 @@ int		is_nan_inf(const char **format, long double db)
 {
 	if (db != db)
 	{
-		if (**F == 'F')
+		if (**FRMT == 'F')
 			write(1, "NAN", 3);
 		else
 			write(1, "nan", 3);
-		(*F)++;
+		(*FRMT)++;
 	}
 	else if (db == (1.0 / 0.0) || db == -(1.0 / 0.0))
 	{
 		if (db == -(1.0 / 0.0))
 			write(1, "-", 1);
-		if (**F == 'F')
+		if (**FRMT == 'F')
 			write(1, "INF", 3);
 		else
 			write(1, "inf", 3);
-		(*F)++;
+		(*FRMT)++;
 		if (db == -(1.0 / 0.0))
 			return (4);
 	}
@@ -94,39 +94,39 @@ void	create_strcut(char **exp, char **mant, int bigl)
 	{
 		if (!(*exp = (char *)ft_memalloc(sizeof(char) * 16)) ||
 			!(*mant = (char *)ft_memalloc(sizeof(char) * 64)))
-			return ;
+			exit(12);
 	}
 	else
 	{
 		if (!(*exp = (char *)ft_memalloc(sizeof(char) * 12)) ||
 			!(*mant = (char *)ft_memalloc(sizeof(char) * 53)))
-			return ;
+			exit(12);
 	}
 }
 
-int		ft_conv_f(const char **format, va_list valist, t_flags *s)
+int		parse_f(const char **format, va_list valist, t_flags *fl)
 {
 	int			ret;
-	t_f			f;
+	t_float		value;
 
-	f.sign = 0;
-	f.db = s->bigl ? va_arg(valist, long double) :
+	value.sign = 0;
+	value.db = fl->bigl ? va_arg(valist, long double) :
 		(double)va_arg(valist, double);
-	if (s->conv != 'b' &&
-		(f.db != f.db || f.db == (1.0 / 0.0) || f.db == -(1.0 / 0.0)))
-		return (is_nan_inf(F, f.db));
-	create_strcut(&f.exp, &f.mant, s->bigl);
-	if (s->bigl)
-		f.exp_i = get_binary_bigl(f.db, &f.binary, &f.exp, &f.mant);
+	if (fl->conv != 'b' &&
+		(value.db != value.db || value.db == (1.0 / 0.0) || value.db == -(1.0 / 0.0)))
+		return (is_nan_inf(FRMT, value.db));
+	create_strcut(&value.exp, &value.mant, fl->bigl);
+	if (fl->bigl)
+		value.exp_i = get_binary_bigl(value.db, &value.binary, &value.exp, &value.mant);
 	else
-		f.exp_i = get_binary(f.db, &f.binary, &f.exp, &f.mant);
-	f.sign = s->bigl && f.binary[48] == '1' ? -1 : f.sign;
-	f.sign = !s->bigl && f.binary[0] == '1' ? -1 : f.sign;
-	f.isint = f.exp_i >= 0 ? 1 : 0;
-	ret = s->conv != 'b' ? integer_part(f, s) : ft_conv_b(s, f);
-	(*F)++;
-	free(f.binary);
-	free(f.exp);
-	free(f.mant);
+		value.exp_i = get_binary(value.db, &value.binary, &value.exp, &value.mant);
+	value.sign = fl->bigl && value.binary[48] == '1' ? -1 : value.sign;
+	value.sign = !fl->bigl && value.binary[0] == '1' ? -1 : value.sign;
+	value.isint = value.exp_i >= 0 ? 1 : 0;
+	ret = fl->conv != 'b' ? integer_part(value, fl) : parse_b(fl, value);
+	(*FRMT)++;
+	ft_strdel(&value.binary);
+	ft_strdel(&value.exp);
+	ft_strdel(&value.mant);
 	return (ret);
 }

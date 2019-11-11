@@ -6,7 +6,7 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/10/22 14:30:42 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/11/11 15:41:29 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ LIB = libft/ft_printf
 LIB_A = libft/libft.a $(LIB)/libftprintf.a 
 VISUAL = ./vizualizer
 
-INCLUDES = -I ./ -I libft/ft_printf
+INCLUDES = -I ./ -I libft/ft_printf -I libft/
 
 SOURCES = lem_in.c hash_func.c bfs.c bellman_ford.c run_ants.c unvisit_rooms.c delete_dup_rooms.c \
 		sort_paths.c create_new_arr_path.c create_paths.c create_dup_rooms.c push_ant.c print_path.c \

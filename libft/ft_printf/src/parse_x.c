@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_conv_x.c                                        :+:      :+:    :+:   */
+/*   parse_x.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 14:53:37 by vhazelnu          #+#    #+#             */
-/*   Updated: 2019/08/04 12:09:10 by vhazelnu         ###   ########.fr       */
+/*   Updated: 2019/11/11 14:22:01 by vhazelnu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 long long	get_nbr_x(const char **format, va_list valist,
-	t_flags *s, char **str)
+	t_flags *fl, char **str)
 {
 	long long	nbr;
 
-	s->conv = **F;
-	if (s->l == 2)
+	fl->conv = **FRMT;
+	if (fl->l == 2)
 		nbr = (unsigned long long)va_arg(valist, unsigned long long);
-	else if (s->l == 1)
+	else if (fl->l == 1)
 		nbr = (unsigned long)va_arg(valist, unsigned long);
-	else if (s->h == 2)
+	else if (fl->h == 2)
 		nbr = (unsigned char)va_arg(valist, int);
-	else if (s->h == 1)
+	else if (fl->h == 1)
 		nbr = (unsigned short)va_arg(valist, unsigned int);
 	else
 		nbr = va_arg(valist, unsigned int);
-	if (**F == 'x')
+	if (**FRMT == 'x')
 		*str = ft_uitoa_base(nbr, 16, 'x');
 	else
 		*str = ft_uitoa_base(nbr, 16, 'X');
@@ -53,34 +53,34 @@ void		write_or_join(char **str, char conv, char key)
 	}
 }
 
-int			print_0x(char **str, t_flags *s, int ret, long long nbr)
+int			print_0x(char **str, t_flags *fl, int ret, long long nbr)
 {
 	int		tmp;
 
 	tmp = 0;
-	if ((s->hash && nbr != 0) || (s->hash && ret >= s->width && nbr != 0))
+	if ((fl->hash && nbr != 0) || (fl->hash && ret >= fl->width && nbr != 0))
 	{
-		if ((ret >= s->width && nbr != 0) || (((s->zero_padd && s->zero_padd >
-			ft_count_digit_ll(nbr, 1)) || s->zero) && s->width && s->hash))
+		if ((ret >= fl->width && nbr != 0) || (((fl->zero_padd && fl->zero_padd >
+			ft_count_digit_ll(nbr, 1)) || fl->zero) && fl->width && fl->hash))
 		{
-			if (s->width && s->hash)
-				s->width -= 2;
-			if (s->width && s->zero_padd && s->hash && !s->neg)
+			if (fl->width && fl->hash)
+				fl->width -= 2;
+			if (fl->width && fl->zero_padd && fl->hash && !fl->neg)
 			{
 				ft_putchar(' ');
-				s->width--;
+				fl->width--;
 				tmp++;
 			}
 			tmp += 2;
-			write_or_join(str, s->conv, 'w');
+			write_or_join(str, fl->conv, 'w');
 		}
 		else
-			write_or_join(str, s->conv, 'j');
+			write_or_join(str, fl->conv, 'j');
 	}
 	return (tmp);
 }
 
-int			ft_conv_x(const char **format, va_list valist, t_flags *s)
+int			parse_x(const char **format, va_list valist, t_flags *fl)
 {
 	int						ret;
 	int						tmp;
@@ -89,17 +89,17 @@ int			ft_conv_x(const char **format, va_list valist, t_flags *s)
 
 	ret = 0;
 	tmp = 0;
-	nbr = get_nbr_x(F, valist, s, &str);
-	*str = nbr == 0 && !s->zero_padd && s->dot ? '\0' : *str;
-	s->neg = s->hash && s->width && ft_count_digit_ll(nbr, 1) >= s->width
-		? 0 : s->neg;
-	s->width = s->hash && s->width && ft_count_digit_ll(nbr, 1) >= s->width
-		? 0 : s->width;
-	s->zero = s->zero_padd || (s->hash && s->zero && s->neg) ? 0 : s->zero;
-	ret = s->hash && nbr != 0 ? ft_strlen(str) + 2 : ft_strlen(str);
-	tmp = print_0x(&str, s, ret, nbr);
-	ret = manage_width(str, s) + tmp;
-	*F += 1;
-	free(str);
+	nbr = get_nbr_x(FRMT, valist, fl, &str);
+	*str = nbr == 0 && !fl->zero_padd && fl->dot ? '\0' : *str;
+	fl->neg = fl->hash && fl->width && ft_count_digit_ll(nbr, 1) >= fl->width
+		? 0 : fl->neg;
+	fl->width = fl->hash && fl->width && ft_count_digit_ll(nbr, 1) >= fl->width
+		? 0 : fl->width;
+	fl->zero = fl->zero_padd || (fl->hash && fl->zero && fl->neg) ? 0 : fl->zero;
+	ret = fl->hash && nbr != 0 ? ft_strlen(str) + 2 : ft_strlen(str);
+	tmp = print_0x(&str, fl, ret, nbr);
+	ret = manage_width(str, fl) + tmp;
+	*FRMT += 1;
+	ft_strdel(&str);
 	return (ret);
 }
