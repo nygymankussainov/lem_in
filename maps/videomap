@@ -1,0 +1,36 @@
+15
+##start
+start 0 4
+##end
+end 10 4
+A 0 0
+B 2 2
+C 2 4
+E 4 0
+D 6 2
+F 6 4
+G 4 6
+H 8 0
+I 8 4
+J 8 6
+K 6 8
+Y 10 8
+start-A
+start-B
+start-C
+A-E
+B-D
+C-F
+C-G
+E-H
+D-F
+F-I
+F-J
+G-K
+G-J
+H-I
+I-end
+J-end
+K-Y
+Y-end
+#asdasd
