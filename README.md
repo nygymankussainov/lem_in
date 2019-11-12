@@ -28,4 +28,4 @@
 	run with visualisation:
 	./lem-in < <data> | ./visual
 
-	![](giphy.gif)
+![](giphy.gif)
