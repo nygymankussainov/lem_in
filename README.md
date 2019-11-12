@@ -28,4 +28,8 @@
 	run with visualisation:
 	./lem-in < <data> | ./visual
 
-![](giphy.gif)
+**Visualisation has done by <a href="https://github.com/Sddoo">Vlad Portnov</a>**
+
+	<p align="center">![](giphy.gif)</p>
+
+
