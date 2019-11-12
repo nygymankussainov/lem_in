@@ -30,7 +30,7 @@
 
 	You can find input files in maps folder.
 
-**Visualisation has done by <a target="_blank" href="https://github.com/Sddoo">Vlad Portnov</a>**
+**Visualisation has done by <a href="https://github.com/Sddoo" target="_blank">Vlad Portnov</a>**
 
 <p align="center"><img src="giphy.gif"></p>
 
