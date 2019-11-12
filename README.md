@@ -23,10 +23,10 @@
 	brew install SDL2_mixer
 
 	make
-	./lem-in < <data>
+	./lem-in < <input_file>
 
 	run with visualisation:
-	./lem-in < <data> | ./visual
+	./lem-in < <input_file> | ./visual
 
 	You can find input files in maps folder.
 
