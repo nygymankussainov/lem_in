@@ -28,7 +28,7 @@
 	run with visualisation:
 	./lem-in < <data> | ./visual
 
-	You can find input files in `maps` folder.
+	You can find input files in maps folder.
 
 **Visualisation has done by <a href="https://github.com/Sddoo">Vlad Portnov</a>**
 
