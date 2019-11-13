@@ -1,8 +1,8 @@
 # Lem_in
 
-	This project is about finding the quickest way to get ants from start-room to end-room.
-	Quickest way means the solution with the least number of lines, respecting the
-	rules below.
+This project is about finding the quickest way to get ants from start-room to end-room.
+Quickest way means the solution with the least number of lines, respecting the
+rules below.
 
 **Rules**
 
@@ -17,10 +17,10 @@
 	make
 	./lem-in < <input_file>
 
-	You can find input files in maps folder.
+You can find input files in maps folder.
 **Run with visualisation:**
 	
-	install sdl libraries for visualisation:
+install sdl libraries for visualisation:
 	
 	brew install SDL2 && brew install SDL2_ttf && brew install SDL2_image && brew install SDL2_gfx && brew install SDL2_mixer
 	make && make viz
