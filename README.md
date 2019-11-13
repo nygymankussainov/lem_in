@@ -31,7 +31,7 @@ run:
 
 	./lem-in < <input_file> | ./visual
 
-**Visualisation has done by ![](https://github.com/Sddoo)**
+**Visualisation has done by <a target="_blank" href="https://github.com/Sddoo">Vlad Portnov</a>**
 
 <p align="center"><img src="giphy.gif"></p>
 
