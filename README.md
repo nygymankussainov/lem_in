@@ -6,7 +6,7 @@ rules below.
 
 **Rules**
 
-- All found pahts must be disjoint.
+- All found paths must be disjoint.
 - At the beginning all ants are in start-room.
 - Each room can only contain one ant at a time. (expet start-room and end-room)
 - Ants have to avoid traffic jams as well as walking all over their fellow ants.
