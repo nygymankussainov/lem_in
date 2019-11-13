@@ -22,9 +22,10 @@ You can find input files in maps folder.
 **Run with visualisation:**
 	
 install sdl libraries for visualisation:
-	
 	brew install SDL2 && brew install SDL2_ttf && brew install SDL2_image && brew install SDL2_gfx && brew install SDL2_mixer
+compile:
 	make && make viz
+run:
 	./lem-in < <input_file> | ./visual
 
 **Visualisation has done by <a target="_blank" href="https://github.com/Sddoo">Vlad Portnov</a>**
