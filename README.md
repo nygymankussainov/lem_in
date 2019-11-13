@@ -30,7 +30,7 @@ compile:
 run:
 
 	./lem-in < <input_file> | ./visual
-**Visualisation has done by [Vlad Portnov](https://github.com/Sddoo/?target=_blank)**
+**Visualisation has done by [Vlad Portnov](https://github.com/Sddoo/)**
 
 <p align="center"><img src="giphy.gif"></p>
 
