@@ -19,7 +19,7 @@ rules below.
 
 You can find input files in maps folder.
 
-**Run with visualisation:**
+# Run with visualisation
 	
 install sdl libraries for visualisation:
 
