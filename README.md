@@ -18,6 +18,7 @@ rules below.
 	./lem-in < <input_file>
 
 You can find input files in maps folder.
+
 **Run with visualisation:**
 	
 install sdl libraries for visualisation:
