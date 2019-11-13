@@ -6,7 +6,7 @@
 #    By: vhazelnu <vhazelnu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/16 11:34:51 by vhazelnu          #+#    #+#              #
-#    Updated: 2019/11/11 15:41:29 by vhazelnu         ###   ########.fr        #
+#    Updated: 2019/11/13 14:20:13 by vhazelnu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ CCFL = -Wall -Wextra -Werror
 
 .PHONY: all clean fclean re library viz obj_dir
 
-all: obj_dir library $(ARCHIVE) $(NAME) viz
+all: obj_dir library $(ARCHIVE) $(NAME)
 
 obj_dir:
 	@mkdir -p $(OBJDIR)

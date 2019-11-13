@@ -12,23 +12,19 @@
 - Ants have to avoid traffic jams as well as walking all over their fellow ants.
 - At each turn each ant can be moved only once and the room at the receiving end must be empty.
 
-**Usage**
-
-	install sdl libraries for visualisation:
-	
-	brew install SDL2
-	brew install SDL2_ttf
-	brew install SDL2_image
-	brew install SDL2_gfx
-	brew install SDL2_mixer
+# Usage
 
 	make
 	./lem-in < <input_file>
 
-	run with visualisation:
-	./lem-in < <input_file> | ./visual
-
 	You can find input files in maps folder.
+**Run with visualisation:**
+	
+	install sdl libraries for visualisation:
+	
+	brew install SDL2 && brew install SDL2_ttf && brew install SDL2_image && brew install SDL2_gfx && brew install SDL2_mixer
+	make && make viz
+	./lem-in < <input_file> | ./visual
 
 **Visualisation has done by <a target="_blank" href="https://github.com/Sddoo">Vlad Portnov</a>**
 
