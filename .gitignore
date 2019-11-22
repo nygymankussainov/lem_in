@@ -12,7 +12,6 @@ lem-in
 data
 visual
 generator
-verifier
 map
 out
 checker
